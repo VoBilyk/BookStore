@@ -35,7 +35,7 @@ namespace BookStore.Model
         {
             if (!books.Contains(oldBook))
             {
-                throw new ArgumentException($"\"{oldBook}\" doesn`t exist");
+                throw new ArgumentException($"Book doesn`t exist");
             }
             
             books.Find(item => item == oldBook).Update(newBook.Name, newBook.Author, newBook.Genre, newBook.Price);

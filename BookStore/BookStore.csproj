@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Menu.cs" />
     <Compile Include="Model\Book.cs" />
     <Compile Include="Model\BookCatalog.cs" />
     <Compile Include="Model\Client.cs" />

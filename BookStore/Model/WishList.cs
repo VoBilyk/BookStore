@@ -21,9 +21,14 @@ namespace BookStore.Model
             wishes = new List<Wish>();
         }
 
-        public void AddWish(Client client, Book book)
+        public void AddWish(Wish wish)
         {
-            wishes.Add(new Wish(client, book));
+            if (wishes.Contains(wish))
+            {
+                throw new ArgumentException($"Wish has already existed");
+            }
+
+            wishes.Add(wish);
         }
 
         public void RemoveWish(Client client, Book book)

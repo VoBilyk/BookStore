@@ -21,25 +21,25 @@ namespace BookStore.Model
             comments = new List<Comment>();
         }
 
-        public void AddComment(Client client, Book book, string text)
+        public void AddComment(Comment comment)
         {
             // User can leave only one comment.
-            if(comments.FindAll(comment => comment.Book == book).Exists(comment => comment.Client == client))
+            if(comments.FindAll(comm => comm.Book == comment.Book).Exists(comm => comm.Client == comment.Client))
             {
-                throw new ArgumentException($"{client} have already left comment for book: {book}");
+                throw new ArgumentException($"{comment.Client} have already left comment for book: {comment.Book}");
             }
 
-            comments.Add(new Comment(client, book, text));
+            comments.Add(comment);
         }
 
-        public void RemoveComment(Client client, Book book)
+        public void RemoveComment(Comment comment)
         {
-            if (!comments.FindAll(comment => comment.Book == book).Exists(comment => comment.Client == client))
+            if (!comments.Contains(comment))
             {
-                throw new ArgumentException($"{client} haven`t left comment for book: {book}");
+                throw new ArgumentException($"{comment.Client} haven`t left comment for book: {comment.Book}");
             }
 
-            comments.RemoveAll(comment => (comment.Client == client) && (comment.Book == book));
+            comments.Remove(comment);
         }
 
 

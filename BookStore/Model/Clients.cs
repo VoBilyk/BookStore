@@ -20,24 +20,24 @@ namespace BookStore.Model
             clients = new List<Client>();
         }
 
-        public void AddClient(string firstName, string secondName)
+        public void AddClient(Client client)
         {
-            if (clients.Exists(client => (client.FirstName == firstName) && (client.SecondName == secondName)))
+            if (clients.Contains(client))
             {
-                throw new ArgumentException($"Client: {firstName} {secondName} already exists");
+                throw new ArgumentException($"{client} already exists");
             }
 
-            clients.Add(new Client(firstName, secondName));
+            clients.Add(client);
         }
 
-        public void RemoveClient(string firstName, string secondName)
+        public void RemoveClient(Client client)
         {
-            if (!clients.Exists(client => (client.FirstName == firstName) && (client.SecondName == secondName)))
+            if (!clients.Contains(client))
             {
-                throw new ArgumentException($"Client: {firstName} {secondName} doesn`t exist");
+                throw new ArgumentException($"{client} doesn`t exist");
             }
 
-            clients.RemoveAll(client => (client.FirstName == firstName) && (client.SecondName == secondName));
+            clients.Remove(client);
         }
     }
 }

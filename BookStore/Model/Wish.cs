@@ -17,5 +17,10 @@ namespace BookStore.Model
             Client = client;
             Book = book;
         }
+
+        public override string ToString()
+        {
+            return $"{Client} wish {Book}";
+        }
     }
 }
