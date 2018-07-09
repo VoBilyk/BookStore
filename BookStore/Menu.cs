@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BookStore.Model;
+using BookStore.Models;
+using BookStore.Services;
 
 namespace BookStore
 {
@@ -212,10 +213,10 @@ namespace BookStore
 
         static private void AddClient()
         {
-            Console.WriteLine("Enter first name:");
+            Console.Write("Enter first name: ");
             string firstName = Console.ReadLine();
 
-            Console.WriteLine("Enter second name:");
+            Console.Write("Enter second name: ");
             string secondName = Console.ReadLine();
 
             try
