@@ -62,7 +62,7 @@ namespace BookStore
 
                     if (currenClient != null)
                     {
-                        ChooseBook();
+                        ClientActionWithBook();
                     }
 
                     break;
@@ -72,10 +72,12 @@ namespace BookStore
                     break;
 
                 case 4:
+                    ShowBooks();
                     UpdateBook();
                     break;
 
                 case 5:
+                    ShowBooks();
                     RemoveBook();
                     break;
 
@@ -117,20 +119,41 @@ namespace BookStore
             }
         }
 
+        static private Book ChooseBookByNumber()
+        {
+            int choice = 0;
+
+            Console.Write("Choose book: ");
+            Int32.TryParse(Console.ReadLine(), out choice);
+            Console.WriteLine(new string('-', 20));
+
+            try
+            {
+                return BookCatalog.Instance.GetBooks.ElementAt(choice);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Uncorrect choice");
+                return null;
+            }
+        }
+
         static private void AddBook()
         {
-            Console.WriteLine("Enter name:");
+            Console.Write("Enter name: ");
             string name = Console.ReadLine();
 
-            Console.WriteLine("Enter author:");
+            Console.Write("Enter author: ");
             string author = Console.ReadLine();
 
-            Console.WriteLine("Enter genre:");
+            Console.Write("Enter genre: ");
             string genre = Console.ReadLine();
 
-            Console.WriteLine("Enter price:");
+            Console.Write("Enter price: ");
             string strPrice = Console.ReadLine();
-            var price = Decimal.Parse(strPrice);
+
+            decimal price;
+            Decimal.TryParse(strPrice, out price);
 
             try
             {
@@ -144,22 +167,27 @@ namespace BookStore
 
         static private void UpdateBook()
         {
-            Console.WriteLine("Enter book name, which need update:");
-            string bookName = Console.ReadLine();
-            var oldBook = BookCatalog.Instance.GetBooks.First(book => book.Name == bookName);
+            var oldBook = ChooseBookByNumber();
 
-            Console.WriteLine("Enter new name:");
+            if (oldBook == null)
+            {
+                return;
+            }
+
+            Console.Write("Enter new name: ");
             string name = Console.ReadLine();
 
-            Console.WriteLine("Enter new author:");
+            Console.Write("Enter new author:");
             string author = Console.ReadLine();
 
-            Console.WriteLine("Enter new genre:");
+            Console.Write("Enter new genre: ");
             string genre = Console.ReadLine();
 
-            Console.WriteLine("Enter new price:");
+            Console.Write("Enter new price: ");
             string strPrice = Console.ReadLine();
-            var price = Decimal.Parse(strPrice);
+
+            decimal price;
+            Decimal.TryParse(strPrice, out price);
 
             try
             {
@@ -173,9 +201,12 @@ namespace BookStore
 
         static private void RemoveBook()
         {
-            Console.WriteLine("Enter book name, which need remove:");
-            string bookName = Console.ReadLine();
-            var foundBook = BookCatalog.Instance.GetBooks.FirstOrDefault(book => book.Name == bookName);
+            var foundBook = ChooseBookByNumber();
+
+            if (foundBook == null)
+            {
+                return;
+            }
 
             try
             {
@@ -186,6 +217,7 @@ namespace BookStore
                 Console.WriteLine(e.Message);
             }
         }
+
 
         static private void ShowClients()
         {
@@ -278,19 +310,17 @@ namespace BookStore
             Console.WriteLine("Client don`t exists");
         }
 
-        static private void ChooseBook()
+        static private void ClientActionWithBook()
         {
-            int choice = 0;
+            var currentBook = ChooseBookByNumber();
 
-            Console.Write("Choose book: ");
-            Int32.TryParse(Console.ReadLine(), out choice);
+            if (currentBook == null) { return; }
 
-            Console.WriteLine(new string('-', 35));
-            var currentBook = BookCatalog.Instance.GetBooks.ElementAt(choice);
             Console.WriteLine(currentBook);
             Console.WriteLine("1. Add to WishList");
             Console.WriteLine("2. Leave comment");
 
+            int choice;
             Int32.TryParse(Console.ReadLine(), out choice);
             switch (choice)
             {
