@@ -24,9 +24,9 @@ namespace BookStore
             BookCatalog.Instance.AddBook(new Book("Harry Potter", "Joanne Rowling", "Fantasy", 30));
 
 
-            ClentService.Instance.AddClient(new Client("Volodymyr", "Bilyk"));
-            ClentService.Instance.AddClient(new Client("Roman", "Velikiy"));
-            ClentService.Instance.AddClient(new Client("Dmytro", "Horobriy"));
+            ClientService.Instance.AddClient(new Client("Volodymyr", "Bilyk"));
+            ClientService.Instance.AddClient(new Client("Roman", "Velikiy"));
+            ClientService.Instance.AddClient(new Client("Dmytro", "Horobriy"));
         }
     }
 }

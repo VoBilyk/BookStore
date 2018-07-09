@@ -191,7 +191,7 @@ namespace BookStore
         {
             var books = BookCatalog.Instance.GetBooks;
             
-            foreach (var client in ClentService.Instance.GetClients)
+            foreach (var client in ClientService.Instance.GetClients)
             {
                 Console.WriteLine(client);
 
@@ -221,7 +221,7 @@ namespace BookStore
 
             try
             {
-                ClentService.Instance.AddClient(new Client(firstName, secondName));
+                ClientService.Instance.AddClient(new Client(firstName, secondName));
             }
             catch (ArgumentException e)
             {
@@ -237,12 +237,12 @@ namespace BookStore
             Console.WriteLine("Enter second name:");
             string secondName = Console.ReadLine();
 
-            var foundClient = ClentService.Instance.GetClients.First(client => 
+            var foundClient = ClientService.Instance.GetClients.First(client => 
                 (client.FirstName == firstName) && (client.SecondName == secondName));
 
             try
             {
-                ClentService.Instance.RemoveClient(foundClient);
+                ClientService.Instance.RemoveClient(foundClient);
             }
             catch (ArgumentException e)
             {
@@ -264,7 +264,7 @@ namespace BookStore
                 try
                 {
                     var client = new Client(firstName, secondName);
-                    ClentService.Instance.AddClient(client);
+                    ClientService.Instance.AddClient(client);
                     currenClient = client;
                 }
                 catch (ArgumentException e)

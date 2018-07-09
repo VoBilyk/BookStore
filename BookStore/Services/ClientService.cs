@@ -7,16 +7,16 @@ using BookStore.Models;
 
 namespace BookStore.Services
 {
-    class ClentService
+    class ClientService
     {
-        private static readonly Lazy<ClentService> lazy = new Lazy<ClentService>(() => new ClentService());
-        public static ClentService Instance { get { return lazy.Value; } }
+        private static readonly Lazy<ClientService> lazy = new Lazy<ClientService>(() => new ClientService());
+        public static ClientService Instance { get { return lazy.Value; } }
 
         private List<Client> clients;
 
         public IEnumerable<Client> GetClients { get { return clients; } }
 
-        private ClentService()
+        private ClientService()
         {
             clients = new List<Client>();
         }

@@ -46,7 +46,7 @@
     <Compile Include="Models\Book.cs" />
     <Compile Include="Services\BookCatalog.cs" />
     <Compile Include="Models\Client.cs" />
-    <Compile Include="Services\ClentService.cs" />
+    <Compile Include="Services\ClientService.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Services\CommentService.cs" />
     <Compile Include="Program.cs" />
