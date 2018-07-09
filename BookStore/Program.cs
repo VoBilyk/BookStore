@@ -14,7 +14,6 @@ namespace BookStore
             Initializate();
 
             Menu.Run();
-            Console.ReadKey();
         }
 
         static void Initializate()
@@ -23,9 +22,10 @@ namespace BookStore
             BookCatalog.Instance.AddBook(new Book("It", "Stephen King", "Horror", 66));
             BookCatalog.Instance.AddBook(new Book("Harry Potter", "Joanne Rowling", "Fantasy", 30));
 
-            Clients.Instance.AddClient(new Client("Volodymyr", "Bilyk"));
-            Clients.Instance.AddClient(new Client("Roman", "Velikiy"));
-            Clients.Instance.AddClient(new Client("Dmytro", "Horobriy"));
+
+            ClentService.Instance.AddClient(new Client("Volodymyr", "Bilyk"));
+            ClentService.Instance.AddClient(new Client("Roman", "Velikiy"));
+            ClentService.Instance.AddClient(new Client("Dmytro", "Horobriy"));
         }
     }
 }

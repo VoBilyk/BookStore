@@ -46,9 +46,9 @@
     <Compile Include="Model\Book.cs" />
     <Compile Include="Model\BookCatalog.cs" />
     <Compile Include="Model\Client.cs" />
-    <Compile Include="Model\Clients.cs" />
+    <Compile Include="Model\ClentService.cs" />
     <Compile Include="Model\Comment.cs" />
-    <Compile Include="Model\Comments.cs" />
+    <Compile Include="Model\CommentService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Wish.cs" />

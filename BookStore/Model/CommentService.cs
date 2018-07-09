@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace BookStore.Model
 {
-    class Comments
+    class CommentService
     {
-        private static readonly Lazy<Comments> lazy = new Lazy<Comments>(() => new Comments());
-        public static Comments Instance { get { return lazy.Value; } }
+        private static readonly Lazy<CommentService> lazy = new Lazy<CommentService>(() => new CommentService());
+        public static CommentService Instance { get { return lazy.Value; } }
 
         private List<Comment> comments;
 
         public IEnumerable<Comment> GetComments { get { return comments; } }
 
 
-        private Comments()
+        private CommentService()
         {
             comments = new List<Comment>();
         }

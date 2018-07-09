@@ -190,12 +190,12 @@ namespace BookStore
         {
             var books = BookCatalog.Instance.GetBooks;
             
-            foreach (var client in Clients.Instance.GetClients)
+            foreach (var client in ClentService.Instance.GetClients)
             {
                 Console.WriteLine(client);
 
                 Console.WriteLine("--- Comments ---");
-                foreach (var comment in Comments.Instance.FindByClient(client))
+                foreach (var comment in CommentService.Instance.FindByClient(client))
                 {
                     Console.WriteLine($"{comment.Book.Name}: {comment.Text}");
                 }
@@ -220,7 +220,7 @@ namespace BookStore
 
             try
             {
-                Clients.Instance.AddClient(new Client(firstName, secondName));
+                ClentService.Instance.AddClient(new Client(firstName, secondName));
             }
             catch (ArgumentException e)
             {
@@ -236,12 +236,12 @@ namespace BookStore
             Console.WriteLine("Enter second name:");
             string secondName = Console.ReadLine();
 
-            var foundClient = Clients.Instance.GetClients.First(client => 
+            var foundClient = ClentService.Instance.GetClients.First(client => 
                 (client.FirstName == firstName) && (client.SecondName == secondName));
 
             try
             {
-                Clients.Instance.RemoveClient(foundClient);
+                ClentService.Instance.RemoveClient(foundClient);
             }
             catch (ArgumentException e)
             {
@@ -263,7 +263,7 @@ namespace BookStore
                 try
                 {
                     var client = new Client(firstName, secondName);
-                    Clients.Instance.AddClient(client);
+                    ClentService.Instance.AddClient(client);
                     currenClient = client;
                 }
                 catch (ArgumentException e)
@@ -314,7 +314,7 @@ namespace BookStore
 
                         try
                         {
-                            Comments.Instance.AddComment(new Comment(currenClient, currentBook, text));
+                            CommentService.Instance.AddComment(new Comment(currenClient, currentBook, text));
                         }
                         catch (ArgumentException e)
                         {

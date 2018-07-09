@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace BookStore.Model
 {
-    class Clients
+    class ClentService
     {
-        private static readonly Lazy<Clients> lazy = new Lazy<Clients>(() => new Clients());
-        public static Clients Instance { get { return lazy.Value; } }
+        private static readonly Lazy<ClentService> lazy = new Lazy<ClentService>(() => new ClentService());
+        public static ClentService Instance { get { return lazy.Value; } }
 
         private List<Client> clients;
 
         public IEnumerable<Client> GetClients { get { return clients; } }
 
-        private Clients()
+        private ClentService()
         {
             clients = new List<Client>();
         }
