@@ -25,7 +25,7 @@ namespace BookStore.Services
         public void AddComment(Comment comment)
         {
             // User can leave only one comment.
-            if(comments.FindAll(comm => comm.Book == comment.Book).Exists(comm => comm.Client == comment.Client))
+            if(comments.FindAll(c => c.Book == comment.Book).Exists(c => c.Client == comment.Client))
             {
                 throw new ArgumentException($"{comment.Client} have already left comment for book: {comment.Book}");
             }

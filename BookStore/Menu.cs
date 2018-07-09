@@ -60,7 +60,7 @@ namespace BookStore
                 case 2:
                     ShowBooks();
 
-                    if(currenClient != null)
+                    if (currenClient != null)
                     {
                         ChooseBook();
                     }
@@ -190,7 +190,7 @@ namespace BookStore
         static private void ShowClients()
         {
             var books = BookCatalog.Instance.GetBooks;
-            
+
             foreach (var client in ClientService.Instance.GetClients)
             {
                 Console.WriteLine(client);
@@ -231,13 +231,13 @@ namespace BookStore
 
         static private void RemoveClient()
         {
-            Console.WriteLine("Enter first name:");
+            Console.Write("Enter first name: ");
             string firstName = Console.ReadLine();
 
-            Console.WriteLine("Enter second name:");
+            Console.Write("Enter second name: ");
             string secondName = Console.ReadLine();
 
-            var foundClient = ClientService.Instance.GetClients.First(client => 
+            var foundClient = ClientService.Instance.GetClients?.FirstOrDefault(client =>
                 (client.FirstName == firstName) && (client.SecondName == secondName));
 
             try
@@ -252,32 +252,30 @@ namespace BookStore
 
         static private void LoginLogout()
         {
-            if(currenClient == null)
-            {
-                Console.WriteLine("Enter first name:");
-                string firstName = Console.ReadLine();
-
-                Console.WriteLine("Enter second name:");
-                string secondName = Console.ReadLine();
-
-
-                try
-                {
-                    var client = new Client(firstName, secondName);
-                    ClientService.Instance.AddClient(client);
-                    currenClient = client;
-                }
-                catch (ArgumentException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-
-                
-            }
-            else
+            if (currenClient != null)
             {
                 currenClient = null;
+                Console.WriteLine("Logout Success");
+                return;
             }
+
+            Console.Write("Enter first name: ");
+            string firstName = Console.ReadLine();
+
+            Console.Write("Enter second name: ");
+            string secondName = Console.ReadLine();
+
+            var foundClient = ClientService.Instance.GetClients?.FirstOrDefault(client =>
+                (client.FirstName == firstName) && (client.SecondName == secondName));
+
+            if (foundClient != null)
+            {
+                currenClient = foundClient;
+                Console.WriteLine("Login Success");
+                return;
+            }
+
+            Console.WriteLine("Client don`t exists");
         }
 
         static private void ChooseBook()

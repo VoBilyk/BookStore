@@ -17,7 +17,7 @@ namespace BookStore.Models
         public string Genre { get; private set; }
 
         public decimal Price { get; private set; }
-
+  
 
         public Book(string name, string author, string genre, decimal price)
         {
