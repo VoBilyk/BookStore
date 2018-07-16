@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BookStore.DAL.Interfaces;
+﻿using BookStore.DAL.Interfaces;
 using BookStore.DAL.Models;
 using BookStore.DAL.Repositories;
 
@@ -22,7 +19,7 @@ namespace BookStore.DAL
             {
                 if (_bookRepository == null)
                 {
-                    _bookRepository = new BookRepository(db.Books);
+                    _bookRepository = new GenericRepository<Book>(db.Books);
                 }
                 return _bookRepository;
             }
@@ -34,7 +31,7 @@ namespace BookStore.DAL
             {
                 if (_clientRepository == null)
                 {
-                    _clientRepository = new ClientRepository(db.Clients);
+                    _clientRepository = new GenericRepository<Client>(db.Clients);
                 }
                 return _clientRepository;
             }
@@ -46,7 +43,7 @@ namespace BookStore.DAL
             {
                 if (_commentRepository == null)
                 {
-                    _commentRepository = new CommentRepository(db.Comments);
+                    _commentRepository = new GenericRepository<Comment>(db.Comments);
                 }
                 return _commentRepository;
             }

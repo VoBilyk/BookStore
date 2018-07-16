@@ -1,10 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
+using AutoMapper;
+using FluentValidation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookStore.Models;
-using BookStore.Services;
+using Microsoft.Extensions.DependencyInjection;
+using BookStore.ConsoleApp.Menu;
+using BookStore.DAL;
+using BookStore.DAL.Interfaces;
+using BookStore.BLL.Interfaces;
+using BookStore.BLL.Services;
+using BookStore.BLL.Validators;
+using BookStore.DAL.Models;
+using BookStore.Shared.DTO;
+
 
 namespace BookStore
 {
@@ -12,21 +19,52 @@ namespace BookStore
     {
         static void Main(string[] args)
         {
-            Initializate();
+            var serviceCollection = new ServiceCollection();
+            ConfigureServices(serviceCollection);
 
-            Menu.Run();
+
+            // Running app
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            serviceProvider.GetService<MainPage>().Run();
         }
 
-        static void Initializate()
+        public static void ConfigureServices(IServiceCollection services)
         {
-            BookCatalog.Instance.AddBook(new Book("The Dark Half", "Stephen King", "Fantasy", 40));
-            BookCatalog.Instance.AddBook(new Book("It", "Stephen King", "Horror", 66));
-            BookCatalog.Instance.AddBook(new Book("Harry Potter", "Joanne Rowling", "Fantasy", 30));
+            //Instance injection
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IService<BookDto>, BookService>();
+            services.AddScoped<IService<ClientDto>, ClientService>();
+            services.AddScoped<IService<CommentDto>, CommentService>();
+            services.AddScoped(_ => MapperConfiguration().CreateMapper());
+            services.AddTransient<AbstractValidator<Book>, BookValidator>();
+            services.AddTransient<AbstractValidator<Client>, ClientValidator>();
+            services.AddTransient<AbstractValidator<Comment>, CommentValidator>();
+            services.AddSingleton<MainPage>();
+        }
 
+        public static MapperConfiguration MapperConfiguration()
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Book, BookDto>();
+                cfg.CreateMap<BookDto, Book>();
 
-            ClientService.Instance.AddClient(new Client("Volodymyr", "Bilyk"));
-            ClientService.Instance.AddClient(new Client("Roman", "Velikiy"));
-            ClientService.Instance.AddClient(new Client("Dmytro", "Horobriy"));
+                cfg.CreateMap<Client, ClientDto>()
+                    .ForMember(dto => dto.WishListId, model => model.MapFrom(m => m.WishList.Select(x => x.Id)));
+
+                cfg.CreateMap<ClientDto, Client>()
+                    .ForMember(model => model.WishList, dto => dto.Ignore());
+
+                cfg.CreateMap<Comment, CommentDto>()
+                    .ForMember(dto => dto.ClientId, model => model.MapFrom(m => m.Client.Id))
+                    .ForMember(dto => dto.BookId, model => model.MapFrom(m => m.Book.Id));
+
+                cfg.CreateMap<CommentDto, Comment>()
+                    .ForMember(model => model.Book, dto => dto.Ignore())
+                    .ForMember(model => model.Client, dto => dto.Ignore());
+            });
+
+            return config;
         }
     }
 }

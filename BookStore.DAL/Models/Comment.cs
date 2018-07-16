@@ -12,11 +12,5 @@ namespace BookStore.DAL.Models
         public Client Client { get; set; }
 
         public Book Book { get; set; }
-
-
-        public override string ToString()
-        {
-            return $"{Text}";
-        }
     }
 }

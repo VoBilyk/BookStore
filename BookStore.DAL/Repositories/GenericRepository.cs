@@ -26,7 +26,7 @@ namespace BookStore.DAL.Repositories
             return item;
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public IEnumerable<TEntity> Get()
         {
             return db;
         }

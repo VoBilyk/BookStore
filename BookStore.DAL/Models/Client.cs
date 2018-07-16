@@ -12,12 +12,6 @@ namespace BookStore.DAL.Models
 
         public string SecondName { get; set; }
 
-        public ICollection<Book> WishList { get; set; }
-
-
-        public override string ToString()
-        {
-            return $"Fullname: {FirstName} {SecondName}";
-        }
+        public List<Book> WishList { get; set; }
     }
 }

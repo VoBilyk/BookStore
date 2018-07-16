@@ -6,7 +6,7 @@ namespace BookStore.DAL.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : IEntity
     {
-        IEnumerable<TEntity> GetAll();
+        IEnumerable<TEntity> Get();
 
         TEntity Get(Guid id);
 
@@ -15,6 +15,8 @@ namespace BookStore.DAL.Interfaces
         void Create(TEntity entity);
 
         void Update(TEntity entity);
+
+        void Delete();
 
         void Delete(Guid id);
     }

@@ -1,9 +1,8 @@
 ﻿using System;
-using BookStore.DAL.Interfaces;
 
-namespace BookStore.DAL.Models
+namespace BookStore.Shared.DTO
 {
-    public class Book : IEntity
+    public class BookDto
     {
         public Guid Id { get; set; }
 
@@ -14,5 +13,11 @@ namespace BookStore.DAL.Models
         public string Genre { get; set; }
 
         public decimal Price { get; set; }
+
+
+        public override string ToString()
+        {
+            return $"Name: {Name}, author: {Author}, genre: {Genre}, price: {Price}";
+        }
     }
 }
