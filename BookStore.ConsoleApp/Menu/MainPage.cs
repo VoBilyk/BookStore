@@ -1,10 +1,10 @@
-﻿using System;
-using BookStore.BLL.Interfaces;
-using BookStore.Shared.DTO;
-
-
-namespace BookStore.ConsoleApp.Menu
+﻿namespace BookStore.ConsoleApp.Menu
 {
+    using System;
+
+    using BookStore.BLL.Interfaces;
+    using BookStore.Shared.DTOs;
+
     public class MainPage
     {
         private readonly IService<BookDto> _bookService;
@@ -12,7 +12,6 @@ namespace BookStore.ConsoleApp.Menu
         private readonly IService<CommentDto> _commentService;
 
         private ClientDto currentClient;
-
 
         public MainPage(IService<BookDto> bookService, IService<ClientDto> clientService, IService<CommentDto> commentService)
         {

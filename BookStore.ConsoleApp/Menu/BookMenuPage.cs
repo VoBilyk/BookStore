@@ -1,9 +1,10 @@
-﻿using System;
-using BookStore.BLL.Interfaces;
-using BookStore.Shared.DTO;
-
-namespace BookStore.ConsoleApp.Menu
+﻿namespace BookStore.ConsoleApp.Menu
 {
+    using System;
+
+    using BookStore.BLL.Interfaces;
+    using BookStore.Shared.DTOs;
+
     public class BookMenuPage
     {
         private IService<BookDto> _bookService;
@@ -16,10 +17,10 @@ namespace BookStore.ConsoleApp.Menu
         public void Run()
         {
             var menu = new MenuVisualizer()
-                .Add("Show books", () => ShowBooks())
-                .Add("Add book", () => AddBook())
-                .Add("Update book", () => AddBook())
-                .Add("Remove book", () => RemoveBook());
+                .Add("Show books", () => this.ShowBooks())
+                .Add("Add book", () => this.AddBook())
+                .Add("Update book", () => this.AddBook())
+                .Add("Remove book", () => this.RemoveBook());
             menu.Display();
         }
 
@@ -47,8 +48,7 @@ namespace BookStore.ConsoleApp.Menu
             Console.Write("Enter price: ");
             string strPrice = Console.ReadLine();
 
-            Decimal.TryParse(strPrice, out decimal price);
-
+            decimal.TryParse(strPrice, out decimal price);
 
             var book = new BookDto
             {
@@ -89,8 +89,7 @@ namespace BookStore.ConsoleApp.Menu
             Console.Write("Enter new price: ");
             string strPrice = Console.ReadLine();
 
-            Decimal.TryParse(strPrice, out decimal price);
-
+            decimal.TryParse(strPrice, out decimal price);
 
             var book = new BookDto
             {

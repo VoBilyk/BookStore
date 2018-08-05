@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using BookStore.DAL.Interfaces;
-
-namespace BookStore.DAL.Models
+﻿namespace BookStore.DAL.Models
 {
+    using System;
+    using System.Collections.Generic;
+
+    using BookStore.DAL.Interfaces;
+
     public class Client : IEntity
     {
         public Guid Id { get; set; }

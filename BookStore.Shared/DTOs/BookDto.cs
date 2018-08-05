@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace BookStore.Shared.DTO
+﻿namespace BookStore.Shared.DTOs
 {
+    using System;
+
     public class BookDto
     {
         public Guid Id { get; set; }
@@ -13,7 +13,6 @@ namespace BookStore.Shared.DTO
         public string Genre { get; set; }
 
         public decimal Price { get; set; }
-
 
         public override string ToString()
         {

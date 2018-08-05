@@ -1,30 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-
-
-namespace BookStore.ConsoleApp.Menu
+﻿namespace BookStore.ConsoleApp.Menu
 {
+    using System;
+    using System.Collections.Generic;
+
     public class MenuVisualizer
     {
-        private IList<(string Name, Action Callback)> Options { get; set; }
+        private IList<(string Name, Action Callback)> _options;
 
         public MenuVisualizer()
         {
-            Options = new List<(string, Action)>();
+            _options = new List<(string, Action)>();
         }
 
         public void Display()
         {
-            for (int i = 0; i < Options.Count; i++)
+            for (int i = 0; i < _options.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {Options[i].Name}");
+                Console.WriteLine($"{i + 1}. {_options[i].Name}");
             }
 
             Console.Write("Your choice: ");
-            int value = ReadInt(1, Options.Count);
+            int value = ReadInt(1, _options.Count);
 
             Console.Clear();
-            Options[value - 1].Callback();
+            _options[value - 1].Callback();
         }
 
         public void ShowCollection<T>(IList<T> items)
@@ -35,10 +34,9 @@ namespace BookStore.ConsoleApp.Menu
             }
         }
 
-
         public MenuVisualizer Add(string option, Action callback)
         {
-            Options.Add((option, callback));
+            _options.Add((option, callback));
             return this;
         }
 
@@ -52,7 +50,7 @@ namespace BookStore.ConsoleApp.Menu
                 Console.Write("Please enter an integer: ");
                 input = Console.ReadLine();
             }
-       
+
             return value;
         }
 

@@ -1,22 +1,24 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using BookStore.DAL.Interfaces;
-
-namespace BookStore.DAL.Repositories
+﻿namespace BookStore.DAL.Repositories
 {
-    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : IEntity
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using BookStore.DAL.Interfaces;
+
+    public class GenericRepository<TEntity> : IRepository<TEntity>
+        where TEntity : IEntity
     {
-        protected readonly List<TEntity> db;
+        protected readonly List<TEntity> _db;
 
         public GenericRepository(List<TEntity> context)
         {
-            this.db = context;
+            _db = context;
         }
 
         public TEntity Get(Guid id)
         {
-            var item = db.Find(t => t.Id == id);
+            var item = _db.Find(t => t.Id == id);
 
             if (item == null)
             {
@@ -28,12 +30,12 @@ namespace BookStore.DAL.Repositories
 
         public IEnumerable<TEntity> Get()
         {
-            return db;
+            return _db;
         }
 
         public IEnumerable<TEntity> Find(Func<TEntity, bool> predicate)
         {
-            var foundedItems = db.Where(predicate);
+            var foundedItems = _db.Where(predicate);
 
             // TODO: check
             if (foundedItems == null)
@@ -46,44 +48,39 @@ namespace BookStore.DAL.Repositories
 
         public void Create(TEntity item)
         {
-            var foundedItem = db.Find(i => i.Id == item.Id);
+            var foundedItem = _db.Find(i => i.Id == item.Id);
 
             if (foundedItem != null)
             {
                 throw new ArgumentException($"Item with id: {item.Id} has alredy exist");
             }
 
-            db.Add(item);
+            _db.Add(item);
         }
 
         public void Update(TEntity item)
         {
-            var foundedItem = db.Find(t => t.Id == item.Id);
+            var foundedItem = _db.Find(t => t.Id == item.Id);
 
             if (foundedItem == null)
             {
                 throw new ArgumentException($"Item id: {item.Id} which need update don`t exists");
             }
 
-            db.Remove(foundedItem);
-            db.Add(item);
+            _db.Remove(foundedItem);
+            _db.Add(item);
         }
 
         public void Delete(Guid id)
         {
-            var ticket = db.Find(item => item.Id == id);
+            var ticket = _db.Find(item => item.Id == id);
 
             if (ticket == null)
             {
                 throw new ArgumentException($"Item with id: {id} don`t exists");
             }
 
-            db.Remove(ticket);
-        }
-
-        public void Delete()
-        {
-            db.Clear();
+            _db.Remove(ticket);
         }
     }
 }

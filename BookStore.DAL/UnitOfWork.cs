@@ -1,17 +1,21 @@
-﻿using BookStore.DAL.Interfaces;
-using BookStore.DAL.Models;
-using BookStore.DAL.Repositories;
-
-namespace BookStore.DAL
+﻿namespace BookStore.DAL
 {
+    using BookStore.DAL.Interfaces;
+    using BookStore.DAL.Models;
+    using BookStore.DAL.Repositories;
+
     public class UnitOfWork : IUnitOfWork
     {
-        private DataSource db = new DataSource();
+        private DataSource _db;
 
         private IRepository<Book> _bookRepository;
         private IRepository<Client> _clientRepository;
         private IRepository<Comment> _commentRepository;
 
+        public UnitOfWork()
+        {
+            _db = new DataSource();
+        }
 
         public IRepository<Book> BookRepository
         {
@@ -19,8 +23,9 @@ namespace BookStore.DAL
             {
                 if (_bookRepository == null)
                 {
-                    _bookRepository = new GenericRepository<Book>(db.Books);
+                    _bookRepository = new GenericRepository<Book>(_db.Books);
                 }
+
                 return _bookRepository;
             }
         }
@@ -31,8 +36,9 @@ namespace BookStore.DAL
             {
                 if (_clientRepository == null)
                 {
-                    _clientRepository = new GenericRepository<Client>(db.Clients);
+                    _clientRepository = new GenericRepository<Client>(_db.Clients);
                 }
+
                 return _clientRepository;
             }
         }
@@ -43,8 +49,9 @@ namespace BookStore.DAL
             {
                 if (_commentRepository == null)
                 {
-                    _commentRepository = new GenericRepository<Comment>(db.Comments);
+                    _commentRepository = new GenericRepository<Comment>(_db.Comments);
                 }
+
                 return _commentRepository;
             }
         }

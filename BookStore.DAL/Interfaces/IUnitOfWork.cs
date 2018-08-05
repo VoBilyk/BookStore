@@ -1,7 +1,7 @@
-﻿using BookStore.DAL.Models;
-
-namespace BookStore.DAL.Interfaces
+﻿namespace BookStore.DAL.Interfaces
 {
+    using BookStore.DAL.Models;
+
     public interface IUnitOfWork
     {
         IRepository<Book> BookRepository { get; }

@@ -1,21 +1,14 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using Bogus;
-using BookStore.DAL.Models;
-
-
-namespace BookStore.DAL
+﻿namespace BookStore.DAL
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Bogus;
+
+    using BookStore.DAL.Models;
+
     public class DataSource
     {
-        public List<Book> Books { get; }
-
-        public List<Client> Clients { get; }
-
-        public List<Comment> Comments { get; }
-
-
         public DataSource(int amount = 10)
         {
             string[] bookGenres = { "Drama", "Mystery", "Horror", "Romance", "Science", "History", "Fantasy" };
@@ -42,7 +35,13 @@ namespace BookStore.DAL
             // Generating date
             Books = bookFaker.Generate(amount);
             Clients = clientFaker.Generate(amount);
-            Comments =  commentFaker.Generate(amount);
+            Comments = commentFaker.Generate(amount);
         }
+
+        public List<Book> Books { get; }
+
+        public List<Client> Clients { get; }
+
+        public List<Comment> Comments { get; }
     }
 }

@@ -1,8 +1,9 @@
-﻿using System;
-using BookStore.DAL.Interfaces;
-
-namespace BookStore.DAL.Models
+﻿namespace BookStore.DAL.Models
 {
+    using System;
+
+    using BookStore.DAL.Interfaces;
+
     public class Book : IEntity
     {
         public Guid Id { get; set; }

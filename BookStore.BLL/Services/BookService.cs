@@ -1,23 +1,23 @@
-﻿using System;
-using AutoMapper;
-using FluentValidation;
-using System.Collections.Generic;
-using System.Linq;
-using BookStore.BLL.Interfaces;
-using BookStore.DAL.Interfaces;
-using BookStore.DAL.Models;
-using BookStore.Shared.DTO;
-
-
-namespace BookStore.BLL.Services
+﻿namespace BookStore.BLL.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using AutoMapper;
+    using FluentValidation;
+
+    using BookStore.BLL.Interfaces;
+    using BookStore.DAL.Interfaces;
+    using BookStore.DAL.Models;
+    using BookStore.Shared.DTOs;
+
     public class BookService : IService<BookDto>
     {
         private IUnitOfWork _uow;
         private IMapper _mapper;
-        private AbstractValidator<Book> _validator;
+        private IValidator<Book> _validator;
 
-        public BookService(IUnitOfWork uow, IMapper mapper, AbstractValidator<Book> validator)
+        public BookService(IUnitOfWork uow, IMapper mapper, IValidator<Book> validator)
         {
             this._uow = uow;
             this._mapper = mapper;
@@ -50,7 +50,7 @@ namespace BookStore.BLL.Services
             else
             {
                 throw new ValidationException(validationResult.Errors);
-            } 
+            }
         }
 
         public void Update(Guid id, BookDto dto)
@@ -75,16 +75,11 @@ namespace BookStore.BLL.Services
             _uow.BookRepository.Delete(id);
         }
 
-        public void Delete()
-        {
-            _uow.BookRepository.Delete();
-        }
-
         public BookDto Find(BookDto dto)
         {
             var book = _uow.BookRepository.Find(x => x.Name == dto.Name).FirstOrDefault();
 
-            if(book == null)
+            if (book == null)
             {
                 throw new InvalidOperationException($"Can`t to find book with name: {dto.Name}");
             }

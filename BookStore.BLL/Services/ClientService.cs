@@ -1,23 +1,23 @@
-﻿using System;
-using System.Linq;
-using AutoMapper;
-using FluentValidation;
-using System.Collections.Generic;
-using BookStore.BLL.Interfaces;
-using BookStore.DAL.Interfaces;
-using BookStore.DAL.Models;
-using BookStore.Shared.DTO;
-
-
-namespace BookStore.BLL.Services
+﻿namespace BookStore.BLL.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using AutoMapper;
+    using FluentValidation;
+
+    using BookStore.BLL.Interfaces;
+    using BookStore.DAL.Interfaces;
+    using BookStore.DAL.Models;
+    using BookStore.Shared.DTOs;
+
     public class ClientService : IService<ClientDto>
     {
         private IUnitOfWork _uow;
         private IMapper _mapper;
-        private AbstractValidator<Client> _validator;
+        private IValidator<Client> _validator;
 
-        public ClientService(IUnitOfWork uow, IMapper mapper, AbstractValidator<Client> validator)
+        public ClientService(IUnitOfWork uow, IMapper mapper, IValidator<Client> validator)
         {
             this._uow = uow;
             this._mapper = mapper;
@@ -76,7 +76,6 @@ namespace BookStore.BLL.Services
                                    select book)?.ToList();
             }
 
-
             var validationResult = _validator.Validate(client);
 
             if (validationResult.IsValid)
@@ -92,11 +91,6 @@ namespace BookStore.BLL.Services
         public void Delete(Guid id)
         {
             _uow.ClientRepository.Delete(id);
-        }
-
-        public void Delete()
-        {
-            _uow.ClientRepository.Delete();
         }
 
         public ClientDto Find(ClientDto dto)

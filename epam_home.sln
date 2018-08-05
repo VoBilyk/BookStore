@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.ConsoleApp", "BookStore.ConsoleApp\BookStore.ConsoleApp.csproj", "{BC4B3E04-201F-429A-BF78-7D66F1B2743A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.DAL", "BookStore.DAL\BookStore.DAL.csproj", "{0DB3732E-0521-4797-8922-769386E3EFC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore.DAL", "BookStore.DAL\BookStore.DAL.csproj", "{0DB3732E-0521-4797-8922-769386E3EFC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.BLL", "BookStore.BLL\BookStore.BLL.csproj", "{149DA940-F5B6-49A1-800A-38C5C4FA1621}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore.BLL", "BookStore.BLL\BookStore.BLL.csproj", "{149DA940-F5B6-49A1-800A-38C5C4FA1621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore.Shared", "BookStore.Shared\BookStore.Shared.csproj", "{24B155CB-BFC8-420E-8819-431602139350}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore.Shared", "BookStore.Shared\BookStore.Shared.csproj", "{24B155CB-BFC8-420E-8819-431602139350}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

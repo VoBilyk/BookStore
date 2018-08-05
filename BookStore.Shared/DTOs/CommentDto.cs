@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace BookStore.Shared.DTO
+﻿namespace BookStore.Shared.DTOs
 {
+    using System;
+
     public class CommentDto
     {
         public Guid Id { get; set; }
@@ -11,7 +11,6 @@ namespace BookStore.Shared.DTO
         public Guid ClientId { get; set; }
 
         public Guid BookId { get; set; }
-
 
         public override string ToString()
         {

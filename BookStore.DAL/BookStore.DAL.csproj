@@ -4,8 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;1309;1101;</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="22.3.1" />
+    <PackageReference Include="Bogus" Version="22.3.2" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>
 
 </Project>

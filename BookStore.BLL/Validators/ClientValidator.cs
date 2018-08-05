@@ -1,8 +1,9 @@
-﻿using FluentValidation;
-using BookStore.DAL.Models;
-
-namespace BookStore.BLL.Validators
+﻿namespace BookStore.BLL.Validators
 {
+    using FluentValidation;
+
+    using BookStore.DAL.Models;
+
     public class ClientValidator : AbstractValidator<Client>
     {
         public ClientValidator()

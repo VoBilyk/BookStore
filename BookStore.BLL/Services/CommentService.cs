@@ -1,22 +1,23 @@
-﻿using System;
-using AutoMapper;
-using FluentValidation;
-using System.Collections.Generic;
-using BookStore.BLL.Interfaces;
-using BookStore.DAL.Interfaces;
-using BookStore.DAL.Models;
-using BookStore.Shared.DTO;
-using System.Linq;
-
-namespace BookStore.BLL.Services
+﻿namespace BookStore.BLL.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using AutoMapper;
+    using FluentValidation;
+
+    using BookStore.BLL.Interfaces;
+    using BookStore.DAL.Interfaces;
+    using BookStore.DAL.Models;
+    using BookStore.Shared.DTOs;
+
     public class CommentService : IService<CommentDto>
     {
         private IUnitOfWork _uow;
         private IMapper _mapper;
-        private AbstractValidator<Comment> _validator;
-        
-        public CommentService(IUnitOfWork uow, IMapper mapper, AbstractValidator<Comment> validator)
+        private IValidator<Comment> _validator;
+
+        public CommentService(IUnitOfWork uow, IMapper mapper, IValidator<Comment> validator)
         {
             this._uow = uow;
             this._mapper = mapper;
@@ -82,11 +83,6 @@ namespace BookStore.BLL.Services
         public void Delete(Guid id)
         {
             _uow.CommentRepository.Delete(id);
-        }
-
-        public void Delete()
-        {
-            _uow.CommentRepository.Delete();
         }
 
         public CommentDto Find(CommentDto dto)

@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-
-
-namespace BookStore.DAL.Interfaces
+﻿namespace BookStore.DAL.Interfaces
 {
-    public interface IRepository<TEntity> where TEntity : IEntity
+    using System;
+    using System.Collections.Generic;
+
+    public interface IRepository<TEntity>
+        where TEntity : IEntity
     {
         IEnumerable<TEntity> Get();
 
         TEntity Get(Guid id);
 
-        IEnumerable<TEntity> Find(Func<TEntity, Boolean> predicate);
+        IEnumerable<TEntity> Find(Func<TEntity, bool> predicate);
 
         void Create(TEntity entity);
 
         void Update(TEntity entity);
-
-        void Delete();
 
         void Delete(Guid id);
     }

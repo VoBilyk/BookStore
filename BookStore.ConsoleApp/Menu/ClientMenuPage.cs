@@ -1,9 +1,10 @@
-﻿using System;
-using BookStore.BLL.Interfaces;
-using BookStore.Shared.DTO;
-
-namespace BookStore.ConsoleApp.Menu
+﻿namespace BookStore.ConsoleApp.Menu
 {
+    using System;
+
+    using BookStore.BLL.Interfaces;
+    using BookStore.Shared.DTOs;
+
     public class ClientMenuPage
     {
         private IService<ClientDto> _clientService;
@@ -32,7 +33,6 @@ namespace BookStore.ConsoleApp.Menu
             Console.WriteLine();
             Console.ReadKey();
         }
-
 
         private void AddClient()
         {

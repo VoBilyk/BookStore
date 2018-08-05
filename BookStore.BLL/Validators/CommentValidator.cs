@@ -1,8 +1,9 @@
-﻿using FluentValidation;
-using BookStore.DAL.Models;
-
-namespace BookStore.BLL.Validators
+﻿namespace BookStore.BLL.Validators
 {
+    using FluentValidation;
+
+    using BookStore.DAL.Models;
+
     public class CommentValidator : AbstractValidator<Comment>
     {
         public CommentValidator()

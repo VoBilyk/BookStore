@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BookStore.BLL.Interfaces
+﻿namespace BookStore.BLL.Interfaces
 {
+    using System;
+    using System.Collections.Generic;
+
     public interface IService<TDto>
     {
         TDto Get(Guid id);
@@ -16,7 +16,5 @@ namespace BookStore.BLL.Interfaces
         void Update(Guid id, TDto dto);
 
         void Delete(Guid id);
-
-        void Delete();
     }
 }

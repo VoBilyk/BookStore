@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BookStore.Shared.DTO
+﻿namespace BookStore.Shared.DTOs
 {
+    using System;
+    using System.Collections.Generic;
 
     public class ClientDto
     {
@@ -14,10 +13,9 @@ namespace BookStore.Shared.DTO
 
         public ICollection<Guid> WishListId { get; set; }
 
-
         public override string ToString()
         {
-            return $"Fullname: {FirstName} {SecondName}";
+            return $"{FirstName} {SecondName}";
         }
     }
 }

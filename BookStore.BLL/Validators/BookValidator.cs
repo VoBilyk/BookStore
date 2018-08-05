@@ -1,8 +1,9 @@
-﻿using FluentValidation;
-using BookStore.DAL.Models;
-
-namespace BookStore.BLL.Validators
+﻿namespace BookStore.BLL.Validators
 {
+    using FluentValidation;
+
+    using BookStore.DAL.Models;
+
     public class BookValidator : AbstractValidator<Book>
     {
         public BookValidator()
@@ -13,11 +14,11 @@ namespace BookStore.BLL.Validators
             RuleFor(x => x.Name)
                 .NotNull()
                 .NotEmpty();
-                
+
             RuleFor(x => x.Author)
                 .NotNull()
                 .NotEmpty();
-                
+
             RuleFor(x => x.Genre)
                 .NotNull()
                 .NotEmpty();
