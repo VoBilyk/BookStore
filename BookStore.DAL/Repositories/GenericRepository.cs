@@ -9,7 +9,7 @@
     public class GenericRepository<TEntity> : IRepository<TEntity>
         where TEntity : IEntity
     {
-        protected readonly List<TEntity> _db;
+        private readonly List<TEntity> _db;
 
         public GenericRepository(List<TEntity> context)
         {

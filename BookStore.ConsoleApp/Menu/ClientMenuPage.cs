@@ -1,17 +1,17 @@
 ﻿namespace BookStore.ConsoleApp.Menu
 {
     using System;
+    using System.Linq;
 
-    using BookStore.BLL.Interfaces;
     using BookStore.Shared.DTOs;
 
     public class ClientMenuPage
     {
-        private IService<ClientDto> _clientService;
+        private MainPage _parentPage;
 
-        public ClientMenuPage(IService<ClientDto> clientService)
+        public ClientMenuPage(MainPage parentPage)
         {
-            this._clientService = clientService;
+            this._parentPage = parentPage;
         }
 
         public void Run()
@@ -26,11 +26,39 @@
 
         private void ShowClients()
         {
-            var clients = _clientService.GetAll();
+            var clients = _parentPage.ClientService.GetAll();
 
             var menu = new MenuVisualizer();
             menu.ShowCollection(clients);
-            Console.WriteLine();
+
+            Console.Write("Choose someone: ");
+            int choice = menu.ReadInt(1, clients.Count);
+
+            ShowDetails(clients[choice - 1]);
+        }
+
+        private void ShowDetails(ClientDto client)
+        {
+            Console.WriteLine($"\nFirstname: {client.FirstName}");
+            Console.WriteLine($"Lastname: {client.SecondName}");
+            Console.WriteLine($"Email: {client.Email}");
+            Console.WriteLine($"Address: {client.Address}");
+            Console.WriteLine($"Birthdate: {client.BirthDate.ToLocalTime()}");
+
+            Console.WriteLine("WishList:");
+            foreach (var bookId in client.WishedBooksId)
+            {
+                var book = _parentPage.BookService.Get(bookId);
+                Console.WriteLine($"\t{book}");
+            }
+
+            Console.WriteLine("Comments:");
+            _parentPage.CommentService
+                .GetAll()
+                .Where(c => c.ClientId == client.Id)
+                .ToList()
+                ?.ForEach(c => Console.WriteLine($"\t{c}"));
+
             Console.ReadKey();
         }
 
@@ -50,7 +78,7 @@
 
             try
             {
-                _clientService.Create(client);
+                _parentPage.ClientService.Create(client);
                 Console.WriteLine("Success\n");
             }
             catch (Exception e)
@@ -61,7 +89,7 @@
 
         private void UpdateClient()
         {
-            var clients = _clientService.GetAll();
+            var clients = _parentPage.ClientService.GetAll();
 
             var menu = new MenuVisualizer();
             menu.ShowCollection(clients);
@@ -81,7 +109,7 @@
 
             try
             {
-                _clientService.Update(clients[choice - 1].Id, client);
+                _parentPage.ClientService.Update(clients[choice - 1].Id, client);
                 Console.WriteLine("Success\n");
             }
             catch (Exception e)
@@ -92,7 +120,7 @@
 
         private void RemoveClient()
         {
-            var clients = _clientService.GetAll();
+            var clients = _parentPage.ClientService.GetAll();
 
             var menu = new MenuVisualizer();
             menu.ShowCollection(clients);
@@ -102,7 +130,7 @@
 
             try
             {
-                _clientService.Delete(clients[choice - 1].Id);
+                _parentPage.ClientService.Delete(clients[choice - 1].Id);
                 Console.WriteLine("Success\n");
             }
             catch (ArgumentException e)

@@ -1,7 +1,6 @@
 ﻿namespace BookStore.DAL.Models
 {
     using System;
-    using System.Collections.Generic;
 
     using BookStore.DAL.Interfaces;
 
@@ -13,6 +12,10 @@
 
         public string SecondName { get; set; }
 
-        public List<Book> WishList { get; set; }
+        public DateTime BirthDate { get; set; }
+
+        public string Email { get; set; }
+
+        public string Address { get; set; }
     }
 }

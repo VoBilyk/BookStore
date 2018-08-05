@@ -7,43 +7,51 @@
 
     public class MainPage
     {
-        private readonly IService<BookDto> _bookService;
-        private readonly IService<ClientDto> _clientService;
-        private readonly IService<CommentDto> _commentService;
-
-        private ClientDto currentClient;
-
-        public MainPage(IService<BookDto> bookService, IService<ClientDto> clientService, IService<CommentDto> commentService)
+        public MainPage(
+            IService<BookDto> bookService,
+            IService<ClientDto> clientService,
+            IService<CommentDto> commentService,
+            IService<WishDto> wishListService)
         {
-            this._bookService = bookService;
-            this._clientService = clientService;
-            this._commentService = commentService;
+            this.BookService = bookService;
+            this.ClientService = clientService;
+            this.CommentService = commentService;
+            this.WishListService = wishListService;
         }
+
+        public IService<BookDto> BookService { get; }
+
+        public IService<ClientDto> ClientService { get; }
+
+        public IService<CommentDto> CommentService { get; }
+
+        public IService<WishDto> WishListService { get; }
+
+        public ClientDto CurrentClient { get; set; }
 
         public void Run()
         {
             bool run = true;
             while (run)
             {
-                Console.WriteLine();
-                Console.WriteLine(new string('-', 30));
-
                 var mainMenu = new MenuVisualizer();
                 mainMenu.Add("Login/Logout", () => LoginLogout())
-                    .Add("Show information about me", () => Console.WriteLine("Not implemented yet"))
-                    .Add("User menu", () => new ClientMenuPage(_clientService).Run())
-                    .Add("Book menu", () => new BookMenuPage(_bookService).Run())
+                    .Add("User menu", () => new ClientMenuPage(this).Run())
+                    .Add("Book menu", () => new BookMenuPage(this).Run())
                     .Add("Exit", () => run = false);
 
                 mainMenu.Display();
+
+                Console.WriteLine();
+                Console.WriteLine(new string('-', 30));
             }
         }
 
         private void LoginLogout()
         {
-            if (currentClient != null)
+            if (CurrentClient != null)
             {
-                currentClient = null;
+                CurrentClient = null;
                 Console.WriteLine("Logout Success");
                 return;
             }
@@ -62,7 +70,7 @@
 
             try
             {
-                currentClient = _clientService.Find(client);
+                CurrentClient = ClientService.Find(client);
                 Console.WriteLine("Login Success");
                 return;
             }

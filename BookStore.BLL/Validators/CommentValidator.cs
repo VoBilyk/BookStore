@@ -11,6 +11,10 @@
             RuleFor(x => x.Id)
                 .NotEmpty();
 
+            RuleFor(x => x.Text)
+                .NotNull()
+                .MinimumLength(5);
+
             RuleFor(x => x.Book)
                 .NotNull();
 

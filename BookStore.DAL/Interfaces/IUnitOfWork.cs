@@ -9,5 +9,7 @@
         IRepository<Client> ClientRepository { get; }
 
         IRepository<Comment> CommentRepository { get; }
+
+        IRepository<Wish> WishListRepository { get; }
     }
 }

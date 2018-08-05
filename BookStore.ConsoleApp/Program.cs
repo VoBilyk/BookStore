@@ -34,15 +34,19 @@
             services.AddScoped<IService<BookDto>, BookService>();
             services.AddScoped<IService<ClientDto>, ClientService>();
             services.AddScoped<IService<CommentDto>, CommentService>();
+            services.AddScoped<IService<WishDto>, WishListService>();
 
             services.AddTransient<IValidator<Book>, BookValidator>();
             services.AddTransient<IValidator<Client>, ClientValidator>();
             services.AddTransient<IValidator<Comment>, CommentValidator>();
-
-            services.AddSingleton<MainPage>();
+            services.AddTransient<IValidator<Wish>, WishValidator>();
 
             var config = new MapperConfiguration(cfg => cfg.AddProfile(new GeneralProfile()));
             services.AddSingleton(_ => config.CreateMapper());
+
+            services.AddSingleton<MainPage>();
+            services.AddSingleton<ClientMenuPage>();
+            services.AddSingleton<BookMenuPage>();
         }
     }
 }

@@ -11,6 +11,9 @@
     using BookStore.DAL.Models;
     using BookStore.Shared.DTOs;
 
+    /// <summary>
+    /// Service which implements business logic for comment
+    /// </summary>
     public class CommentService : IService<CommentDto>
     {
         private IUnitOfWork _uow;
@@ -38,13 +41,10 @@
 
         public void Create(CommentDto dto)
         {
-            //var comment = _mapper.Map<CommentDto, Comment>(dto);
-            var comment = new Comment
-            {
-                Id = Guid.NewGuid(),
-                Client = _uow.ClientRepository.Get(dto.ClientId),
-                Book = _uow.BookRepository.Get(dto.BookId)
-            };
+            var comment = _mapper.Map<CommentDto, Comment>(dto);
+            comment.Id = Guid.NewGuid();
+            comment.Client = _uow.ClientRepository.Get(dto.ClientId);
+            comment.Book = _uow.BookRepository.Get(dto.BookId);
 
             var validationResult = _validator.Validate(comment);
 
@@ -60,13 +60,10 @@
 
         public void Update(Guid id, CommentDto dto)
         {
-            //var comment = _mapper.Map<CommentDto, Comment>(dto);
-            var comment = new Comment
-            {
-                Id = id,
-                Client = _uow.ClientRepository.Get(dto.ClientId),
-                Book = _uow.BookRepository.Get(dto.BookId)
-            };
+            var comment = _mapper.Map<CommentDto, Comment>(dto);
+            comment.Id = id;
+            comment.Client = _uow.ClientRepository.Get(dto.ClientId);
+            comment.Book = _uow.BookRepository.Get(dto.BookId);
 
             var validationResult = _validator.Validate(comment);
 

@@ -11,6 +11,9 @@
     using BookStore.DAL.Models;
     using BookStore.Shared.DTOs;
 
+    /// <summary>
+    /// Service which implements business logic for book
+    /// </summary>
     public class BookService : IService<BookDto>
     {
         private IUnitOfWork _uow;
@@ -27,13 +30,40 @@
         public BookDto Get(Guid id)
         {
             var book = _uow.BookRepository.Get(id);
-            return _mapper.Map<Book, BookDto>(book);
+            var bookDto = _mapper.Map<Book, BookDto>(book);
+
+            bookDto.WishedClientsId = _uow.WishListRepository
+                .Find(w => w.BookId == id)
+                .Select(w => w.ClientId)
+                .ToList();
+
+            bookDto.UserCommentsId = _uow.CommentRepository
+                .Find(c => c.Book.Id == id)
+                .Select(c => c.Id)
+                .ToList();
+
+            return bookDto;
         }
 
         public List<BookDto> GetAll()
         {
             var books = _uow.BookRepository.Get();
-            return _mapper.Map<IEnumerable<Book>, List<BookDto>>(books);
+            var booksDto = _mapper.Map<IEnumerable<Book>, List<BookDto>>(books);
+
+            foreach (var bookDto in booksDto)
+            {
+                bookDto.WishedClientsId = _uow.WishListRepository
+                .Find(w => w.BookId == bookDto.Id)
+                .Select(w => w.ClientId)
+                .ToList();
+
+                bookDto.UserCommentsId = _uow.CommentRepository
+                .Find(c => c.Book.Id == bookDto.Id)
+                .Select(c => c.Id)
+                .ToList();
+            }
+
+            return booksDto;
         }
 
         public void Create(BookDto dto)
@@ -46,6 +76,16 @@
             if (validationResult.IsValid)
             {
                 _uow.BookRepository.Create(book);
+
+                foreach (var clientId in dto.WishedClientsId)
+                {
+                    _uow.WishListRepository.Create(
+                        new Wish
+                        {
+                            ClientId = clientId,
+                            BookId = book.Id
+                        });
+                }
             }
             else
             {
@@ -63,6 +103,16 @@
             if (validationResult.IsValid)
             {
                 _uow.BookRepository.Update(book);
+
+                foreach (var clientId in dto.WishedClientsId)
+                {
+                    _uow.WishListRepository.Create(
+                        new Wish
+                        {
+                            ClientId = clientId,
+                            BookId = book.Id
+                        });
+                }
             }
             else
             {

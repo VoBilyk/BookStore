@@ -13,15 +13,17 @@
 
             RuleFor(x => x.Name)
                 .NotNull()
-                .NotEmpty();
+                .MinimumLength(2);
 
             RuleFor(x => x.Author)
                 .NotNull()
-                .NotEmpty();
+                .NotEmpty()
+                .MinimumLength(2);
 
             RuleFor(x => x.Genre)
                 .NotNull()
-                .NotEmpty();
+                .NotEmpty()
+                .MinimumLength(2);
 
             RuleFor(x => x.Price)
                 .NotEmpty();
