@@ -1,4 +1,4 @@
-﻿namespace BookStore.ConsoleApp.Menu
+﻿namespace BookStore.ConsoleApp.MenuPages
 {
     using System;
     using System.Linq;
@@ -71,8 +71,8 @@
 
             var isWished = _parentPage.CurrentClient.WishedBooksId.Contains(book.Id);
             var isCommented = (from commentId in book.UserCommentsId
-                              where _parentPage.CurrentClient.CommentsId.Contains(commentId)
-                              select true).FirstOrDefault();
+                               where _parentPage.CurrentClient.CommentsId.Contains(commentId)
+                               select true).FirstOrDefault();
 
             var userMenu = new MenuVisualizer();
             userMenu.Add(isWished ? "Remove from WishList" : "Add to WishList", () => AddRemoveWishlist(book, isWished))

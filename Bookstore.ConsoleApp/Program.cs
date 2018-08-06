@@ -8,7 +8,7 @@
     using BookStore.BLL.MappingProfiles;
     using BookStore.BLL.Services;
     using BookStore.BLL.Validators;
-    using BookStore.ConsoleApp.Menu;
+    using BookStore.ConsoleApp.MenuPages;
     using BookStore.DAL;
     using BookStore.DAL.Interfaces;
     using BookStore.DAL.Models;

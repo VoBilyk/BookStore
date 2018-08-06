@@ -1,4 +1,4 @@
-﻿namespace BookStore.ConsoleApp.Menu
+﻿namespace BookStore.ConsoleApp.MenuPages
 {
     using System;
     using System.Linq;
