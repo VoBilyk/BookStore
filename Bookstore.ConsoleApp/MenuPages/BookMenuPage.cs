@@ -2,16 +2,32 @@
 {
     using System;
     using System.Linq;
+    using Microsoft.Extensions.Logging;
 
+    using BookStore.BLL.Interfaces;
+    using Bookstore.ConsoleApp;
     using BookStore.Shared.DTOs;
 
     public class BookMenuPage
     {
-        private MainPage _parentPage;
+        private readonly ILogger<BookMenuPage> _logger;
+        private readonly IService<ClientDto> _clientService;
+        private readonly IService<BookDto> _bookService;
+        private readonly IService<CommentDto> _commentService;
+        private readonly IService<WishDto> _wishListService;
 
-        public BookMenuPage(MainPage parentPage)
+        public BookMenuPage(
+            ILogger<BookMenuPage> logger,
+            IService<ClientDto> clientService,
+            IService<BookDto> bookService,
+            IService<CommentDto> commentService,
+            IService<WishDto> wishListService)
         {
-            _parentPage = parentPage;
+            this._logger = logger;
+            this._clientService = clientService;
+            this._bookService = bookService;
+            this._commentService = commentService;
+            this._wishListService = wishListService;
         }
 
         public void Run()
@@ -20,13 +36,14 @@
                 .Add("Show books", () => ShowBooks())
                 .Add("Add book", () => AddBook())
                 .Add("Update book", () => AddBook())
-                .Add("Remove book", () => RemoveBook());
+                .Add("Remove book", () => RemoveBook())
+                .Add("Return back", () => { return; });
             menu.Display();
         }
 
         private void ShowBooks()
         {
-            var books = _parentPage.BookService.GetAll();
+            var books = _bookService.GetAll();
 
             var menu = new MenuVisualizer();
             menu.ShowCollection(books);
@@ -46,18 +63,18 @@
             Console.WriteLine("Users which wish:");
             foreach (var clientId in book.WishedClientsId)
             {
-                var client = _parentPage.ClientService.Get(clientId);
+                var client = _clientService.Get(clientId);
                 Console.WriteLine($"\t{client}");
             }
 
             Console.WriteLine("Comments:");
-            _parentPage.CommentService
+            _commentService
                 .GetAll()
                 .Where(c => c.BookId == book.Id)
                 .ToList()
                 ?.ForEach(c => Console.WriteLine($"\t{c}"));
 
-            if (_parentPage.CurrentClient != null)
+            if (Startup.CurrentClientId != null)
             {
                 UserAction(book);
             }
@@ -69,16 +86,17 @@
         {
             Console.WriteLine("Your action:");
 
-            var isWished = _parentPage.CurrentClient.WishedBooksId.Contains(book.Id);
+            var currentClient = _clientService.Get(Startup.CurrentClientId.Value);
+            var isWished = currentClient.WishedBooksId.Contains(book.Id);
             var isCommented = (from commentId in book.UserCommentsId
-                               where _parentPage.CurrentClient.CommentsId.Contains(commentId)
+                               where currentClient.CommentsId.Contains(commentId)
                                select true).FirstOrDefault();
 
             var userMenu = new MenuVisualizer();
             userMenu.Add(isWished ? "Remove from WishList" : "Add to WishList", () => AddRemoveWishlist(book, isWished))
-                    .Add(isCommented ? "Remove comment" : "Add comment", () => AddRemoveComment(book, isCommented));
-
-            userMenu.Display();
+                    .Add(isCommented ? "Remove comment" : "Add comment", () => AddRemoveComment(book, isCommented))
+                    .Add("Return back", () => { return; })
+                    .Display();
         }
 
         private void AddRemoveWishlist(BookDto book, bool remove)
@@ -87,34 +105,32 @@
             {
                 try
                 {
-                    var wish = _parentPage.WishListService.GetAll()
-                        .FirstOrDefault(c => c.BookId == book.Id && c.ClientId == _parentPage.CurrentClient.Id);
+                    var wish = _wishListService.GetAll()
+                        .FirstOrDefault(c => c.BookId == book.Id && c.ClientId == Startup.CurrentClientId.Value);
 
-                    _parentPage.WishListService.Delete(wish.Id);
+                    _wishListService.Delete(wish.Id);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Error. Can`t delete");
+                    _logger.LogError(ex, ex.Message);
                 }
             }
             else
             {
                 try
                 {
-                    _parentPage.WishListService.Create(
+                    _wishListService.Create(
                     new WishDto
                     {
-                        ClientId = _parentPage.CurrentClient.Id,
+                        ClientId = Startup.CurrentClientId.Value,
                         BookId = book.Id
                     });
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Error. Can`t create");
+                    _logger.LogError(ex, ex.Message);
                 }
             }
-
-            _parentPage.CurrentClient = _parentPage.ClientService.Get(_parentPage.CurrentClient.Id);
         }
 
         private void AddRemoveComment(BookDto book, bool remove)
@@ -123,35 +139,33 @@
             {
                 try
                 {
-                    var comment = _parentPage.CommentService.GetAll()
-                        .FirstOrDefault(c => c.BookId == book.Id && c.ClientId == _parentPage.CurrentClient.Id);
+                    var comment = _commentService.GetAll()
+                        .FirstOrDefault(c => c.BookId == book.Id && c.ClientId == Startup.CurrentClientId);
 
-                    _parentPage.CommentService.Delete(comment.Id);
+                    _commentService.Delete(comment.Id);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Error. Can`t delete");
+                    _logger.LogError(ex, ex.Message);
                 }
             }
             else
             {
                 try
                 {
-                    _parentPage.CommentService.Create(
+                    _commentService.Create(
                     new CommentDto
                     {
-                        ClientId = _parentPage.CurrentClient.Id,
+                        ClientId = Startup.CurrentClientId.Value,
                         BookId = book.Id,
                         Text = Console.ReadLine()
                     });
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Error. Can`t create");
+                    _logger.LogError(ex, ex.Message);
                 }
             }
-
-            _parentPage.CurrentClient = _parentPage.ClientService.Get(_parentPage.CurrentClient.Id);
         }
 
         private void AddBook()
@@ -180,18 +194,18 @@
 
             try
             {
-                _parentPage.BookService.Create(book);
-                Console.WriteLine("Success\n");
+                _bookService.Create(book);
+                _logger.LogInformation("Created success");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
+                _logger.LogError(ex, ex.Message);
             }
         }
 
         private void UpdateBook()
         {
-            var books = _parentPage.BookService.GetAll();
+            var books = _bookService.GetAll();
 
             var menu = new MenuVisualizer();
             menu.ShowCollection(books);
@@ -221,18 +235,18 @@
 
             try
             {
-                _parentPage.BookService.Update(books[choice - 1].Id, book);
-                Console.WriteLine("Success\n");
+                _bookService.Update(books[choice - 1].Id, book);
+                _logger.LogInformation("Updated success");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
+                _logger.LogError(ex, ex.Message);
             }
         }
 
         private void RemoveBook()
         {
-            var books = _parentPage.BookService.GetAll();
+            var books = _bookService.GetAll();
 
             var menu = new MenuVisualizer();
             menu.ShowCollection(books);
@@ -242,12 +256,12 @@
 
             try
             {
-                _parentPage.BookService.Delete(books[choice - 1].Id);
-                Console.WriteLine("Success\n");
+                _bookService.Delete(books[choice - 1].Id);
+                _logger.LogInformation("Deleted success");
             }
-            catch (ArgumentException e)
+            catch (ArgumentException ex)
             {
-                Console.WriteLine(e.Message);
+                _logger.LogError(ex, ex.Message);
             }
         }
     }

@@ -2,16 +2,30 @@
 {
     using System;
     using System.Linq;
+    using Microsoft.Extensions.Logging;
 
+    using BookStore.BLL.Interfaces;
+    using Bookstore.ConsoleApp;
     using BookStore.Shared.DTOs;
 
     public class ClientMenuPage
     {
-        private MainPage _parentPage;
+        private readonly ILogger<BookMenuPage> _logger;
+        private readonly IService<ClientDto> _clientService;
+        private readonly IService<BookDto> _bookService;
+        private readonly IService<CommentDto> _commentService;
+        private readonly IService<WishDto> _wishListService;
 
-        public ClientMenuPage(MainPage parentPage)
+        public ClientMenuPage(
+            ILogger<BookMenuPage> logger,
+            IService<ClientDto> clientService,
+            IService<BookDto> bookService,
+            IService<CommentDto> commentService)
         {
-            this._parentPage = parentPage;
+            this._logger = logger;
+            this._clientService = clientService;
+            this._bookService = bookService;
+            this._commentService = commentService;
         }
 
         public void Run()
@@ -20,13 +34,14 @@
                 .Add("Show clients", () => ShowClients())
                 .Add("Add client", () => AddClient())
                 .Add("Update client", () => UpdateClient())
-                .Add("Remove client", () => RemoveClient());
+                .Add("Remove client", () => RemoveClient())
+                .Add("Return back", () => { return; });
             menu.Display();
         }
 
         private void ShowClients()
         {
-            var clients = _parentPage.ClientService.GetAll();
+            var clients = _clientService.GetAll();
 
             var menu = new MenuVisualizer();
             menu.ShowCollection(clients);
@@ -48,16 +63,16 @@
             Console.WriteLine("WishList:");
             foreach (var bookId in client.WishedBooksId)
             {
-                var book = _parentPage.BookService.Get(bookId);
+                var book = _bookService.Get(bookId);
                 Console.WriteLine($"\t{book}");
             }
 
             Console.WriteLine("Comments:");
-            _parentPage.CommentService
-                .GetAll()
-                .Where(c => c.ClientId == client.Id)
-                .ToList()
-                ?.ForEach(c => Console.WriteLine($"\t{c}"));
+            foreach (var commentId in client.CommentsId)
+            {
+                var comment = _commentService.Get(commentId);
+                Console.WriteLine($"\t{comment}");
+            }
 
             Console.ReadKey();
         }
@@ -78,8 +93,8 @@
 
             try
             {
-                _parentPage.ClientService.Create(client);
-                Console.WriteLine("Success\n");
+                _clientService.Create(client);
+                _logger.LogInformation("Success");
             }
             catch (Exception e)
             {
@@ -89,7 +104,7 @@
 
         private void UpdateClient()
         {
-            var clients = _parentPage.ClientService.GetAll();
+            var clients = _clientService.GetAll();
 
             var menu = new MenuVisualizer();
             menu.ShowCollection(clients);
@@ -109,18 +124,18 @@
 
             try
             {
-                _parentPage.ClientService.Update(clients[choice - 1].Id, client);
-                Console.WriteLine("Success\n");
+                _clientService.Update(clients[choice - 1].Id, client);
+                _logger.LogInformation("Updated success");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
+                _logger.LogError(ex, ex.Message);
             }
         }
 
         private void RemoveClient()
         {
-            var clients = _parentPage.ClientService.GetAll();
+            var clients = _clientService.GetAll();
 
             var menu = new MenuVisualizer();
             menu.ShowCollection(clients);
@@ -130,12 +145,12 @@
 
             try
             {
-                _parentPage.ClientService.Delete(clients[choice - 1].Id);
-                Console.WriteLine("Success\n");
+                _clientService.Delete(clients[choice - 1].Id);
+                _logger.LogInformation("Deleted success");
             }
-            catch (ArgumentException e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
+                _logger.LogError(ex, ex.Message);
             }
         }
     }

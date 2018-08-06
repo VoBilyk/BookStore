@@ -1,33 +1,32 @@
 ﻿namespace BookStore.ConsoleApp.MenuPages
 {
     using System;
+    using Microsoft.Extensions.Logging;
 
     using BookStore.BLL.Interfaces;
+    using Bookstore.ConsoleApp;
     using BookStore.Shared.DTOs;
 
     public class MainPage
     {
+        private readonly ILogger<MainPage> _logger;
+        private readonly IService<ClientDto> _clientService;
+
+        private readonly BookMenuPage _bookPage;
+        private readonly ClientMenuPage _clientPage;
+
         public MainPage(
-            IService<BookDto> bookService,
             IService<ClientDto> clientService,
-            IService<CommentDto> commentService,
-            IService<WishDto> wishListService)
+            ILogger<MainPage> logger,
+            BookMenuPage bookPage,
+            ClientMenuPage clientPage)
         {
-            this.BookService = bookService;
-            this.ClientService = clientService;
-            this.CommentService = commentService;
-            this.WishListService = wishListService;
+            this._clientPage = clientPage;
+            this._bookPage = bookPage;
+
+            this._clientService = clientService;
+            this._logger = logger;
         }
-
-        public IService<BookDto> BookService { get; }
-
-        public IService<ClientDto> ClientService { get; }
-
-        public IService<CommentDto> CommentService { get; }
-
-        public IService<WishDto> WishListService { get; }
-
-        public ClientDto CurrentClient { get; set; }
 
         public void Run()
         {
@@ -36,8 +35,8 @@
             {
                 var mainMenu = new MenuVisualizer();
                 mainMenu.Add("Login/Logout", () => LoginLogout())
-                    .Add("User menu", () => new ClientMenuPage(this).Run())
-                    .Add("Book menu", () => new BookMenuPage(this).Run())
+                    .Add("User menu", () => _clientPage.Run())
+                    .Add("Book menu", () => _bookPage.Run())
                     .Add("Exit", () => run = false);
 
                 mainMenu.Display();
@@ -49,10 +48,11 @@
 
         private void LoginLogout()
         {
-            if (CurrentClient != null)
+            if (Startup.CurrentClientId != null)
             {
-                CurrentClient = null;
-                Console.WriteLine("Logout Success");
+                Startup.CurrentClientId = null;
+
+                _logger.LogInformation("Logout Success");
                 return;
             }
 
@@ -70,13 +70,14 @@
 
             try
             {
-                CurrentClient = ClientService.Find(client);
-                Console.WriteLine("Login Success");
+                Startup.CurrentClientId = _clientService.Find(client).Id;
+
+                _logger.LogInformation("Login Success");
                 return;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                _logger.LogError(e.Message);
             }
         }
     }
