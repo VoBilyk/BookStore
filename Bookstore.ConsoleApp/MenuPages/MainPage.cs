@@ -7,6 +7,9 @@
     using Bookstore.ConsoleApp;
     using BookStore.Shared.DTOs;
 
+    /// <summary>
+    /// Page from which started design
+    /// </summary>
     public class MainPage
     {
         private readonly ILogger<MainPage> _logger;

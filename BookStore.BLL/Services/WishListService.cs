@@ -11,15 +11,19 @@
     using BookStore.DAL.Models;
     using BookStore.Shared.DTOs;
 
-    /// <summary>
-    /// Service which implements business logic for wishList
-    /// </summary>
+    /// <inheritdoc/>
     public class WishListService : IService<WishDto>
     {
         private IUnitOfWork _uow;
         private IMapper _mapper;
         private IValidator<Wish> _validator;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WishListService"/> class.
+        /// </summary>
+        /// <param name="uow">UnitOfWork implementation</param>
+        /// <param name="mapper">Mapper implementation</param>
+        /// <param name="validator">Validator implementation</param>
         public WishListService(IUnitOfWork uow, IMapper mapper, IValidator<Wish> validator)
         {
             this._uow = uow;
@@ -27,6 +31,7 @@
             this._validator = validator;
         }
 
+        /// <inheritdoc/>
         public WishDto Get(Guid id)
         {
             var wish = _uow.WishListRepository.Get(id);
@@ -39,6 +44,22 @@
             return _mapper.Map<IEnumerable<Wish>, List<WishDto>>(wishList);
         }
 
+        /// <inheritdoc/>
+        public WishDto Find(WishDto dto)
+        {
+            var wish = _uow.WishListRepository
+                .Find(x => x.BookId == dto.BookId && x.ClientId == dto.ClientId)
+                .FirstOrDefault();
+
+            if (wish == null)
+            {
+                throw new InvalidOperationException("Can`t find wish");
+            }
+
+            return _mapper.Map<Wish, WishDto>(wish);
+        }
+
+        /// <inheritdoc/>
         public void Create(WishDto dto)
         {
             var wish = _mapper.Map<WishDto, Wish>(dto);
@@ -56,6 +77,7 @@
             }
         }
 
+        /// <inheritdoc/>
         public void Update(Guid id, WishDto dto)
         {
             var wish = _mapper.Map<WishDto, Wish>(dto);
@@ -73,23 +95,10 @@
             }
         }
 
+        /// <inheritdoc/>
         public void Delete(Guid id)
         {
             _uow.WishListRepository.Delete(id);
-        }
-
-        public WishDto Find(WishDto dto)
-        {
-            var wish = _uow.WishListRepository
-                .Find(x => x.BookId == dto.BookId && x.ClientId == dto.ClientId)
-                .FirstOrDefault();
-
-            if (wish == null)
-            {
-                throw new InvalidOperationException($"Can`t to wish comment");
-            }
-
-            return _mapper.Map<Wish, WishDto>(wish);
         }
     }
 }

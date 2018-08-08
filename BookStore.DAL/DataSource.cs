@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Bogus;
 
     using BookStore.DAL.Models;
@@ -21,14 +20,30 @@
             Seed(amount);
         }
 
-        public List<Book> Books { get; set; }
+        /// <summary>
+        /// Gets book collection
+        /// </summary>
+        public List<Book> Books { get; private set; }
 
-        public List<Client> Clients { get; set; }
+        /// <summary>
+        /// Gets client collection
+        /// </summary>
+        public List<Client> Clients { get; private set; }
 
-        public List<Comment> Comments { get; set; }
+        /// <summary>
+        /// Gets comment collection
+        /// </summary>
+        public List<Comment> Comments { get; private set; }
 
-        public List<Wish> WishList { get; set; }
+        /// <summary>
+        /// Gets wish list collection
+        /// </summary>
+        public List<Wish> WishList { get; private set; }
 
+        /// <summary>
+        /// Added random data for data source
+        /// </summary>
+        /// <param name="amount">Amount of generated elements in each table</param>
         private void Seed(int amount)
         {
             string[] bookGenres = { "Drama", "Mystery", "Horror", "Romance", "Science", "History", "Fantasy" };

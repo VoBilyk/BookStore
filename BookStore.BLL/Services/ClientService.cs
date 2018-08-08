@@ -11,15 +11,19 @@
     using BookStore.DAL.Models;
     using BookStore.Shared.DTOs;
 
-    /// <summary>
-    /// Service which implements business logic for client
-    /// </summary>
+    /// <inheritdoc/>
     public class ClientService : IService<ClientDto>
     {
         private IUnitOfWork _uow;
         private IMapper _mapper;
         private IValidator<Client> _validator;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClientService"/> class.
+        /// </summary>
+        /// <param name="uow">UnitOfWork implementation</param>
+        /// <param name="mapper">Mapper implementation</param>
+        /// <param name="validator">Validator implementation</param>
         public ClientService(IUnitOfWork uow, IMapper mapper, IValidator<Client> validator)
         {
             this._uow = uow;
@@ -27,6 +31,22 @@
             this._validator = validator;
         }
 
+        /// <inheritdoc/>
+        public ClientDto Find(ClientDto dto)
+        {
+            var client = _uow.ClientRepository
+                .Find(x => (x.FirstName == dto.FirstName) && (x.SecondName == dto.SecondName))
+                .FirstOrDefault();
+
+            if (client == null)
+            {
+                throw new InvalidOperationException($"Can`t to find client with name: {dto.FirstName} {dto.SecondName}");
+            }
+
+            return _mapper.Map<Client, ClientDto>(client);
+        }
+
+        /// <inheritdoc/>
         public ClientDto Get(Guid id)
         {
             var client = _uow.ClientRepository.Get(id);
@@ -45,6 +65,7 @@
             return clientDto;
         }
 
+        /// <inheritdoc/>
         public List<ClientDto> GetAll()
         {
             var clients = _uow.ClientRepository.Get();
@@ -66,6 +87,7 @@
             return clientsDto;
         }
 
+        /// <inheritdoc/>
         public void Create(ClientDto dto)
         {
             var client = _mapper.Map<ClientDto, Client>(dto);
@@ -93,6 +115,7 @@
             }
         }
 
+        /// <inheritdoc/>
         public void Update(Guid id, ClientDto dto)
         {
             var client = _mapper.Map<ClientDto, Client>(dto);
@@ -120,21 +143,10 @@
             }
         }
 
+        /// <inheritdoc/>
         public void Delete(Guid id)
         {
             _uow.ClientRepository.Delete(id);
-        }
-
-        public ClientDto Find(ClientDto dto)
-        {
-            var client = _uow.ClientRepository.Find(x => (x.FirstName == dto.FirstName) && (x.SecondName == dto.SecondName)).FirstOrDefault();
-
-            if (client == null)
-            {
-                throw new InvalidOperationException($"Can`t to find client with name: {dto.FirstName} {dto.SecondName}");
-            }
-
-            return _mapper.Map<Client, ClientDto>(client);
         }
     }
 }

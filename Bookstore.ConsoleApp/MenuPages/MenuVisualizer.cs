@@ -3,6 +3,9 @@
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Menu visualizer for console
+    /// </summary>
     public class MenuVisualizer
     {
         private IList<(string Name, Action Callback)> _options;
@@ -12,37 +15,45 @@
             _options = new List<(string, Action)>();
         }
 
-        public void Display()
+        /// <summary>
+        /// Show collection as list to console
+        /// </summary>
+        /// <typeparam name="T">Generic type of collection</typeparam>
+        /// <param name="items">Collection which need to show</param>
+        public static void ShowCollection<T>(IList<T> items)
         {
-            for (int i = 0; i < _options.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {_options[i].Name}");
-            }
-
-            Console.Write("Your choice: ");
-            int value = ReadInt(1, _options.Count);
-
-            Console.Clear();
-            _options[value - 1].Callback();
-        }
-
-        public void ShowCollection<T>(IList<T> items)
-        {
-            for (int i = 0; i < items.Count; i++)
+            for (var i = 0; i < items.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {items[i]}");
             }
         }
 
-        public MenuVisualizer Add(string option, Action callback)
+        /// <summary>
+        /// Read int form into console
+        /// </summary>
+        /// <param name="min">Min possible value</param>
+        /// <param name="max">Max possible value</param>
+        /// <returns>Entered value</returns>
+        public static int ReadInt(int min, int max)
         {
-            _options.Add((option, callback));
-            return this;
+            var value = ReadInt();
+
+            while (value < min || value > max)
+            {
+                Console.Write($"Please enter an integer between {min} and {max}: ");
+                value = ReadInt();
+            }
+
+            return value;
         }
 
-        public int ReadInt()
+        /// <summary>
+        /// Getting entered value
+        /// </summary>
+        /// <returns>Entered value</returns>
+        public static int ReadInt()
         {
-            string input = Console.ReadLine();
+            var input = Console.ReadLine();
             int value;
 
             while (!int.TryParse(input, out value))
@@ -54,17 +65,33 @@
             return value;
         }
 
-        public int ReadInt(int min, int max)
+        /// <summary>
+        /// Show menu into console
+        /// </summary>
+        public void Display()
         {
-            int value = ReadInt();
-
-            while (value < min || value > max)
+            for (var i = 0; i < _options.Count; i++)
             {
-                Console.Write($"Please enter an integer between {min} and {max}: ");
-                value = ReadInt();
+                Console.WriteLine($"{i + 1}. {_options[i].Name}");
             }
 
-            return value;
+            Console.Write("Your choice: ");
+            var value = ReadInt(1, _options.Count);
+
+            Console.Clear();
+            _options[value - 1].Callback();
+        }
+
+        /// <summary>
+        /// Add new menu item
+        /// </summary>
+        /// <param name="option">Item name</param>
+        /// <param name="callback">Operating which need to execute when choose item</param>
+        /// <returns>Current Menu Visualizer instance</returns>
+        public MenuVisualizer Add(string option, Action callback)
+        {
+            _options.Add((option, callback));
+            return this;
         }
     }
 }

@@ -8,6 +8,9 @@
     using Bookstore.ConsoleApp;
     using BookStore.Shared.DTOs;
 
+    /// <summary>
+    /// Page for working with books
+    /// </summary>
     public class BookMenuPage
     {
         private readonly ILogger<BookMenuPage> _logger;
@@ -35,7 +38,7 @@
             var menu = new MenuVisualizer()
                 .Add("Show books", () => ShowBooks())
                 .Add("Add book", () => AddBook())
-                .Add("Update book", () => AddBook())
+                .Add("Update book", () => UpdateBook())
                 .Add("Remove book", () => RemoveBook())
                 .Add("Return back", () => { return; });
             menu.Display();
@@ -45,10 +48,9 @@
         {
             var books = _bookService.GetAll();
 
-            var menu = new MenuVisualizer();
-            menu.ShowCollection(books);
+            MenuVisualizer.ShowCollection(books);
             Console.Write("\nChoose someone: ");
-            int choice = menu.ReadInt(1, books.Count);
+            var choice = MenuVisualizer.ReadInt(1, books.Count);
 
             ShowDetails(books[choice - 1]);
         }
@@ -171,18 +173,18 @@
         private void AddBook()
         {
             Console.Write("Enter name: ");
-            string name = Console.ReadLine();
+            var name = Console.ReadLine();
 
             Console.Write("Enter author: ");
-            string author = Console.ReadLine();
+            var author = Console.ReadLine();
 
             Console.Write("Enter genre: ");
-            string genre = Console.ReadLine();
+            var genre = Console.ReadLine();
 
             Console.Write("Enter price: ");
-            string strPrice = Console.ReadLine();
+            var strPrice = Console.ReadLine();
 
-            decimal.TryParse(strPrice, out decimal price);
+            decimal.TryParse(strPrice, out var price);
 
             var book = new BookDto
             {
@@ -206,10 +208,8 @@
         private void UpdateBook()
         {
             var books = _bookService.GetAll();
-
-            var menu = new MenuVisualizer();
-            menu.ShowCollection(books);
-            int choice = menu.ReadInt(1, books.Count);
+            MenuVisualizer.ShowCollection(books);
+            int choice = MenuVisualizer.ReadInt(1, books.Count);
 
             Console.Write("Enter new name: ");
             string name = Console.ReadLine();
@@ -248,11 +248,10 @@
         {
             var books = _bookService.GetAll();
 
-            var menu = new MenuVisualizer();
-            menu.ShowCollection(books);
+            MenuVisualizer.ShowCollection(books);
 
             Console.Write("Your choice: ");
-            int choice = menu.ReadInt(1, books.Count);
+            int choice = MenuVisualizer.ReadInt(1, books.Count);
 
             try
             {

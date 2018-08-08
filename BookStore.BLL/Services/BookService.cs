@@ -11,15 +11,19 @@
     using BookStore.DAL.Models;
     using BookStore.Shared.DTOs;
 
-    /// <summary>
-    /// Service which implements business logic for book
-    /// </summary>
+    /// <inheritdoc/>
     public class BookService : IService<BookDto>
     {
         private IUnitOfWork _uow;
         private IMapper _mapper;
         private IValidator<Book> _validator;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BookService"/> class.
+        /// </summary>
+        /// <param name="uow">UnitOfWork implementation</param>
+        /// <param name="mapper">Mapper implementation</param>
+        /// <param name="validator">Validator implementation</param>
         public BookService(IUnitOfWork uow, IMapper mapper, IValidator<Book> validator)
         {
             this._uow = uow;
@@ -27,6 +31,7 @@
             this._validator = validator;
         }
 
+        /// <inheritdoc/>
         public BookDto Get(Guid id)
         {
             var book = _uow.BookRepository.Get(id);
@@ -45,6 +50,7 @@
             return bookDto;
         }
 
+        /// <inheritdoc/>
         public List<BookDto> GetAll()
         {
             var books = _uow.BookRepository.Get();
@@ -66,6 +72,20 @@
             return booksDto;
         }
 
+        /// <inheritdoc/>
+        public BookDto Find(BookDto dto)
+        {
+            var book = _uow.BookRepository.Find(x => x.Name == dto.Name).FirstOrDefault();
+
+            if (book == null)
+            {
+                throw new InvalidOperationException($"Can`t to find book with name: {dto.Name}");
+            }
+
+            return _mapper.Map<Book, BookDto>(book);
+        }
+
+        /// <inheritdoc/>
         public void Create(BookDto dto)
         {
             var book = _mapper.Map<BookDto, Book>(dto);
@@ -93,6 +113,7 @@
             }
         }
 
+        /// <inheritdoc/>
         public void Update(Guid id, BookDto dto)
         {
             var book = _mapper.Map<BookDto, Book>(dto);
@@ -120,21 +141,10 @@
             }
         }
 
+        /// <inheritdoc/>
         public void Delete(Guid id)
         {
             _uow.BookRepository.Delete(id);
-        }
-
-        public BookDto Find(BookDto dto)
-        {
-            var book = _uow.BookRepository.Find(x => x.Name == dto.Name).FirstOrDefault();
-
-            if (book == null)
-            {
-                throw new InvalidOperationException($"Can`t to find book with name: {dto.Name}");
-            }
-
-            return _mapper.Map<Book, BookDto>(book);
         }
     }
 }

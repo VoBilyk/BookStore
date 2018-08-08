@@ -4,6 +4,9 @@
 
     using BookStore.DAL.Interfaces;
 
+    /// <summary>
+    /// Comment entity
+    /// </summary>
     public class Comment : IEntity
     {
         public Guid Id { get; set; }

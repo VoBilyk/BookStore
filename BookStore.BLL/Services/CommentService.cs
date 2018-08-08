@@ -11,15 +11,19 @@
     using BookStore.DAL.Models;
     using BookStore.Shared.DTOs;
 
-    /// <summary>
-    /// Service which implements business logic for comment
-    /// </summary>
+    /// <inheritdoc/>
     public class CommentService : IService<CommentDto>
     {
         private IUnitOfWork _uow;
         private IMapper _mapper;
         private IValidator<Comment> _validator;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommentService"/> class.
+        /// </summary>
+        /// <param name="uow">UnitOfWork implementation</param>
+        /// <param name="mapper">Mapper implementation</param>
+        /// <param name="validator">Validator implementation</param>
         public CommentService(IUnitOfWork uow, IMapper mapper, IValidator<Comment> validator)
         {
             this._uow = uow;
@@ -27,18 +31,34 @@
             this._validator = validator;
         }
 
+        /// <inheritdoc/>
         public CommentDto Get(Guid id)
         {
             var comment = _uow.CommentRepository.Get(id);
             return _mapper.Map<Comment, CommentDto>(comment);
         }
 
+        /// <inheritdoc/>
         public List<CommentDto> GetAll()
         {
             var comments = _uow.CommentRepository.Get();
             return _mapper.Map<IEnumerable<Comment>, List<CommentDto>>(comments);
         }
 
+        /// <inheritdoc/>
+        public CommentDto Find(CommentDto dto)
+        {
+            var comment = _uow.CommentRepository.Find(x => x.Text == dto.Text).FirstOrDefault();
+
+            if (comment == null)
+            {
+                throw new InvalidOperationException($"Can`t to find comment");
+            }
+
+            return _mapper.Map<Comment, CommentDto>(comment);
+        }
+
+        /// <inheritdoc/>
         public void Create(CommentDto dto)
         {
             var comment = _mapper.Map<CommentDto, Comment>(dto);
@@ -58,6 +78,7 @@
             }
         }
 
+        /// <inheritdoc/>
         public void Update(Guid id, CommentDto dto)
         {
             var comment = _mapper.Map<CommentDto, Comment>(dto);
@@ -77,21 +98,10 @@
             }
         }
 
+        /// <inheritdoc/>
         public void Delete(Guid id)
         {
             _uow.CommentRepository.Delete(id);
-        }
-
-        public CommentDto Find(CommentDto dto)
-        {
-            var comment = _uow.CommentRepository.Find(x => x.Text == dto.Text).FirstOrDefault();
-
-            if (comment == null)
-            {
-                throw new InvalidOperationException($"Can`t to find comment");
-            }
-
-            return _mapper.Map<Comment, CommentDto>(comment);
         }
     }
 }

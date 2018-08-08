@@ -5,8 +5,12 @@
     using BookStore.DAL.Models;
     using BookStore.Shared.DTOs;
 
+    /// <inheritdoc/>
     public class GeneralProfile : Profile
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GeneralProfile"/> class.
+        /// </summary>
         public GeneralProfile()
         {
             CreateMap<Book, BookDto>();

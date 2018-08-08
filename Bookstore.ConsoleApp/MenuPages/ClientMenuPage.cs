@@ -1,13 +1,14 @@
 ﻿namespace BookStore.ConsoleApp.MenuPages
 {
     using System;
-    using System.Linq;
     using Microsoft.Extensions.Logging;
 
     using BookStore.BLL.Interfaces;
-    using Bookstore.ConsoleApp;
     using BookStore.Shared.DTOs;
 
+    /// <summary>
+    /// Page form working with client
+    /// </summary>
     public class ClientMenuPage
     {
         private readonly ILogger<BookMenuPage> _logger;
@@ -43,11 +44,10 @@
         {
             var clients = _clientService.GetAll();
 
-            var menu = new MenuVisualizer();
-            menu.ShowCollection(clients);
+            MenuVisualizer.ShowCollection(clients);
 
             Console.Write("Choose someone: ");
-            int choice = menu.ReadInt(1, clients.Count);
+            int choice = MenuVisualizer.ReadInt(1, clients.Count);
 
             ShowDetails(clients[choice - 1]);
         }
@@ -106,9 +106,8 @@
         {
             var clients = _clientService.GetAll();
 
-            var menu = new MenuVisualizer();
-            menu.ShowCollection(clients);
-            int choice = menu.ReadInt(1, clients.Count);
+            MenuVisualizer.ShowCollection(clients);
+            int choice = MenuVisualizer.ReadInt(1, clients.Count);
 
             Console.Write("Enter first name: ");
             string firstName = Console.ReadLine();
@@ -137,11 +136,10 @@
         {
             var clients = _clientService.GetAll();
 
-            var menu = new MenuVisualizer();
-            menu.ShowCollection(clients);
+            MenuVisualizer.ShowCollection(clients);
 
             Console.Write("Your choice: ");
-            int choice = menu.ReadInt(1, clients.Count);
+            int choice = MenuVisualizer.ReadInt(1, clients.Count);
 
             try
             {

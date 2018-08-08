@@ -21,56 +21,16 @@
             _db = new DataSource();
         }
 
-        public IRepository<Book> BookRepository
-        {
-            get
-            {
-                if (_bookRepository == null)
-                {
-                    _bookRepository = new BookRepository(_db);
-                }
+        /// <inheritdoc/>
+        public IRepository<Book> BookRepository => _bookRepository ?? new BookRepository(_db);
 
-                return _bookRepository;
-            }
-        }
+        /// <inheritdoc/>
+        public IRepository<Client> ClientRepository => _clientRepository ?? new ClientRepository(_db);
 
-        public IRepository<Client> ClientRepository
-        {
-            get
-            {
-                if (_clientRepository == null)
-                {
-                    _clientRepository = new ClientRepository(_db);
-                }
+        /// <inheritdoc/>
+        public IRepository<Comment> CommentRepository => _commentRepository ?? new CommentRepository(_db);
 
-                return _clientRepository;
-            }
-        }
-
-        public IRepository<Comment> CommentRepository
-        {
-            get
-            {
-                if (_commentRepository == null)
-                {
-                    _commentRepository = new CommentRepository(_db);
-                }
-
-                return _commentRepository;
-            }
-        }
-
-        public IRepository<Wish> WishListRepository
-        {
-            get
-            {
-                if (_wishListRepository == null)
-                {
-                    _wishListRepository = new WishRepository(_db);
-                }
-
-                return _wishListRepository;
-            }
-        }
+        /// <inheritdoc/>
+        public IRepository<Wish> WishListRepository => _wishListRepository ?? new WishListRepository(_db);
     }
 }

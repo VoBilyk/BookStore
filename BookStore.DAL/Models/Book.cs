@@ -4,6 +4,9 @@
 
     using BookStore.DAL.Interfaces;
 
+    /// <summary>
+    /// Book entity
+    /// </summary>
     public class Book : IEntity
     {
         public Guid Id { get; set; }
