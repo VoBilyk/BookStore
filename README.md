@@ -1,7 +1,8 @@
 # BookStore
 
 ## Що зроблено:
-* Created .NET Core Console application, whith have following functions:
+* Створено solution з наступними функціями:
+    * Console application для взаємодії з користувачем
     * управління каталогом книжок - додавання, редагування, видалення описів книжок, коментарів до книжок.
     * ведення WishList клієнтів.
     * пошук. 
@@ -9,9 +10,11 @@
     * авторизація користувача
 * Присутні сутності Book, Client, WishList(BookClient, n:m),Comments (Client Comments for Book, 1:n) 
 * Проект створено за багаторівневою архітектурою (Presentation layer, Business layer, Data Access layer)
-* Data Access layer сформовано за UnitOfWork принципом
+* Data Access layer сформовано за UnitOfWork паттерном, що містить repositories
 
-*Використані IoC контейнер .NET Core, AutoMapper, Bogus, Nloger*
+*Використано IoC контейнер .NET Core, AutoMapper, Bogus, Nlog*
 
-##Upd1
-* Added NLogger
+##Updates:
+* Upd1: Added NLogger
+* Upd2: Changed platform for ConsoleApplication to .NET Core
+* Upd3: Added documentation
