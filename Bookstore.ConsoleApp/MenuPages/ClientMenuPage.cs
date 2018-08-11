@@ -12,16 +12,15 @@
     public class ClientMenuPage
     {
         private readonly ILogger<BookMenuPage> _logger;
-        private readonly IService<ClientDto> _clientService;
-        private readonly IService<BookDto> _bookService;
-        private readonly IService<CommentDto> _commentService;
-        private readonly IService<WishDto> _wishListService;
+        private readonly IClientService _clientService;
+        private readonly IBookService _bookService;
+        private readonly ICommentService _commentService;
 
         public ClientMenuPage(
             ILogger<BookMenuPage> logger,
-            IService<ClientDto> clientService,
-            IService<BookDto> bookService,
-            IService<CommentDto> commentService)
+            IClientService clientService,
+            IBookService bookService,
+            ICommentService commentService)
         {
             this._logger = logger;
             this._clientService = clientService;
@@ -55,7 +54,7 @@
         private void ShowDetails(ClientDto client)
         {
             Console.WriteLine($"\nFirstname: {client.FirstName}");
-            Console.WriteLine($"Lastname: {client.SecondName}");
+            Console.WriteLine($"Lastname: {client.LastName}");
             Console.WriteLine($"Email: {client.Email}");
             Console.WriteLine($"Address: {client.Address}");
             Console.WriteLine($"Birthdate: {client.BirthDate.ToLocalTime()}");
@@ -79,17 +78,7 @@
 
         private void AddClient()
         {
-            Console.Write("Enter first name: ");
-            string firstName = Console.ReadLine();
-
-            Console.Write("Enter second name: ");
-            string secondName = Console.ReadLine();
-
-            var client = new ClientDto
-            {
-                FirstName = firstName,
-                SecondName = secondName
-            };
+            var client = EnterClientData();
 
             try
             {
@@ -105,21 +94,12 @@
         private void UpdateClient()
         {
             var clients = _clientService.GetAll();
-
             MenuVisualizer.ShowCollection(clients);
+
+            Console.Write("Your choice: ");
             int choice = MenuVisualizer.ReadInt(1, clients.Count);
 
-            Console.Write("Enter first name: ");
-            string firstName = Console.ReadLine();
-
-            Console.Write("Enter second name: ");
-            string secondName = Console.ReadLine();
-
-            var client = new ClientDto
-            {
-                FirstName = firstName,
-                SecondName = secondName
-            };
+            var client = EnterClientData();
 
             try
             {
@@ -150,6 +130,25 @@
             {
                 _logger.LogError(ex, ex.Message);
             }
+        }
+
+        private ClientDto EnterClientData()
+        {
+            Console.Write("Enter first name: ");
+            string firstName = Console.ReadLine();
+
+            Console.Write("Enter last name: ");
+            string secondName = Console.ReadLine();
+
+            Console.Write("Enter email: ");
+            string email = Console.ReadLine();
+
+            return new ClientDto
+            {
+                FirstName = firstName,
+                LastName = secondName,
+                Email = email
+            };
         }
     }
 }

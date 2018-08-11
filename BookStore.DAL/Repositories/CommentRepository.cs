@@ -1,9 +1,10 @@
 ﻿namespace BookStore.DAL.Repositories
 {
+    using BookStore.DAL.Interfaces.Repositories;
     using BookStore.DAL.Models;
 
     /// <inheritdoc/>
-    public class CommentRepository : GenericRepository<Comment>
+    public class CommentRepository : GenericRepository<Comment>, ICommentRepository
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CommentRepository"/> class.

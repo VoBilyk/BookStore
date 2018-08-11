@@ -1,9 +1,10 @@
 ﻿namespace BookStore.DAL.Repositories
 {
+    using BookStore.DAL.Interfaces.Repositories;
     using BookStore.DAL.Models;
-    
+
     /// <inheritdoc/>
-    public class WishListRepository : GenericRepository<Wish>
+    public class WishListRepository : GenericRepository<Wish>, IWishListRepository
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="WishListRepository"/> class.

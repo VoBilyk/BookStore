@@ -1,4 +1,4 @@
-﻿namespace Bookstore.ConsoleApp
+﻿namespace BookStore.ConsoleApp
 {
     using System;
     using AutoMapper;
@@ -15,7 +15,6 @@
     using BookStore.DAL;
     using BookStore.DAL.Interfaces;
     using BookStore.DAL.Models;
-    using BookStore.Shared.DTOs;
 
     public static class Startup
     {
@@ -26,10 +25,10 @@
             // Instance injection
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddScoped<IService<BookDto>, BookService>();
-            services.AddScoped<IService<ClientDto>, ClientService>();
-            services.AddScoped<IService<CommentDto>, CommentService>();
-            services.AddScoped<IService<WishDto>, WishListService>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IWishListService, WishListService>();
 
             services.AddTransient<IValidator<Book>, BookValidator>();
             services.AddTransient<IValidator<Client>, ClientValidator>();
@@ -40,8 +39,10 @@
             services.AddSingleton(new LoggerFactory().AddNLog());
             services.AddLogging();
 
-            var config = new MapperConfiguration(cfg => cfg.AddProfile(new GeneralProfile()));
-            services.AddSingleton(_ => config.CreateMapper());
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<GeneralProfile>();
+            });
 
             services.AddTransient<MainPage>();
             services.AddTransient<ClientMenuPage>();

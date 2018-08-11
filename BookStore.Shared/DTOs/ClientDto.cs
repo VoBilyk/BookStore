@@ -15,7 +15,7 @@
 
         public string FirstName { get; set; }
 
-        public string SecondName { get; set; }
+        public string LastName { get; set; }
 
         public DateTime BirthDate { get; set; }
 
@@ -29,7 +29,7 @@
 
         public override string ToString()
         {
-            return $"{FirstName} {SecondName}";
+            return $"{FirstName} {LastName}";
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace BookStore.DAL
 {
     using BookStore.DAL.Interfaces;
-    using BookStore.DAL.Models;
+    using BookStore.DAL.Interfaces.Repositories;
     using BookStore.DAL.Repositories;
 
     /// <summary>
@@ -11,10 +11,10 @@
     {
         private DataSource _db;
 
-        private IRepository<Book> _bookRepository;
-        private IRepository<Client> _clientRepository;
-        private IRepository<Comment> _commentRepository;
-        private IRepository<Wish> _wishListRepository;
+        private IBookRepository _bookRepository;
+        private IClientRepository _clientRepository;
+        private ICommentRepository _commentRepository;
+        private IWishListRepository _wishListRepository;
 
         public UnitOfWork()
         {
@@ -22,15 +22,15 @@
         }
 
         /// <inheritdoc/>
-        public IRepository<Book> BookRepository => _bookRepository ?? new BookRepository(_db);
+        public IBookRepository BookRepository => _bookRepository ?? new BookRepository(_db);
 
         /// <inheritdoc/>
-        public IRepository<Client> ClientRepository => _clientRepository ?? new ClientRepository(_db);
+        public IClientRepository ClientRepository => _clientRepository ?? new ClientRepository(_db);
 
         /// <inheritdoc/>
-        public IRepository<Comment> CommentRepository => _commentRepository ?? new CommentRepository(_db);
+        public ICommentRepository CommentRepository => _commentRepository ?? new CommentRepository(_db);
 
         /// <inheritdoc/>
-        public IRepository<Wish> WishListRepository => _wishListRepository ?? new WishListRepository(_db);
+        public IWishListRepository WishListRepository => _wishListRepository ?? new WishListRepository(_db);
     }
 }

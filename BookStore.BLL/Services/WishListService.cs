@@ -12,7 +12,7 @@
     using BookStore.Shared.DTOs;
 
     /// <inheritdoc/>
-    public class WishListService : IService<WishDto>
+    public class WishListService : IWishListService
     {
         private IUnitOfWork _uow;
         private IMapper _mapper;

@@ -1,9 +1,10 @@
 ﻿namespace BookStore.DAL.Repositories
 {
+    using BookStore.DAL.Interfaces.Repositories;
     using BookStore.DAL.Models;
 
     /// <inheritdoc/>
-    public class BookRepository : GenericRepository<Book>
+    public class BookRepository : GenericRepository<Book>, IBookRepository
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BookRepository"/> class.

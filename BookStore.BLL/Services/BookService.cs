@@ -12,7 +12,7 @@
     using BookStore.Shared.DTOs;
 
     /// <inheritdoc/>
-    public class BookService : IService<BookDto>
+    public class BookService : IBookService
     {
         private IUnitOfWork _uow;
         private IMapper _mapper;

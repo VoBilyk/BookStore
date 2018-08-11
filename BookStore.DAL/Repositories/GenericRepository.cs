@@ -5,6 +5,7 @@
     using System.Linq;
 
     using BookStore.DAL.Interfaces;
+    using BookStore.DAL.Interfaces.Repositories;
 
     /// <inheritdoc/>
     public class GenericRepository<TEntity> : IRepository<TEntity>

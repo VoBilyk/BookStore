@@ -1,4 +1,4 @@
-﻿namespace BookStore.DAL.Interfaces
+﻿namespace BookStore.DAL.Interfaces.Repositories
 {
     using System;
     using System.Collections.Generic;

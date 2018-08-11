@@ -12,7 +12,7 @@
     using BookStore.Shared.DTOs;
 
     /// <inheritdoc/>
-    public class CommentService : IService<CommentDto>
+    public class CommentService : ICommentService
     {
         private IUnitOfWork _uow;
         private IMapper _mapper;

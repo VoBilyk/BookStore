@@ -5,7 +5,7 @@
     using Microsoft.Extensions.Logging;
 
     using BookStore.BLL.Interfaces;
-    using Bookstore.ConsoleApp;
+    using BookStore.ConsoleApp;
     using BookStore.Shared.DTOs;
 
     /// <summary>
@@ -14,17 +14,17 @@
     public class BookMenuPage
     {
         private readonly ILogger<BookMenuPage> _logger;
-        private readonly IService<ClientDto> _clientService;
-        private readonly IService<BookDto> _bookService;
-        private readonly IService<CommentDto> _commentService;
-        private readonly IService<WishDto> _wishListService;
+        private readonly IClientService _clientService;
+        private readonly IBookService _bookService;
+        private readonly ICommentService _commentService;
+        private readonly IWishListService _wishListService;
 
         public BookMenuPage(
             ILogger<BookMenuPage> logger,
-            IService<ClientDto> clientService,
-            IService<BookDto> bookService,
-            IService<CommentDto> commentService,
-            IService<WishDto> wishListService)
+            IClientService clientService,
+            IBookService bookService,
+            ICommentService commentService,
+            IWishListService wishListService)
         {
             this._logger = logger;
             this._clientService = clientService;
@@ -172,27 +172,7 @@
 
         private void AddBook()
         {
-            Console.Write("Enter name: ");
-            var name = Console.ReadLine();
-
-            Console.Write("Enter author: ");
-            var author = Console.ReadLine();
-
-            Console.Write("Enter genre: ");
-            var genre = Console.ReadLine();
-
-            Console.Write("Enter price: ");
-            var strPrice = Console.ReadLine();
-
-            decimal.TryParse(strPrice, out var price);
-
-            var book = new BookDto
-            {
-                Name = name,
-                Author = author,
-                Genre = genre,
-                Price = price
-            };
+            var book = EnterBookData();
 
             try
             {
@@ -211,27 +191,7 @@
             MenuVisualizer.ShowCollection(books);
             int choice = MenuVisualizer.ReadInt(1, books.Count);
 
-            Console.Write("Enter new name: ");
-            string name = Console.ReadLine();
-
-            Console.Write("Enter new author: ");
-            string author = Console.ReadLine();
-
-            Console.Write("Enter new genre: ");
-            string genre = Console.ReadLine();
-
-            Console.Write("Enter new price: ");
-            string strPrice = Console.ReadLine();
-
-            decimal.TryParse(strPrice, out decimal price);
-
-            var book = new BookDto
-            {
-                Name = name,
-                Author = author,
-                Genre = genre,
-                Price = price
-            };
+            var book = EnterBookData();
 
             try
             {
@@ -262,6 +222,31 @@
             {
                 _logger.LogError(ex, ex.Message);
             }
+        }
+
+        private BookDto EnterBookData()
+        {
+            Console.Write("Enter new name: ");
+            string name = Console.ReadLine();
+
+            Console.Write("Enter new author: ");
+            string author = Console.ReadLine();
+
+            Console.Write("Enter new genre: ");
+            string genre = Console.ReadLine();
+
+            Console.Write("Enter new price: ");
+            string strPrice = Console.ReadLine();
+
+            decimal.TryParse(strPrice, out decimal price);
+
+            return new BookDto
+            {
+                Name = name,
+                Author = author,
+                Genre = genre,
+                Price = price
+            };
         }
     }
 }

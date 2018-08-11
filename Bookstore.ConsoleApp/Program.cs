@@ -1,9 +1,10 @@
-﻿namespace Bookstore.ConsoleApp
+﻿namespace BookStore.ConsoleApp
 {
-    using BookStore.ConsoleApp.MenuPages;
-
+    using System;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+
+    using BookStore.ConsoleApp.MenuPages;
 
     public class Program
     {
@@ -20,7 +21,7 @@
             {
                 serviceProvider.GetService<MainPage>().Run();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 logger.LogCritical(ex, ex.Message);
                 NLog.LogManager.Shutdown();

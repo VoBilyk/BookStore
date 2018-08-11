@@ -1,5 +1,6 @@
 ﻿namespace BookStore.DAL.Interfaces
 {
+    using BookStore.DAL.Interfaces.Repositories;
     using BookStore.DAL.Models;
 
     /// <summary>
@@ -10,21 +11,21 @@
         /// <summary>
         /// Gets BookRepository
         /// </summary>
-        IRepository<Book> BookRepository { get; }
+        IBookRepository BookRepository { get; }
 
         /// <summary>
         /// Gets ClientRepository
         /// </summary>
-        IRepository<Client> ClientRepository { get; }
+        IClientRepository ClientRepository { get; }
 
         /// <summary>
         /// Gets CommentRepository
         /// </summary>
-        IRepository<Comment> CommentRepository { get; }
+        ICommentRepository CommentRepository { get; }
 
         /// <summary>
         /// Gets WishListRepository
         /// </summary>
-        IRepository<Wish> WishListRepository { get; }
+        IWishListRepository WishListRepository { get; }
     }
 }

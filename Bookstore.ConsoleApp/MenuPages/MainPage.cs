@@ -4,7 +4,7 @@
     using Microsoft.Extensions.Logging;
 
     using BookStore.BLL.Interfaces;
-    using Bookstore.ConsoleApp;
+    using BookStore.ConsoleApp;
     using BookStore.Shared.DTOs;
 
     /// <summary>
@@ -13,13 +13,13 @@
     public class MainPage
     {
         private readonly ILogger<MainPage> _logger;
-        private readonly IService<ClientDto> _clientService;
+        private readonly IClientService _clientService;
 
         private readonly BookMenuPage _bookPage;
         private readonly ClientMenuPage _clientPage;
 
         public MainPage(
-            IService<ClientDto> clientService,
+            IClientService clientService,
             ILogger<MainPage> logger,
             BookMenuPage bookPage,
             ClientMenuPage clientPage)
@@ -68,7 +68,7 @@
             var client = new ClientDto
             {
                 FirstName = firstName,
-                SecondName = secondName
+                LastName = secondName
             };
 
             try

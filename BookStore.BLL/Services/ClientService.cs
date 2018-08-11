@@ -12,7 +12,7 @@
     using BookStore.Shared.DTOs;
 
     /// <inheritdoc/>
-    public class ClientService : IService<ClientDto>
+    public class ClientService : IClientService
     {
         private IUnitOfWork _uow;
         private IMapper _mapper;
@@ -35,12 +35,12 @@
         public ClientDto Find(ClientDto dto)
         {
             var client = _uow.ClientRepository
-                .Find(x => (x.FirstName == dto.FirstName) && (x.SecondName == dto.SecondName))
+                .Find(x => (x.FirstName == dto.FirstName) && (x.LastName == dto.LastName))
                 .FirstOrDefault();
 
             if (client == null)
             {
-                throw new InvalidOperationException($"Can`t to find client with name: {dto.FirstName} {dto.SecondName}");
+                throw new InvalidOperationException($"Can`t to find client with name: {dto.FirstName} {dto.LastName}");
             }
 
             return _mapper.Map<Client, ClientDto>(client);

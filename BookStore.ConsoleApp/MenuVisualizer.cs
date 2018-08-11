@@ -1,12 +1,14 @@
-﻿namespace BookStore.ConsoleApp.MenuPages
+﻿namespace BookStore.ConsoleApp
 {
     using System;
     using System.Collections.Generic;
 
+    using BookStore.ConsoleApp.Interfaces;
+
     /// <summary>
     /// Menu visualizer for console
     /// </summary>
-    public class MenuVisualizer
+    public class MenuVisualizer : IMenuVisualizer
     {
         private IList<(string Name, Action Callback)> _options;
 
@@ -88,10 +90,25 @@
         /// <param name="option">Item name</param>
         /// <param name="callback">Operating which need to execute when choose item</param>
         /// <returns>Current Menu Visualizer instance</returns>
-        public MenuVisualizer Add(string option, Action callback)
+        public IMenuVisualizer Add(string option, Action callback)
         {
             _options.Add((option, callback));
             return this;
+        }
+
+        void IMenuVisualizer.ShowCollection<T>(IList<T> items)
+        {
+            MenuVisualizer.ShowCollection<T>(items);
+        }
+
+        int IMenuVisualizer.ReadInt(int min, int max)
+        {
+            return MenuVisualizer.ReadInt(min, max);
+        }
+
+        int IMenuVisualizer.ReadInt()
+        {
+            return MenuVisualizer.ReadInt();
         }
     }
 }
