@@ -46,8 +46,7 @@
         {
             var foundedItems = _db.Where(predicate);
 
-            // TODO: check
-            if (foundedItems == null)
+            if (!foundedItems.Any())
             {
                 throw new ArgumentException($"Can`t find items");
             }
