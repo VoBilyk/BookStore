@@ -40,9 +40,11 @@
 
             this.bookDto = new BookDto
             {
+                Id = Guid.NewGuid(),
                 Name = "BookName",
                 Author = "Author",
                 Genre = "Genre",
+                Price = 10,
                 WishedClientsId = new List<Guid> { Guid.NewGuid() },
                 UserCommentsId = new List<Guid> { Guid.NewGuid() }
             };
@@ -90,7 +92,7 @@
             // Arrange
             var book = new Book { Name = "BookName" };
 
-            var service = new BookService(_unitOfWorkFake, _mapper, _validator);
+            var service = new BookService(_unitOfWorkFake, _mapper, _alwaysValidValidator);
             A.CallTo(() => _unitOfWorkFake.BookRepository.Find(A<Func<Book,bool>>._))
                 .Returns(new List<Book>{ book });
 
@@ -139,12 +141,26 @@
         }
 
         [Test]
+        public void Update_WhenUpdateBook_ThenInvokeUpdateByRepository()
+        {
+            // Arrange
+            var service = new BookService(_unitOfWorkFake, _mapper, _alwaysValidValidator);
+
+            // Act
+            service.Update(bookDto.Id, bookDto);
+
+            // Assert
+            A.CallTo(() => _unitOfWorkFake.BookRepository.Update(A<Book>._)).MustHaveHappened();
+            A.CallTo(() => _unitOfWorkFake.WishListRepository.Create(A<Wish>._)).MustHaveHappened();
+        }
+
+        [Test]
         public void Delete_WhenDeleteBook_ThenInvokeDeleteByRepository()
         {
             // Arrange
             var bookId = Guid.NewGuid();
 
-            var service = new BookService(_unitOfWorkFake, _mapper, _validator);
+            var service = new BookService(_unitOfWorkFake, _mapper, _alwaysValidValidator);
             service.Delete(bookId);
 
             // Act - Assert
@@ -158,7 +174,7 @@
             var book = new Book { Name = "Name", Author = "Author", Genre = "Genre", Price = 10};
 
             A.CallTo(() => _mapperFake.Map<BookDto, Book>(bookDto)).Returns(book);
-            var service = new BookService(_unitOfWorkFake, _mapperFake, _validator);
+            var service = new BookService(_unitOfWorkFake, _mapperFake, _alwaysValidValidator);
             service.Create(bookDto);
 
             // Act - Assert

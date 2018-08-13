@@ -113,6 +113,19 @@
         }
 
         [Test]
+        public void Create_WhenCreateComment_ThenInvokeCreateByRepository()
+        {
+            // Arrange
+            var service = new CommentService(_unitOfWorkFake, _mapper, _alwaysValidValidator);
+
+            // Act
+            service.Create(new CommentDto());
+
+            // Assert
+            A.CallTo(() => _unitOfWorkFake.CommentRepository.Create(A<Comment>._)).MustHaveHappened();
+        }
+
+        [Test]
         public void Update_WhenCommentIsEmpty_ThenThrowValidExeption()
         {
             // Arrange
@@ -123,6 +136,19 @@
 
             // Act - Assert
             Assert.Throws<ValidationException>(() => service.Update(commentId, comment));
+        }
+
+        [Test]
+        public void Update_WhenUpdateComment_ThenInvokeUpdateByRepository()
+        {
+            // Arrange
+            var service = new CommentService(_unitOfWorkFake, _mapper, _alwaysValidValidator);
+
+            // Act
+            service.Update(Guid.NewGuid(), new CommentDto());
+
+            // Assert
+            A.CallTo(() => _unitOfWorkFake.CommentRepository.Update(A<Comment>._)).MustHaveHappened();
         }
 
         [Test]

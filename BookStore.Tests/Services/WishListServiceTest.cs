@@ -113,6 +113,19 @@
         }
 
         [Test]
+        public void Create_WhenCreateWish_ThenInvokeCreateByRepository()
+        {
+            // Arrange
+            var service = new WishListService(_unitOfWorkFake, _mapper, _alwaysValidValidator);
+
+            // Act
+            service.Create(new WishDto());
+
+            // Assert
+            A.CallTo(() => _unitOfWorkFake.WishListRepository.Create(A<Wish>._)).MustHaveHappened();
+        }
+
+        [Test]
         public void Update_WhenWishIsEmpty_ThenThrowValidExeption()
         {
             // Arrange
@@ -123,6 +136,19 @@
 
             // Act - Assert
             Assert.Throws<ValidationException>(() => service.Update(wishListId, wishList));
+        }
+
+        [Test]
+        public void Update_WhenUpdateWish_ThenInvokeUpdateByRepository()
+        {
+            // Arrange
+            var service = new WishListService(_unitOfWorkFake, _mapper, _alwaysValidValidator);
+
+            // Act
+            service.Update(Guid.NewGuid(), new WishDto());
+
+            // Assert
+            A.CallTo(() => _unitOfWorkFake.WishListRepository.Update(A<Wish>._)).MustHaveHappened();
         }
 
         [Test]

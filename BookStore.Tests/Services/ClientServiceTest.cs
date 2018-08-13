@@ -40,10 +40,12 @@
 
             this.clientDto = new ClientDto
             {
+                Id = Guid.NewGuid(),
+                BirthDate = DateTime.Now,
                 FirstName = "FName",
                 LastName = "LName",
-                CommentsId = new List<Guid> {Guid.NewGuid()},
-                WishedBooksId = new List<Guid> {Guid.NewGuid()}
+                CommentsId = new List<Guid> { Guid.NewGuid() },
+                WishedBooksId = new List<Guid> { Guid.NewGuid() }
             };
         }
 
@@ -133,6 +135,20 @@
 
             // Act - Assert
             Assert.Throws<ValidationException>(() => service.Update(clientId, client));
+        }
+
+        [Test]
+        public void Update_WhenClientUpdate_ThenInvokeUpdateByRepository()
+        {
+            // Arrange
+            var service = new ClientService(_unitOfWorkFake, _mapper, _validator);
+
+            // Act
+            service.Update(clientDto.Id, clientDto);
+
+            // Assert
+            A.CallTo(() => _unitOfWorkFake.ClientRepository.Update(A<Client>._)).MustHaveHappened();
+            A.CallTo(() => _unitOfWorkFake.WishListRepository.Create(A<Wish>._)).MustHaveHappened();
         }
 
         [Test]
