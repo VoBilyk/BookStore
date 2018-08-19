@@ -15,6 +15,7 @@
 *Використано IoC контейнер .NET Core, AutoMapper, Bogus, Nlog*
 
 ##Updates:
-* Upd1: Added NLogger
+* Upd1: Added logging used NLogger
 * Upd2: Changed platform for ConsoleApplication to .NET Core
 * Upd3: Added documentation
+* Upd4: Added unit test used NUnit
