@@ -49,11 +49,11 @@
         {
             var wish = _uow.WishListRepository
                 .Find(x => x.BookId == dto.BookId && x.ClientId == dto.ClientId)
-                .FirstOrDefault();
+                ?.FirstOrDefault();
 
             if (wish == null)
             {
-                throw new InvalidOperationException("Can`t find wish");
+                throw new ArgumentException("Can`t find wish");
             }
 
             return _mapper.Map<Wish, WishDto>(wish);

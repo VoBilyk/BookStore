@@ -75,11 +75,11 @@
         /// <inheritdoc/>
         public BookDto Find(BookDto dto)
         {
-            var book = _uow.BookRepository.Find(x => x.Name == dto.Name).FirstOrDefault();
+            var book = _uow.BookRepository.Find(x => x.Name == dto.Name)?.FirstOrDefault();
 
             if (book == null)
             {
-                throw new InvalidOperationException($"Can`t to find book with name: {dto.Name}");
+                throw new ArgumentException($"Can`t to find book with name: {dto.Name}");
             }
 
             return _mapper.Map<Book, BookDto>(book);

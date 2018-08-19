@@ -18,13 +18,12 @@
 
     public static class Startup
     {
-        public static Guid? CurrentClientId { get; set; }
-
         public static void ConfigureServices(IServiceCollection services)
         {
             // Instance injection
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            services.AddSingleton<IAuthService, AuthService>();
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<ICommentService, CommentService>();

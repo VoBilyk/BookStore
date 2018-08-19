@@ -101,7 +101,7 @@
         }
 
         [Test]
-        public void Find_WhenFindUnknownCLient_ThenThrowInvalidOperationExeption()
+        public void Find_WhenFindUnknownCLient_ThenThrowArgumentException()
         {
             // Arrange
             var client = new ClientDto();
@@ -109,7 +109,7 @@
             var service = new ClientService(_unitOfWorkFake, _mapper, _validator);
 
             // Act - Assert
-            Assert.Throws<InvalidOperationException>(() => service.Find(client));
+            Assert.Throws<ArgumentException>(() => service.Find(client));
         }
 
         [Test]

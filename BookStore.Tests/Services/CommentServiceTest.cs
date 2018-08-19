@@ -89,7 +89,7 @@
         }
 
         [Test]
-        public void Find_WhenFindUnknownComment_ThenThrowInvalidOperationExeption()
+        public void Find_WhenFindUnknownComment_ThenThrowArgumentException()
         {
             // Arrange
             var comment = new CommentDto();
@@ -97,7 +97,7 @@
             var service = new CommentService(_unitOfWorkFake, _mapper, _validator);
 
             // Act - Assert
-            Assert.Throws<InvalidOperationException>(() => service.Find(comment));
+            Assert.Throws<ArgumentException>(() => service.Find(comment));
         }
 
         [Test]

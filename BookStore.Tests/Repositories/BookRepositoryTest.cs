@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace BookStore.Tests.Services
+﻿namespace BookStore.Tests.Services
 {
+    using System;
     using System.Linq;
-    using FakeItEasy;
     using NUnit.Framework;
 
     using BookStore.DAL;
@@ -158,15 +156,18 @@ namespace BookStore.Tests.Services
         }
 
         [Test]
-        public void Find_WhenFindBookByUnknownId_ThenThrowArgumentException()
+        public void Find_WhenFindBookByUnknownId_ThenEmptyCollection()
         {
             // Arrange
             var bookId = default(Guid);
 
             var repository = new BookRepository(_db);
 
+            // Act
+            var foundBook = repository.Find(b => b.Id == bookId);
+
             // Act Assert
-            Assert.Throws<ArgumentException>(() => repository.Find(b => b.Id == bookId));
+            Assert.IsEmpty(foundBook);
         }
     }
 }

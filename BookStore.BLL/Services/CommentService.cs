@@ -48,11 +48,11 @@
         /// <inheritdoc/>
         public CommentDto Find(CommentDto dto)
         {
-            var comment = _uow.CommentRepository.Find(x => x.Text == dto.Text).FirstOrDefault();
+            var comment = _uow.CommentRepository.Find(x => x.Text == dto.Text)?.FirstOrDefault();
 
             if (comment == null)
             {
-                throw new InvalidOperationException($"Can`t to find comment");
+                throw new ArgumentException($"Can`t to find comment");
             }
 
             return _mapper.Map<Comment, CommentDto>(comment);

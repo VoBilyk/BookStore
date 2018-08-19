@@ -89,7 +89,7 @@
         }
 
         [Test]
-        public void Find_WhenFindUnknownWish_ThenThrowInvalidOperationExeption()
+        public void Find_WhenFindUnknownWish_ThenThrowArgumentException()
         {
             // Arrange
             var wish = new WishDto();
@@ -97,7 +97,7 @@
             var service = new WishListService(_unitOfWorkFake, _mapper, _validator);
 
             // Act - Assert
-            Assert.Throws<InvalidOperationException>(() => service.Find(wish));
+            Assert.Throws<ArgumentException>(() => service.Find(wish));
         }
 
         [Test]

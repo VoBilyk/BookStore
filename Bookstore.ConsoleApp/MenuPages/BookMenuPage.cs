@@ -15,6 +15,7 @@
     {
         private readonly ILogger<BookMenuPage> _logger;
         private readonly IClientService _clientService;
+        private readonly IAuthService _authService;
         private readonly IBookService _bookService;
         private readonly ICommentService _commentService;
         private readonly IWishListService _wishListService;
@@ -22,12 +23,14 @@
         public BookMenuPage(
             ILogger<BookMenuPage> logger,
             IClientService clientService,
+            IAuthService authService,
             IBookService bookService,
             ICommentService commentService,
             IWishListService wishListService)
         {
             this._logger = logger;
             this._clientService = clientService;
+            this._authService = authService;
             this._bookService = bookService;
             this._commentService = commentService;
             this._wishListService = wishListService;
@@ -76,19 +79,19 @@
                 .ToList()
                 ?.ForEach(c => Console.WriteLine($"\t{c}"));
 
-            if (Startup.CurrentClientId != null)
+            var currentClient = _authService.GetCurrentClient();
+            if (currentClient != null)
             {
-                UserAction(book);
+                UserAction(currentClient, book);
             }
 
             Console.ReadKey();
         }
 
-        private void UserAction(BookDto book)
+        private void UserAction(ClientDto currentClient, BookDto book)
         {
             Console.WriteLine("Your action:");
 
-            var currentClient = _clientService.Get(Startup.CurrentClientId.Value);
             var isWished = currentClient.WishedBooksId.Contains(book.Id);
             var isCommented = (from commentId in book.UserCommentsId
                                where currentClient.CommentsId.Contains(commentId)
@@ -108,7 +111,7 @@
                 try
                 {
                     var wish = _wishListService.GetAll()
-                        .FirstOrDefault(c => c.BookId == book.Id && c.ClientId == Startup.CurrentClientId.Value);
+                        .FirstOrDefault(c => c.BookId == book.Id && c.ClientId == _authService.GetCurrentClientId());
 
                     _wishListService.Delete(wish.Id);
                 }
@@ -124,7 +127,7 @@
                     _wishListService.Create(
                     new WishDto
                     {
-                        ClientId = Startup.CurrentClientId.Value,
+                        ClientId = _authService.GetCurrentClientId().Value,
                         BookId = book.Id
                     });
                 }
@@ -142,7 +145,7 @@
                 try
                 {
                     var comment = _commentService.GetAll()
-                        .FirstOrDefault(c => c.BookId == book.Id && c.ClientId == Startup.CurrentClientId);
+                        .FirstOrDefault(c => c.BookId == book.Id && c.ClientId == _authService.GetCurrentClientId());
 
                     _commentService.Delete(comment.Id);
                 }
@@ -158,7 +161,7 @@
                     _commentService.Create(
                     new CommentDto
                     {
-                        ClientId = Startup.CurrentClientId.Value,
+                        ClientId = _authService.GetCurrentClientId().Value,
                         BookId = book.Id,
                         Text = Console.ReadLine()
                     });

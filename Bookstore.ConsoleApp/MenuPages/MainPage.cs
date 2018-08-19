@@ -13,13 +13,13 @@
     public class MainPage
     {
         private readonly ILogger<MainPage> _logger;
-        private readonly IClientService _clientService;
+        private readonly IAuthService _authService;
 
         private readonly BookMenuPage _bookPage;
         private readonly ClientMenuPage _clientPage;
 
         public MainPage(
-            IClientService clientService,
+            IAuthService authService,
             ILogger<MainPage> logger,
             BookMenuPage bookPage,
             ClientMenuPage clientPage)
@@ -27,7 +27,7 @@
             this._clientPage = clientPage;
             this._bookPage = bookPage;
 
-            this._clientService = clientService;
+            this._authService = authService;
             this._logger = logger;
         }
 
@@ -36,6 +36,13 @@
             bool run = true;
             while (run)
             {
+                var currentClient = _authService.GetCurrentClient();
+                if (currentClient != null)
+                {
+                    Console.WriteLine($"Hello, {currentClient}");
+                    Console.WriteLine(new string('-', 30));
+                }
+
                 var mainMenu = new MenuVisualizer();
                 mainMenu.Add("Login/Logout", () => LoginLogout())
                     .Add("User menu", () => _clientPage.Run())
@@ -51,11 +58,17 @@
 
         private void LoginLogout()
         {
-            if (Startup.CurrentClientId != null)
+            if (_authService.GetCurrentClient() != null)
             {
-                Startup.CurrentClientId = null;
+                if (_authService.Logout())
+                {
+                    _logger.LogInformation("Logout Success");
+                }
+                else
+                {
+                    _logger.LogInformation("Can`t logout");
+                }
 
-                _logger.LogInformation("Logout Success");
                 return;
             }
 
@@ -71,16 +84,13 @@
                 LastName = secondName
             };
 
-            try
+            if (_authService.Login(client))
             {
-                Startup.CurrentClientId = _clientService.Find(client).Id;
-
                 _logger.LogInformation("Login Success");
-                return;
             }
-            catch (Exception e)
+            else
             {
-                _logger.LogError(e.Message);
+                _logger.LogWarning("Client don`t exist");
             }
         }
     }

@@ -44,14 +44,7 @@
         /// <inheritdoc/>
         public IEnumerable<TEntity> Find(Func<TEntity, bool> predicate)
         {
-            var foundedItems = _db.Where(predicate);
-
-            if (!foundedItems.Any())
-            {
-                throw new ArgumentException($"Can`t find items");
-            }
-
-            return foundedItems;
+            return _db.Where(predicate);
         }
 
         /// <inheritdoc/>

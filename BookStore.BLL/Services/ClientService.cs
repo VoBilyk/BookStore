@@ -36,11 +36,11 @@
         {
             var client = _uow.ClientRepository
                 .Find(x => (x.FirstName == dto.FirstName) && (x.LastName == dto.LastName))
-                .FirstOrDefault();
+                ?.FirstOrDefault();
 
             if (client == null)
             {
-                throw new InvalidOperationException($"Can`t to find client with name: {dto.FirstName} {dto.LastName}");
+                throw new ArgumentException($"Can`t to find client with name: {dto.FirstName} {dto.LastName}");
             }
 
             return _mapper.Map<Client, ClientDto>(client);

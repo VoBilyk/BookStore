@@ -93,7 +93,7 @@
             var book = new Book { Name = "BookName" };
 
             var service = new BookService(_unitOfWorkFake, _mapper, _alwaysValidValidator);
-            A.CallTo(() => _unitOfWorkFake.BookRepository.Find(A<Func<Book,bool>>._))
+            A.CallTo(() => _unitOfWorkFake.BookRepository.Find(A<Func<Book, bool>>._))
                 .Returns(new List<Book>{ book });
 
             // Act
@@ -104,7 +104,7 @@
         }
 
         [Test]
-        public void Find_WhenFindUnknownBook_ThenThrowInvalidOperationExeption()
+        public void Find_WhenFindUnknownBook_ThenThrowArgumentException()
         {
             // Arrange
             var book = new BookDto();
@@ -112,7 +112,7 @@
             var service = new BookService(_unitOfWorkFake, _mapper, _validator);
 
             // Act - Assert
-            Assert.Throws<InvalidOperationException>(() => service.Find(book));
+            Assert.Throws<ArgumentException>(() => service.Find(book));
         }
 
         [Test]
@@ -171,7 +171,7 @@
         public void Create_WhenGetBook_ThenInvokedMapper()
         {
             // Arrange
-            var book = new Book { Name = "Name", Author = "Author", Genre = "Genre", Price = 10};
+            var book = new Book { Name = "Name", Author = "Author", Genre = "Genre", Price = 10 };
 
             A.CallTo(() => _mapperFake.Map<BookDto, Book>(bookDto)).Returns(book);
             var service = new BookService(_unitOfWorkFake, _mapperFake, _alwaysValidValidator);
