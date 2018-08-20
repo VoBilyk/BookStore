@@ -1,18 +1,19 @@
 # BookStore
 
-## Що зроблено:
-* Створено solution з наступними функціями:
-    * Console application для взаємодії з користувачем
-    * управління каталогом книжок - додавання, редагування, видалення описів книжок, коментарів до книжок.
-    * ведення WishList клієнтів.
-    * пошук. 
-    * управління клієнтами - додавання, редагування, видалення.
-    * авторизація користувача
-* Присутні сутності Book, Client, WishList(BookClient, n:m),Comments (Client Comments for Book, 1:n) 
-* Проект створено за багаторівневою архітектурою (Presentation layer, Business layer, Data Access layer)
-* Data Access layer сформовано за UnitOfWork паттерном, що містить repositories
+## What is done:
+* Created solution has following features:
+    * Console application to interact with the user
+    * managing the catalog of books - adding, editing, deleting book descriptions, commenting on books.
+    * managing by clients - adding, editing, deleting items, creating comments, wishlist.
+    * authorization.
+    * searching. 
 
-*Використано IoC контейнер .NET Core, AutoMapper, Bogus, Nlog*
+* Existed entities Book, Client, WishList(BookClient, n:m),Comments (Client Comments for Book, 1:n) 
+* Created by multilayer architecture (Presentation layer, Business layer, Data Access layer)
+* Data Access layer implemented by UnitOfWork pattern with repositories
+
+*Used standart .NET Core IoC container, AutoMapper, FluentValidator, Bogus, Nlog, NUnit, FakeItEasy*
+[SolarScanner analysis](https://sonarcloud.io/dashboard?id=5211bookstore)
 
 ##Updates:
 * Upd1: Added logging used NLogger
