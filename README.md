@@ -13,6 +13,7 @@
 * Data Access layer implemented by UnitOfWork pattern with repositories
 
 *Used standart .NET Core IoC container, AutoMapper, FluentValidator, Bogus, Nlog, NUnit, FakeItEasy*
+
 [SolarScanner analysis](https://sonarcloud.io/dashboard?id=5211bookstore)
 
 ##Updates:
