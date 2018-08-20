@@ -56,7 +56,14 @@
             // Arrange
             var books = new List<Book>() { new Book { }, new Book { } };
 
-            A.CallTo(() => _unitOfWorkFake.BookRepository.Get()).Returns(books);
+            A.CallTo(() => _unitOfWorkFake.BookRepository.Get())
+                .Returns(books);
+
+            A.CallTo(() => _unitOfWorkFake.WishListRepository.Find(A<Func<Wish, bool>>._))
+                .Returns(new List<Wish> { new Wish() });
+
+            A.CallTo(() => _unitOfWorkFake.CommentRepository.Find(A<Func<Comment, bool>>._))
+                .Returns(new List<Comment> { new Comment() });
 
             var service = new BookService(_unitOfWorkFake, _mapper, _alwaysValidValidator);
 
@@ -75,6 +82,12 @@
 
             A.CallTo(() => _unitOfWorkFake.BookRepository.Get(bookId))
                 .Returns(new Book { Id = bookId });
+
+            A.CallTo(() => _unitOfWorkFake.WishListRepository.Find(A<Func<Wish, bool>>._))
+                .Returns(new List<Wish> { new Wish() });
+
+            A.CallTo(() => _unitOfWorkFake.CommentRepository.Find(A<Func<Comment, bool>>._))
+                .Returns(new List<Comment> { new Comment() });
 
             var service = new BookService(_unitOfWorkFake, _mapper, _alwaysValidValidator);
 

@@ -57,6 +57,12 @@
 
             A.CallTo(() => _unitOfWorkFake.ClientRepository.Get()).Returns(clients);
 
+            A.CallTo(() => _unitOfWorkFake.WishListRepository.Find(A<Func<Wish, bool>>._))
+                .Returns(new List<Wish> { new Wish() });
+
+            A.CallTo(() => _unitOfWorkFake.CommentRepository.Find(A<Func<Comment, bool>>._))
+                .Returns(new List<Comment> { new Comment() });
+
             var service = new ClientService(_unitOfWorkFake, _mapper, _alwaysValidValidator);
 
             // Act
@@ -74,6 +80,12 @@
 
             A.CallTo(() => _unitOfWorkFake.ClientRepository.Get(clientId))
                 .Returns(new Client { Id = clientId });
+
+            A.CallTo(() => _unitOfWorkFake.WishListRepository.Find(A<Func<Wish, bool>>._))
+                .Returns(new List<Wish> { new Wish() });
+
+            A.CallTo(() => _unitOfWorkFake.CommentRepository.Find(A<Func<Comment, bool>>._))
+                .Returns(new List<Comment> { new Comment() });
 
             var service = new ClientService(_unitOfWorkFake, _mapper, _alwaysValidValidator);
 
