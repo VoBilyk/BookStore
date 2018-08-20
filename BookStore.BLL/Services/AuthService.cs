@@ -14,18 +14,15 @@
     public class AuthService : IAuthService
     {
         private readonly IUnitOfWork _uow;
-        private readonly ILogger<AuthService> _logger;
         private readonly IClientService _clientService;
 
         private Guid? _currentUserId;
 
         public AuthService(
             IUnitOfWork uow,
-            ILogger<AuthService> logger,
             IClientService clientService)
         {
             this._uow = uow;
-            this._logger = logger;
             this._clientService = clientService;
         }
 
@@ -47,16 +44,9 @@
         /// <inheritdoc/>
         public bool Login(ClientDto client)
         {
-            try
-            {
-                _currentUserId = _uow.ClientRepository
-                    .Find(x => (x.FirstName == client.FirstName) && (x.LastName == client.LastName))?
-                    .FirstOrDefault()?.Id;
-            }
-            catch (ArgumentException e)
-            {
-                _logger.LogError(e, e.Message);
-            }
+            _currentUserId = _uow.ClientRepository
+                .Find(x => (x.FirstName == client.FirstName) && (x.LastName == client.LastName))?
+                .FirstOrDefault()?.Id;
 
             return _currentUserId.HasValue;
         }

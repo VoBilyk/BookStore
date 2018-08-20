@@ -1,4 +1,4 @@
-﻿namespace BookStore.Tests.Services
+﻿namespace BookStore.Tests.Repositories
 {
     using System;
     using System.Linq;

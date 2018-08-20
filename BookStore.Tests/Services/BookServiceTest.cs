@@ -48,7 +48,6 @@
                 WishedClientsId = new List<Guid> { Guid.NewGuid() },
                 UserCommentsId = new List<Guid> { Guid.NewGuid() }
             };
-
         }
 
         [Test]
@@ -94,7 +93,7 @@
 
             var service = new BookService(_unitOfWorkFake, _mapper, _alwaysValidValidator);
             A.CallTo(() => _unitOfWorkFake.BookRepository.Find(A<Func<Book, bool>>._))
-                .Returns(new List<Book>{ book });
+                .Returns(new List<Book> { book });
 
             // Act
             var returnedBook = service.Find(bookDto);
