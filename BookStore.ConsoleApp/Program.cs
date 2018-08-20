@@ -6,7 +6,7 @@
 
     using BookStore.ConsoleApp.MenuPages;
 
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -15,7 +15,7 @@
 
             // Running app
             var serviceProvider = services.BuildServiceProvider();
-            var logger = serviceProvider.GetService<ILoggerFactory>().CreateLogger<Program>();
+            var logger = serviceProvider.GetService<ILoggerFactory>().CreateLogger(typeof(Program));
 
             try
             {

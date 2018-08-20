@@ -14,9 +14,9 @@
     /// <inheritdoc/>
     public class CommentService : ICommentService
     {
-        private IUnitOfWork _uow;
-        private IMapper _mapper;
-        private IValidator<Comment> _validator;
+        private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
+        private readonly IValidator<Comment> _validator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommentService"/> class.

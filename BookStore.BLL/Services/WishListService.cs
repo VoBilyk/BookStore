@@ -14,9 +14,9 @@
     /// <inheritdoc/>
     public class WishListService : IWishListService
     {
-        private IUnitOfWork _uow;
-        private IMapper _mapper;
-        private IValidator<Wish> _validator;
+        private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
+        private readonly IValidator<Wish> _validator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WishListService"/> class.

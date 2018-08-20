@@ -48,30 +48,30 @@
         }
 
         /// <inheritdoc/>
-        public void Create(TEntity item)
+        public void Create(TEntity entity)
         {
-            var foundedItem = _db.Find(i => i.Id == item.Id);
+            var foundedItem = _db.Find(i => i.Id == entity.Id);
 
             if (foundedItem != null)
             {
-                throw new ArgumentException($"Item with id: {item.Id} has already exist");
+                throw new ArgumentException($"Item with id: {entity.Id} has already exist");
             }
 
-            _db.Add(item);
+            _db.Add(entity);
         }
 
         /// <inheritdoc/>
-        public void Update(TEntity item)
+        public void Update(TEntity entity)
         {
-            var foundedItem = _db.Find(t => t.Id == item.Id);
+            var foundedItem = _db.Find(t => t.Id == entity.Id);
 
             if (foundedItem == null)
             {
-                throw new ArgumentException($"Item id: {item.Id} which need update don`t exists");
+                throw new ArgumentException($"Item id: {entity.Id} which need update don`t exists");
             }
 
             _db.Remove(foundedItem);
-            _db.Add(item);
+            _db.Add(entity);
         }
 
         /// <inheritdoc/>

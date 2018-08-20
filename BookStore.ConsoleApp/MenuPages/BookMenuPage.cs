@@ -43,7 +43,7 @@
                 .Add("Add book", () => AddBook())
                 .Add("Update book", () => UpdateBook())
                 .Add("Remove book", () => RemoveBook())
-                .Add("Return back", () => { return; });
+                .Add("Return back", () => { });
             menu.Display();
         }
 
@@ -100,13 +100,13 @@
             var userMenu = new MenuVisualizer();
             userMenu.Add(isWished ? "Remove from WishList" : "Add to WishList", () => AddRemoveWishlist(book, isWished))
                     .Add(isCommented ? "Remove comment" : "Add comment", () => AddRemoveComment(book, isCommented))
-                    .Add("Return back", () => { return; })
+                    .Add("Return back", () => { })
                     .Display();
         }
 
         private void AddRemoveWishlist(BookDto book, bool remove)
         {
-            if (remove == true)
+            if (remove)
             {
                 try
                 {
@@ -140,7 +140,7 @@
 
         private void AddRemoveComment(BookDto book, bool remove)
         {
-            if (remove == true)
+            if (remove)
             {
                 try
                 {

@@ -14,9 +14,9 @@
     /// <inheritdoc/>
     public class ClientService : IClientService
     {
-        private IUnitOfWork _uow;
-        private IMapper _mapper;
-        private IValidator<Client> _validator;
+        private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
+        private readonly IValidator<Client> _validator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClientService"/> class.

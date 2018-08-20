@@ -35,7 +35,7 @@
                 .Add("Add client", () => AddClient())
                 .Add("Update client", () => UpdateClient())
                 .Add("Remove client", () => RemoveClient())
-                .Add("Return back", () => { return; });
+                .Add("Return back", () => { });
             menu.Display();
         }
 

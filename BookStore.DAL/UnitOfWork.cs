@@ -9,7 +9,7 @@
     /// </summary>
     public class UnitOfWork : IUnitOfWork
     {
-        private DataSource _db;
+        private readonly DataSource _db;
 
         private IBookRepository _bookRepository;
         private IClientRepository _clientRepository;
@@ -22,15 +22,59 @@
         }
 
         /// <inheritdoc/>
-        public IBookRepository BookRepository => _bookRepository ?? new BookRepository(_db);
+        public IBookRepository BookRepository
+        {
+            get
+            {
+                if (_bookRepository == null)
+                {
+                    _bookRepository = new BookRepository(_db);
+                }
+
+                return _bookRepository;
+            }
+        }
 
         /// <inheritdoc/>
-        public IClientRepository ClientRepository => _clientRepository ?? new ClientRepository(_db);
+        public IClientRepository ClientRepository
+        {
+            get
+            {
+                if (_clientRepository == null)
+                {
+                    _clientRepository = new ClientRepository(_db);
+                }
+
+                return _clientRepository;
+            }
+        }
 
         /// <inheritdoc/>
-        public ICommentRepository CommentRepository => _commentRepository ?? new CommentRepository(_db);
+        public ICommentRepository CommentRepository
+        {
+            get
+            {
+                if (_commentRepository == null)
+                {
+                    _commentRepository = new CommentRepository(_db);
+                }
+
+                return _commentRepository;
+            }
+        }
 
         /// <inheritdoc/>
-        public IWishListRepository WishListRepository => _wishListRepository ?? new WishListRepository(_db);
+        public IWishListRepository WishListRepository
+        {
+            get
+            {
+                if (_wishListRepository == null)
+                {
+                    _wishListRepository = new WishListRepository(_db);
+                }
+
+                return _wishListRepository;
+            }
+        }
     }
 }

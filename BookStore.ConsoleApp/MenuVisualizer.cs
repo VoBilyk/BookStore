@@ -10,7 +10,7 @@
     /// </summary>
     public class MenuVisualizer : IMenuVisualizer
     {
-        private IList<(string Name, Action Callback)> _options;
+        private readonly IList<(string Name, Action Callback)> _options;
 
         public MenuVisualizer()
         {

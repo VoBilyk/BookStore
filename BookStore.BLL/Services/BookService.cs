@@ -14,9 +14,9 @@
     /// <inheritdoc/>
     public class BookService : IBookService
     {
-        private IUnitOfWork _uow;
-        private IMapper _mapper;
-        private IValidator<Book> _validator;
+        private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
+        private readonly IValidator<Book> _validator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BookService"/> class.
