@@ -5,15 +5,17 @@
     using Microsoft.Extensions.Logging;
 
     using BookStore.BLL.Interfaces;
-    using BookStore.ConsoleApp;
+    using BookStore.ConsoleApp.Interfaces;
     using BookStore.Shared.DTOs;
 
     /// <summary>
     /// Page for working with books
     /// </summary>
-    public class BookMenuPage
+    public class BookMenuPage : IPage
     {
         private readonly ILogger<BookMenuPage> _logger;
+        private readonly IMenuVisualizer _menuVisualizer;
+        private readonly IOutputEnvironment _outputEnvironment;
         private readonly IClientService _clientService;
         private readonly IAuthService _authService;
         private readonly IBookService _bookService;
@@ -22,6 +24,8 @@
 
         public BookMenuPage(
             ILogger<BookMenuPage> logger,
+            IMenuVisualizer menuVisualizer,
+            IOutputEnvironment outputEnvironment,
             IClientService clientService,
             IAuthService authService,
             IBookService bookService,
@@ -29,6 +33,9 @@
             IWishListService wishListService)
         {
             this._logger = logger;
+            this._outputEnvironment = outputEnvironment;
+            this._menuVisualizer = menuVisualizer;
+
             this._clientService = clientService;
             this._authService = authService;
             this._bookService = bookService;
@@ -36,9 +43,10 @@
             this._wishListService = wishListService;
         }
 
-        public void Run()
+        /// <inheritdoc/>
+        public void Display()
         {
-            var menu = new MenuVisualizer()
+            var menu = _menuVisualizer.FactoryMethod()
                 .Add("Show books", () => ShowBooks())
                 .Add("Add book", () => AddBook())
                 .Add("Update book", () => UpdateBook())
@@ -47,37 +55,37 @@
             menu.Display();
         }
 
-        private void ShowBooks()
+        public void ShowBooks()
         {
             var books = _bookService.GetAll();
 
-            MenuVisualizer.ShowCollection(books);
-            Console.Write("\nChoose someone: ");
-            var choice = MenuVisualizer.ReadInt(1, books.Count);
+            _menuVisualizer.ShowCollection(books);
+            _outputEnvironment.Write("\nChoose someone: ");
+            var choice = _outputEnvironment.ReadInt(1, books.Count);
 
             ShowDetails(books[choice - 1]);
         }
 
-        private void ShowDetails(BookDto book)
+        public void ShowDetails(BookDto book)
         {
-            Console.WriteLine($"\nName: {book.Name}");
-            Console.WriteLine($"Genre: {book.Genre}");
-            Console.WriteLine($"Author: {book.Author}");
-            Console.WriteLine($"Price: {book.Price}$");
+            _outputEnvironment.WriteLine($"\nName: {book.Name}");
+            _outputEnvironment.WriteLine($"Genre: {book.Genre}");
+            _outputEnvironment.WriteLine($"Author: {book.Author}");
+            _outputEnvironment.WriteLine($"Price: {book.Price}$");
 
-            Console.WriteLine("Users which wish:");
+            _outputEnvironment.WriteLine("Users which wish:");
             foreach (var clientId in book.WishedClientsId)
             {
                 var client = _clientService.Get(clientId);
-                Console.WriteLine($"\t{client}");
+                _outputEnvironment.WriteLine($"\t{client}");
             }
 
-            Console.WriteLine("Comments:");
+            _outputEnvironment.WriteLine("Comments:");
             _commentService
                 .GetAll()
                 .Where(c => c.BookId == book.Id)
                 .ToList()
-                ?.ForEach(c => Console.WriteLine($"\t{c}"));
+                ?.ForEach(c => _outputEnvironment.WriteLine($"\t{c}"));
 
             var currentClient = _authService.GetCurrentClient();
             if (currentClient != null)
@@ -85,26 +93,26 @@
                 UserAction(currentClient, book);
             }
 
-            Console.ReadKey();
+            _outputEnvironment.ReadKey();
         }
 
-        private void UserAction(ClientDto currentClient, BookDto book)
+        public void UserAction(ClientDto currentClient, BookDto book)
         {
-            Console.WriteLine("Your action:");
+            _outputEnvironment.WriteLine("Your action:");
 
             var isWished = currentClient.WishedBooksId.Contains(book.Id);
             var isCommented = (from commentId in book.UserCommentsId
                                where currentClient.CommentsId.Contains(commentId)
                                select true).FirstOrDefault();
 
-            var userMenu = new MenuVisualizer();
+            var userMenu = _menuVisualizer.FactoryMethod();
             userMenu.Add(isWished ? "Remove from WishList" : "Add to WishList", () => AddRemoveWishlist(book, isWished))
                     .Add(isCommented ? "Remove comment" : "Add comment", () => AddRemoveComment(book, isCommented))
                     .Add("Return back", () => { })
                     .Display();
         }
 
-        private void AddRemoveWishlist(BookDto book, bool remove)
+        public void AddRemoveWishlist(BookDto book, bool remove)
         {
             if (remove)
             {
@@ -138,7 +146,7 @@
             }
         }
 
-        private void AddRemoveComment(BookDto book, bool remove)
+        public void AddRemoveComment(BookDto book, bool remove)
         {
             if (remove)
             {
@@ -163,7 +171,7 @@
                     {
                         ClientId = _authService.GetCurrentClientId().Value,
                         BookId = book.Id,
-                        Text = Console.ReadLine()
+                        Text = _outputEnvironment.Read()
                     });
                 }
                 catch (Exception ex)
@@ -173,7 +181,7 @@
             }
         }
 
-        private void AddBook()
+        public void AddBook()
         {
             var book = EnterBookData();
 
@@ -188,11 +196,11 @@
             }
         }
 
-        private void UpdateBook()
+        public void UpdateBook()
         {
             var books = _bookService.GetAll();
-            MenuVisualizer.ShowCollection(books);
-            int choice = MenuVisualizer.ReadInt(1, books.Count);
+            _menuVisualizer.ShowCollection(books);
+            var choice = _outputEnvironment.ReadInt(1, books.Count);
 
             var book = EnterBookData();
 
@@ -207,21 +215,21 @@
             }
         }
 
-        private void RemoveBook()
+        public void RemoveBook()
         {
             var books = _bookService.GetAll();
 
-            MenuVisualizer.ShowCollection(books);
+            _menuVisualizer.ShowCollection(books);
 
-            Console.Write("Your choice: ");
-            int choice = MenuVisualizer.ReadInt(1, books.Count);
+            _outputEnvironment.Write("Your choice: ");
+            var choice = _outputEnvironment.ReadInt(1, books.Count);
 
             try
             {
                 _bookService.Delete(books[choice - 1].Id);
                 _logger.LogInformation("Deleted success");
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
             }
@@ -229,19 +237,17 @@
 
         private BookDto EnterBookData()
         {
-            Console.Write("Enter new name: ");
-            string name = Console.ReadLine();
+            _outputEnvironment.Write("Enter new name: ");
+            var name = _outputEnvironment.Read();
 
-            Console.Write("Enter new author: ");
-            string author = Console.ReadLine();
+            _outputEnvironment.Write("Enter new author: ");
+            var author = _outputEnvironment.Read();
 
-            Console.Write("Enter new genre: ");
-            string genre = Console.ReadLine();
+            _outputEnvironment.Write("Enter new genre: ");
+            var genre = _outputEnvironment.Read();
 
-            Console.Write("Enter new price: ");
-            string strPrice = Console.ReadLine();
-
-            decimal.TryParse(strPrice, out decimal price);
+            _outputEnvironment.Write("Enter new price: ");
+            var price = _outputEnvironment.ReadInt();
 
             return new BookDto
             {

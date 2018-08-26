@@ -1,4 +1,6 @@
-﻿namespace BookStore.ConsoleApp
+﻿using BookStore.ConsoleApp.Interfaces;
+
+namespace BookStore.ConsoleApp
 {
     using System;
     using AutoMapper;
@@ -43,6 +45,8 @@
                 cfg.AddProfile<GeneralProfile>();
             });
 
+            services.AddSingleton<IOutputEnvironment, OutputEnvironment>();
+            services.AddSingleton<IMenuVisualizer, MenuVisualizer>();
             services.AddTransient<MainPage>();
             services.AddTransient<ClientMenuPage>();
             services.AddTransient<BookMenuPage>();

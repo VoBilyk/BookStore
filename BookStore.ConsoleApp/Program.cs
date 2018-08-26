@@ -19,7 +19,7 @@
 
             try
             {
-                serviceProvider.GetService<MainPage>().Run();
+                serviceProvider.GetService<MainPage>().Display();
             }
             catch (Exception ex)
             {

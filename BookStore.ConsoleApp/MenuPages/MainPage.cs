@@ -5,33 +5,41 @@
 
     using BookStore.BLL.Interfaces;
     using BookStore.ConsoleApp;
+    using BookStore.ConsoleApp.Interfaces;
     using BookStore.Shared.DTOs;
 
     /// <summary>
     /// Page from which started design
     /// </summary>
-    public class MainPage
+    public class MainPage : IPage
     {
         private readonly ILogger<MainPage> _logger;
         private readonly IAuthService _authService;
+        private readonly IMenuVisualizer _menuVisualizer;
+        private readonly IOutputEnvironment _outputEnvironment;
 
         private readonly BookMenuPage _bookPage;
         private readonly ClientMenuPage _clientPage;
 
         public MainPage(
-            IAuthService authService,
             ILogger<MainPage> logger,
+            IMenuVisualizer menuVisualizer,
+            IOutputEnvironment outputEnvironment,
+            IAuthService authService,
             BookMenuPage bookPage,
             ClientMenuPage clientPage)
         {
             this._clientPage = clientPage;
             this._bookPage = bookPage;
 
+            this._menuVisualizer = menuVisualizer;
+            this._outputEnvironment = outputEnvironment;
             this._authService = authService;
             this._logger = logger;
         }
 
-        public void Run()
+        /// <inheritdoc/>
+        public void Display()
         {
             bool run = true;
             while (run)
@@ -39,24 +47,24 @@
                 var currentClient = _authService.GetCurrentClient();
                 if (currentClient != null)
                 {
-                    Console.WriteLine($"Hello, {currentClient}");
-                    Console.WriteLine(new string('-', 30));
+                    _outputEnvironment.WriteLine($"Hello, {currentClient}");
+                    _outputEnvironment.WriteLine(new string('-', 30));
                 }
 
-                var mainMenu = new MenuVisualizer();
+                var mainMenu = _menuVisualizer.FactoryMethod();
                 mainMenu.Add("Login/Logout", () => LoginLogout())
-                    .Add("User menu", () => _clientPage.Run())
-                    .Add("Book menu", () => _bookPage.Run())
+                    .Add("User menu", () => _clientPage.Display())
+                    .Add("Book menu", () => _bookPage.Display())
                     .Add("Exit", () => run = false);
 
                 mainMenu.Display();
 
-                Console.WriteLine();
-                Console.WriteLine(new string('-', 30));
+                _outputEnvironment.WriteLine("\n");
+                _outputEnvironment.WriteLine(new string('-', 30));
             }
         }
 
-        private void LoginLogout()
+        public void LoginLogout()
         {
             if (_authService.GetCurrentClient() != null)
             {
@@ -72,11 +80,11 @@
                 return;
             }
 
-            Console.Write("Enter first name: ");
-            string firstName = Console.ReadLine();
+            _outputEnvironment.Write("Enter first name: ");
+            var firstName = _outputEnvironment.Read();
 
-            Console.Write("Enter second name: ");
-            string secondName = Console.ReadLine();
+            _outputEnvironment.Write("Enter second name: ");
+            var secondName = _outputEnvironment.Read();
 
             var client = new ClientDto
             {
