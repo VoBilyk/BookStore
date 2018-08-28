@@ -45,11 +45,11 @@
         }
 
         /// <inheritdoc/>
-        public List<WishDto> Find(string id)
+        public List<WishDto> Find(string query)
         {
-            if (!Guid.TryParse(id, out Guid guid))
+            if (!Guid.TryParse(query, out Guid guid))
             {
-                return null;
+                return new List<WishDto>();
             }
 
             var wishList = _uow.WishListRepository
