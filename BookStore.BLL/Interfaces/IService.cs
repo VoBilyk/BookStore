@@ -25,9 +25,9 @@
         /// <summary>
         /// Finding item
         /// </summary>
-        /// <param name="dto">Data transfer object of item which need to find</param>
-        /// <returns>Found item</returns>
-        TDto Find(TDto dto);
+        /// <param name="query">Value which need to find</param>
+        /// <returns>Found items</returns>
+        List<TDto> Find(string query);
 
         /// <summary>
         /// Creating item

@@ -106,22 +106,25 @@
                 .Returns(new List<Client> { client });
 
             // Act
-            var returnedClient = service.Find(clientDto);
+            var returnedClient = service.Find(client.FirstName);
 
             // Assert
-            Assert.AreEqual(clientDto.FirstName, returnedClient.FirstName);
+            Assert.AreEqual(clientDto.FirstName, returnedClient[0].FirstName);
         }
 
         [Test]
-        public void Find_WhenFindUnknownCLient_ThenThrowArgumentException()
+        public void Find_WhenFindUnknownClient_ThenReturnEmptyCollection()
         {
             // Arrange
             var client = new ClientDto();
 
             var service = new ClientService(_unitOfWorkFake, _mapper, _validator);
 
-            // Act - Assert
-            Assert.Throws<ArgumentException>(() => service.Find(client));
+            // Act
+            var result = service.Find(string.Empty);
+
+            // Assert
+            Assert.IsEmpty(result);
         }
 
         [Test]

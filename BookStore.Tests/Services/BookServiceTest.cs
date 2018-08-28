@@ -109,22 +109,25 @@
                 .Returns(new List<Book> { book });
 
             // Act
-            var returnedBook = service.Find(bookDto);
+            var returnedBook = service.Find(book.Name);
 
             // Assert
-            Assert.AreEqual(bookDto.Name, returnedBook.Name);
+            Assert.AreEqual(bookDto.Name, returnedBook[0].Name);
         }
 
         [Test]
-        public void Find_WhenFindUnknownBook_ThenThrowArgumentException()
+        public void Find_WhenFindUnknownBook_ThenReturnEmptyCollection()
         {
             // Arrange
             var book = new BookDto();
 
             var service = new BookService(_unitOfWorkFake, _mapper, _validator);
 
-            // Act - Assert
-            Assert.Throws<ArgumentException>(() => service.Find(book));
+            // Act
+            var result = service.Find(string.Empty);
+
+            // Assert
+            Assert.IsEmpty(result);
         }
 
         [Test]

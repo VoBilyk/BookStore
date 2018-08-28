@@ -76,6 +76,16 @@
         }
 
         [Test]
+        public void Find_WhenFindClient_ThenInvokeFindByService()
+        {
+            // Act
+            _page.Find();
+
+            // Assert
+            A.CallTo(() => _clientService.Find(A<string>._)).MustHaveHappened();
+        }
+
+        [Test]
         public void AddClient_WhenAddClient_ThenInvokeCreateByService()
         {
             // Act

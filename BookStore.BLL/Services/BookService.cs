@@ -10,6 +10,7 @@
     using BookStore.DAL.Interfaces;
     using BookStore.DAL.Models;
     using BookStore.Shared.DTOs;
+    using BookStore.Shared.Extensions;
 
     /// <inheritdoc/>
     public class BookService : IBookService
@@ -73,16 +74,15 @@
         }
 
         /// <inheritdoc/>
-        public BookDto Find(BookDto dto)
+        public List<BookDto> Find(string query)
         {
-            var book = _uow.BookRepository.Find(x => x.Name == dto.Name)?.FirstOrDefault();
+            var books = _uow.BookRepository
+                .Find(x => x.Name.ContainsIgnoringCase(query) ||
+                           x.Genre.ContainsIgnoringCase(query) ||
+                           x.Author.ContainsIgnoringCase(query))
+                .ToList();
 
-            if (book == null)
-            {
-                throw new ArgumentException($"Can`t to find book with name: {dto.Name}");
-            }
-
-            return _mapper.Map<Book, BookDto>(book);
+            return _mapper.Map<List<Book>, List<BookDto>>(books);
         }
 
         /// <inheritdoc/>

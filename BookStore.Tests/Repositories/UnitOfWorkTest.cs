@@ -1,7 +1,4 @@
-﻿
-using BookStore.DAL.Interfaces;
-
-namespace BookStore.Tests.Repositories
+﻿namespace BookStore.Tests.Repositories
 {
     using System;
     using System.Linq;
@@ -9,6 +6,7 @@ namespace BookStore.Tests.Repositories
     using NUnit.Framework;
 
     using BookStore.DAL;
+    using BookStore.DAL.Interfaces;
     using BookStore.DAL.Models;
     using BookStore.DAL.Repositories;
 

@@ -1,6 +1,4 @@
-﻿using BookStore.ConsoleApp.Interfaces;
-
-namespace BookStore.Tests.Visualizations
+﻿namespace BookStore.Tests.Visualizations
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +7,7 @@ namespace BookStore.Tests.Visualizations
     using NUnit.Framework;
 
     using BookStore.ConsoleApp;
+    using BookStore.ConsoleApp.Interfaces;
     using BookStore.DAL;
     using BookStore.DAL.Models;
     using BookStore.DAL.Repositories;

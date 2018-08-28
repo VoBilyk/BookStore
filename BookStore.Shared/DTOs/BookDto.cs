@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
 
+    using BookStore.Shared.Resources;
+
     public class BookDto
     {
         public BookDto()
@@ -27,7 +29,7 @@
 
         public override string ToString()
         {
-            return $"Name: {Name}, author: {Author}, genre: {Genre}, price: {Price}";
+            return $"{Resource.Name}: {Name}, {Resource.Author}: {Author}, {Resource.Genre}: {Genre}, {Resource.Price}: {Price}";
         }
     }
 }

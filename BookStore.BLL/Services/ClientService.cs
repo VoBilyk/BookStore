@@ -10,6 +10,7 @@
     using BookStore.DAL.Interfaces;
     using BookStore.DAL.Models;
     using BookStore.Shared.DTOs;
+    using BookStore.Shared.Extensions;
 
     /// <inheritdoc/>
     public class ClientService : IClientService
@@ -32,18 +33,14 @@
         }
 
         /// <inheritdoc/>
-        public ClientDto Find(ClientDto dto)
+        public List<ClientDto> Find(string query)
         {
-            var client = _uow.ClientRepository
-                .Find(x => (x.FirstName == dto.FirstName) && (x.LastName == dto.LastName))
-                ?.FirstOrDefault();
+            var clients = _uow.ClientRepository
+                .Find(x => x.FirstName.ContainsIgnoringCase(query) ||
+                           x.LastName.ContainsIgnoringCase(query))
+                .ToList();
 
-            if (client == null)
-            {
-                throw new ArgumentException($"Can`t to find client with name: {dto.FirstName} {dto.LastName}");
-            }
-
-            return _mapper.Map<Client, ClientDto>(client);
+            return _mapper.Map<List<Client>, List<ClientDto>>(clients);
         }
 
         /// <inheritdoc/>

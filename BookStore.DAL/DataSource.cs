@@ -59,7 +59,7 @@
                 .RuleFor(o => o.Id, f => Guid.NewGuid())
                 .RuleFor(o => o.FirstName, f => f.Name.FirstName())
                 .RuleFor(o => o.LastName, f => f.Name.LastName())
-                .RuleFor(o => o.BirthDate, f => f.Date.Past(50))
+                .RuleFor(o => o.BirthDate, f => f.Date.Past(50).Date)
                 .RuleFor(o => o.Email, f => f.Internet.Email())
                 .RuleFor(o => o.Address, f => f.Address.FullAddress());
 

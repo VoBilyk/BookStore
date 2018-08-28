@@ -82,26 +82,29 @@
                 .Returns(new List<Comment> { comment });
 
             // Act
-            var returnedComment = service.Find(commentDto);
+            var returnedComment = service.Find(comment.Text);
 
             // Assert
-            Assert.AreEqual(commentDto.Text, returnedComment.Text);
+            Assert.AreEqual(commentDto.Text, returnedComment[0].Text);
         }
 
         [Test]
-        public void Find_WhenFindUnknownComment_ThenThrowArgumentException()
+        public void Find_WhenFindUnknownComment_ThenReturnEmptyCollection()
         {
             // Arrange
             var comment = new CommentDto();
 
             var service = new CommentService(_unitOfWorkFake, _mapper, _validator);
 
-            // Act - Assert
-            Assert.Throws<ArgumentException>(() => service.Find(comment));
+            // Act
+            var result = service.Find(string.Empty);
+
+            // Assert
+            Assert.IsEmpty(result);
         }
 
         [Test]
-        public void Create_WhenCommentIsEmpty_ThenThrowValidExeption()
+        public void Create_WhenCommentIsEmpty_ThenThrowValidException()
         {
             // Arrange
             var comment = new CommentDto();
@@ -126,7 +129,7 @@
         }
 
         [Test]
-        public void Update_WhenCommentIsEmpty_ThenThrowValidExeption()
+        public void Update_WhenCommentIsEmpty_ThenThrowValidException()
         {
             // Arrange
             var comment = new CommentDto();

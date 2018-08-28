@@ -70,6 +70,16 @@
         }
 
         [Test]
+        public void Find_WhenFindBook_ThenInvokeFindByService()
+        {
+            // Act
+            _page.Find();
+
+            // Assert
+            A.CallTo(() => _bookService.Find(A<string>._)).MustHaveHappened();
+        }
+
+        [Test]
         public void Display_WhenDisplayMenu_ThenCreateMenu()
         {
             // Arrange

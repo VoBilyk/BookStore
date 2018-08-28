@@ -82,22 +82,25 @@
                 .Returns(new List<Wish> { wish });
 
             // Act
-            var returnedWish = service.Find(wishDto);
+            var returnedWish = service.Find(wish.Id.ToString());
 
             // Assert
-            Assert.AreEqual(wishDto.Id, returnedWish.Id);
+            Assert.AreEqual(wishDto.Id, returnedWish[0].Id);
         }
 
         [Test]
-        public void Find_WhenFindUnknownWish_ThenThrowArgumentException()
+        public void Find_WhenFindUnknownWish_ThenReturnNull()
         {
             // Arrange
             var wish = new WishDto();
 
             var service = new WishListService(_unitOfWorkFake, _mapper, _validator);
 
-            // Act - Assert
-            Assert.Throws<ArgumentException>(() => service.Find(wish));
+            // Act
+            var result = service.Find(string.Empty);
+
+            // Assert
+            Assert.IsNull(result);
         }
 
         [Test]

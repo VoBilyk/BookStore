@@ -13,7 +13,6 @@
     [TestFixture]
     public class MainMenuPageTest
     {
-
         private ILogger<MainPage> _logger;
         private IMenuVisualizer _menuVisualizer;
         private IOutputEnvironment _outputEnvironment;

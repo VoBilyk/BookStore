@@ -7,6 +7,7 @@
     using BookStore.BLL.Interfaces;
     using BookStore.ConsoleApp.Interfaces;
     using BookStore.Shared.DTOs;
+    using BookStore.Shared.Resources;
 
     /// <summary>
     /// Page for working with books
@@ -47,11 +48,12 @@
         public void Display()
         {
             var menu = _menuVisualizer.FactoryMethod()
-                .Add("Show books", () => ShowBooks())
-                .Add("Add book", () => AddBook())
-                .Add("Update book", () => UpdateBook())
-                .Add("Remove book", () => RemoveBook())
-                .Add("Return back", () => { });
+                .Add(Resource.ShowBooks, () => ShowBooks())
+                .Add(Resource.Search, () => Find())
+                .Add(Resource.AddBook, () => AddBook())
+                .Add(Resource.UpdateBook, () => UpdateBook())
+                .Add(Resource.RemoveBook, () => RemoveBook())
+                .Add(Resource.ReturnBack, () => { });
             menu.Display();
         }
 
@@ -60,7 +62,28 @@
             var books = _bookService.GetAll();
 
             _menuVisualizer.ShowCollection(books);
-            _outputEnvironment.Write("\nChoose someone: ");
+            _outputEnvironment.Write($"\n{Resource.ChooseSomeone}: ");
+            var choice = _outputEnvironment.ReadInt(1, books.Count);
+
+            ShowDetails(books[choice - 1]);
+        }
+
+        public void Find()
+        {
+            _outputEnvironment.Write($"{Resource.Search}: ");
+            var query = _outputEnvironment.Read();
+
+            var books = _bookService.Find(query);
+
+            if (!books.Any())
+            {
+                _outputEnvironment.WriteLine(Resource.NotFound);
+                return;
+            }
+
+            _menuVisualizer.ShowCollection(books);
+
+            _outputEnvironment.Write($"{Resource.ChooseSomeone}: ");
             var choice = _outputEnvironment.ReadInt(1, books.Count);
 
             ShowDetails(books[choice - 1]);
@@ -68,24 +91,34 @@
 
         public void ShowDetails(BookDto book)
         {
-            _outputEnvironment.WriteLine($"\nName: {book.Name}");
-            _outputEnvironment.WriteLine($"Genre: {book.Genre}");
-            _outputEnvironment.WriteLine($"Author: {book.Author}");
-            _outputEnvironment.WriteLine($"Price: {book.Price}$");
+            _outputEnvironment.WriteLine($"\n{Resource.Name}: {book.Name}");
+            _outputEnvironment.WriteLine($"{Resource.Genre}: {book.Genre}");
+            _outputEnvironment.WriteLine($"{Resource.Author}: {book.Author}");
+            _outputEnvironment.WriteLine($"{Resource.Price}: {book.Price}$");
 
-            _outputEnvironment.WriteLine("Users which wish:");
+            _outputEnvironment.WriteLine($"{Resource.UsersWhichWish}:");
+            if (!book.WishedClientsId.Any())
+            {
+                _outputEnvironment.WriteLine($"\t{Resource.NotHave}");
+            }
+
             foreach (var clientId in book.WishedClientsId)
             {
                 var client = _clientService.Get(clientId);
                 _outputEnvironment.WriteLine($"\t{client}");
             }
 
-            _outputEnvironment.WriteLine("Comments:");
-            _commentService
-                .GetAll()
-                .Where(c => c.BookId == book.Id)
-                .ToList()
-                ?.ForEach(c => _outputEnvironment.WriteLine($"\t{c}"));
+            _outputEnvironment.WriteLine($"{Resource.Comments}:");
+            var comments = _commentService.GetAll().Where(c => c.BookId == book.Id);
+            if (!comments.Any())
+            {
+                _outputEnvironment.WriteLine($"\t{Resource.NotHave}");
+            }
+
+            foreach (var comment in comments)
+            {
+                _outputEnvironment.WriteLine($"\t{comment}");
+            }
 
             var currentClient = _authService.GetCurrentClient();
             if (currentClient != null)
@@ -98,7 +131,7 @@
 
         public void UserAction(ClientDto currentClient, BookDto book)
         {
-            _outputEnvironment.WriteLine("Your action:");
+            _outputEnvironment.WriteLine($"{Resource.YourChoice}:");
 
             var isWished = currentClient.WishedBooksId.Contains(book.Id);
             var isCommented = (from commentId in book.UserCommentsId
@@ -106,9 +139,9 @@
                                select true).FirstOrDefault();
 
             var userMenu = _menuVisualizer.FactoryMethod();
-            userMenu.Add(isWished ? "Remove from WishList" : "Add to WishList", () => AddRemoveWishlist(book, isWished))
-                    .Add(isCommented ? "Remove comment" : "Add comment", () => AddRemoveComment(book, isCommented))
-                    .Add("Return back", () => { })
+            userMenu.Add(isWished ? Resource.RemoveFromWishList : Resource.AddToWishList, () => AddRemoveWishlist(book, isWished))
+                    .Add(isCommented ? Resource.RemoveComment : Resource.AddComment, () => AddRemoveComment(book, isCommented))
+                    .Add(Resource.ReturnBack, () => { })
                     .Display();
         }
 
@@ -188,7 +221,7 @@
             try
             {
                 _bookService.Create(book);
-                _logger.LogInformation("Created success");
+                _logger.LogInformation(Resource.CreatedSuccess);
             }
             catch (Exception ex)
             {
@@ -207,7 +240,7 @@
             try
             {
                 _bookService.Update(books[choice - 1].Id, book);
-                _logger.LogInformation("Updated success");
+                _logger.LogInformation(Resource.UpdatedSuccess);
             }
             catch (Exception ex)
             {
@@ -221,13 +254,13 @@
 
             _menuVisualizer.ShowCollection(books);
 
-            _outputEnvironment.Write("Your choice: ");
+            _outputEnvironment.Write($"{Resource.YourChoice}: ");
             var choice = _outputEnvironment.ReadInt(1, books.Count);
 
             try
             {
                 _bookService.Delete(books[choice - 1].Id);
-                _logger.LogInformation("Deleted success");
+                _logger.LogInformation(Resource.DeletedSuccess);
             }
             catch (Exception ex)
             {
@@ -237,16 +270,16 @@
 
         private BookDto EnterBookData()
         {
-            _outputEnvironment.Write("Enter new name: ");
+            _outputEnvironment.Write($"{Resource.EnterNewName}: ");
             var name = _outputEnvironment.Read();
 
-            _outputEnvironment.Write("Enter new author: ");
+            _outputEnvironment.Write($"{Resource.EnterNewAuthor}: ");
             var author = _outputEnvironment.Read();
 
-            _outputEnvironment.Write("Enter new genre: ");
+            _outputEnvironment.Write($"{Resource.EnterNewGenre}: ");
             var genre = _outputEnvironment.Read();
 
-            _outputEnvironment.Write("Enter new price: ");
+            _outputEnvironment.Write($"{Resource.EnterNewPrice}: ");
             var price = _outputEnvironment.ReadInt();
 
             return new BookDto

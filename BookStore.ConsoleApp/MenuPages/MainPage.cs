@@ -1,12 +1,12 @@
 ﻿namespace BookStore.ConsoleApp.MenuPages
 {
-    using System;
     using Microsoft.Extensions.Logging;
 
     using BookStore.BLL.Interfaces;
-    using BookStore.ConsoleApp;
     using BookStore.ConsoleApp.Interfaces;
     using BookStore.Shared.DTOs;
+    using BookStore.Shared;
+    using BookStore.Shared.Resources;
 
     /// <summary>
     /// Page from which started design
@@ -47,19 +47,19 @@
                 var currentClient = _authService.GetCurrentClient();
                 if (currentClient != null)
                 {
-                    _outputEnvironment.WriteLine($"Hello, {currentClient}");
+                    _outputEnvironment.WriteLine($"{Resource.Hello}, {currentClient}");
                     _outputEnvironment.WriteLine(new string('-', 30));
                 }
 
                 var mainMenu = _menuVisualizer.FactoryMethod();
-                mainMenu.Add("Login/Logout", () => LoginLogout())
-                    .Add("User menu", () => _clientPage.Display())
-                    .Add("Book menu", () => _bookPage.Display())
-                    .Add("Exit", () => run = false);
+                mainMenu.Add(_authService.GetCurrentClientId().HasValue ? Resource.Logout : Resource.Login, () => LoginLogout())
+                    .Add(Resource.ClientMenu, () => _clientPage.Display())
+                    .Add(Resource.BookMenu, () => _bookPage.Display())
+                    .Add(Resource.SwitchLanguage, () => LanguageSwitcher.Switch())
+                    .Add(Resource.Exit, () => run = false);
 
                 mainMenu.Display();
 
-                _outputEnvironment.WriteLine("\n");
                 _outputEnvironment.WriteLine(new string('-', 30));
             }
         }
@@ -70,35 +70,35 @@
             {
                 if (_authService.Logout())
                 {
-                    _logger.LogInformation("Logout Success");
+                    _logger.LogInformation(Resource.LogoutSuccess);
                 }
                 else
                 {
-                    _logger.LogInformation("Can`t logout");
+                    _logger.LogInformation(Resource.CannotLogout);
                 }
 
                 return;
             }
 
-            _outputEnvironment.Write("Enter first name: ");
+            _outputEnvironment.Write($"{Resource.EnterFirstName}: ");
             var firstName = _outputEnvironment.Read();
 
-            _outputEnvironment.Write("Enter second name: ");
-            var secondName = _outputEnvironment.Read();
+            _outputEnvironment.Write($"{Resource.EnterLastName}: ");
+            var lastName = _outputEnvironment.Read();
 
             var client = new ClientDto
             {
                 FirstName = firstName,
-                LastName = secondName
+                LastName = lastName
             };
 
             if (_authService.Login(client))
             {
-                _logger.LogInformation("Login Success");
+                _logger.LogInformation(Resource.LoginSuccess);
             }
             else
             {
-                _logger.LogWarning("Client don`t exist");
+                _logger.LogWarning(Resource.ClientNotExist);
             }
         }
     }

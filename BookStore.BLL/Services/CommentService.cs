@@ -10,6 +10,7 @@
     using BookStore.DAL.Interfaces;
     using BookStore.DAL.Models;
     using BookStore.Shared.DTOs;
+    using BookStore.Shared.Extensions;
 
     /// <inheritdoc/>
     public class CommentService : ICommentService
@@ -46,16 +47,13 @@
         }
 
         /// <inheritdoc/>
-        public CommentDto Find(CommentDto dto)
+        public List<CommentDto> Find(string query)
         {
-            var comment = _uow.CommentRepository.Find(x => x.Text == dto.Text)?.FirstOrDefault();
+            var comments = _uow.CommentRepository
+                .Find(x => x.Text.ContainsIgnoringCase(query))
+                .ToList();
 
-            if (comment == null)
-            {
-                throw new ArgumentException($"Can`t to find comment");
-            }
-
-            return _mapper.Map<Comment, CommentDto>(comment);
+            return _mapper.Map<List<Comment>, List<CommentDto>>(comments);
         }
 
         /// <inheritdoc/>

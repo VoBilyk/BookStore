@@ -1,11 +1,13 @@
 ﻿namespace BookStore.ConsoleApp.MenuPages
 {
     using System;
+    using System.Linq;
     using Microsoft.Extensions.Logging;
 
     using BookStore.BLL.Interfaces;
     using BookStore.ConsoleApp.Interfaces;
     using BookStore.Shared.DTOs;
+    using BookStore.Shared.Resources;
 
     /// <summary>
     /// Page form working with client
@@ -41,11 +43,12 @@
         public void Display()
         {
             var menu = _menuVisualizer.FactoryMethod()
-                .Add("Show clients", () => ShowClients())
-                .Add("Add client", () => AddClient())
-                .Add("Update client", () => UpdateClient())
-                .Add("Remove client", () => RemoveClient())
-                .Add("Return back", () => { });
+                .Add(Resource.ShowClients, () => ShowClients())
+                .Add(Resource.Search, () => Find())
+                .Add(Resource.AddClient, () => AddClient())
+                .Add(Resource.UpdateClient, () => UpdateClient())
+                .Add(Resource.RemoveClient, () => RemoveClient())
+                .Add(Resource.ReturnBack, () => { });
             menu.Display();
         }
 
@@ -55,7 +58,28 @@
 
             _menuVisualizer.ShowCollection(clients);
 
-            _outputEnvironment.Write("Choose someone: ");
+            _outputEnvironment.Write($"{Resource.ChooseSomeone}: ");
+            var choice = _outputEnvironment.ReadInt(1, clients.Count);
+
+            ShowDetails(clients[choice - 1]);
+        }
+
+        public void Find()
+        {
+            _outputEnvironment.Write($"{Resource.Search}: ");
+            var query = _outputEnvironment.Read();
+
+            var clients = _clientService.Find(query);
+
+            if (!clients.Any())
+            {
+                _outputEnvironment.WriteLine(Resource.NotFound);
+                return;
+            }
+
+            _menuVisualizer.ShowCollection(clients);
+
+            _outputEnvironment.Write($"{Resource.ChooseSomeone}: ");
             var choice = _outputEnvironment.ReadInt(1, clients.Count);
 
             ShowDetails(clients[choice - 1]);
@@ -63,20 +87,32 @@
 
         public void ShowDetails(ClientDto client)
         {
-            _outputEnvironment.WriteLine($"\nFirstname: {client.FirstName}");
-            _outputEnvironment.WriteLine($"Lastname: {client.LastName}");
-            _outputEnvironment.WriteLine($"Email: {client.Email}");
-            _outputEnvironment.WriteLine($"Address: {client.Address}");
-            _outputEnvironment.WriteLine($"Birthdate: {client.BirthDate.ToLocalTime()}");
+            _outputEnvironment.WriteLine($"\n{Resource.FirstName}: {client.FirstName}");
+            _outputEnvironment.WriteLine($"{Resource.LastName}: {client.LastName}");
+            _outputEnvironment.WriteLine($"{Resource.Email}: {client.Email}");
+            _outputEnvironment.WriteLine($"{Resource.Address}: {client.Address}");
+            _outputEnvironment.WriteLine($"{Resource.BirthDate}: {client.BirthDate.ToShortDateString()}");
 
-            _outputEnvironment.WriteLine("WishList:");
+            _outputEnvironment.WriteLine($"{Resource.WishList}:");
+
+            if (!client.WishedBooksId.Any())
+            {
+                _outputEnvironment.WriteLine($"\t{Resource.NotHave}");
+            }
+
             foreach (var bookId in client.WishedBooksId)
             {
                 var book = _bookService.Get(bookId);
                 _outputEnvironment.WriteLine($"\t{book}");
             }
 
-            _outputEnvironment.WriteLine("Comments:");
+            _outputEnvironment.WriteLine($"{Resource.Comments}:");
+
+            if (!client.CommentsId.Any())
+            {
+                _outputEnvironment.WriteLine($"\t{Resource.NotHave}");
+            }
+
             foreach (var commentId in client.CommentsId)
             {
                 var comment = _commentService.Get(commentId);
@@ -93,7 +129,7 @@
             try
             {
                 _clientService.Create(client);
-                _logger.LogInformation("Success");
+                _logger.LogInformation(Resource.CreatedSuccess);
             }
             catch (Exception ex)
             {
@@ -106,7 +142,7 @@
             var clients = _clientService.GetAll();
             _menuVisualizer.ShowCollection(clients);
 
-            _outputEnvironment.Write("Your choice: ");
+            _outputEnvironment.Write($"{Resource.YourChoice}: ");
             var choice = _outputEnvironment.ReadInt(1, clients.Count);
 
             var client = EnterClientData();
@@ -114,7 +150,7 @@
             try
             {
                 _clientService.Update(clients[choice - 1].Id, client);
-                _logger.LogInformation("Updated success");
+                _logger.LogInformation(Resource.UpdatedSuccess);
             }
             catch (Exception ex)
             {
@@ -128,13 +164,13 @@
 
             _menuVisualizer.ShowCollection(clients);
 
-            _outputEnvironment.Write("Your choice: ");
+            _outputEnvironment.Write($"{Resource.YourChoice}: ");
             var choice = _outputEnvironment.ReadInt(1, clients.Count);
 
             try
             {
                 _clientService.Delete(clients[choice - 1].Id);
-                _logger.LogInformation("Deleted success");
+                _logger.LogInformation(Resource.DeletedSuccess);
             }
             catch (Exception ex)
             {
@@ -144,19 +180,19 @@
 
         private ClientDto EnterClientData()
         {
-            _outputEnvironment.Write("Enter first name: ");
+            _outputEnvironment.Write($"{Resource.EnterFirstName}: ");
             var firstName = _outputEnvironment.Read();
 
-            _outputEnvironment.Write("Enter last name: ");
-            var secondName = _outputEnvironment.Read();
+            _outputEnvironment.Write($"{Resource.EnterLastName}: ");
+            var lastName = _outputEnvironment.Read();
 
-            _outputEnvironment.Write("Enter email: ");
+            _outputEnvironment.Write($"{Resource.EnterEmail}: ");
             var email = _outputEnvironment.Read();
 
             return new ClientDto
             {
                 FirstName = firstName,
-                LastName = secondName,
+                LastName = lastName,
                 Email = email
             };
         }

@@ -3,6 +3,7 @@
     using System;
 
     using BookStore.ConsoleApp.Interfaces;
+    using BookStore.Shared.Resources;
 
     /// <inheritdoc/>
     public class OutputEnvironment : IOutputEnvironment
@@ -26,7 +27,7 @@
 
             while (value < min || value > max)
             {
-                Console.Write($"Please enter an integer between {min} and {max}: ");
+                Console.Write($"{Resource.EnterInteger} {min}-{max}: ");
                 value = ReadInt();
             }
 
@@ -41,7 +42,7 @@
 
             while (!int.TryParse(input, out value))
             {
-                Console.Write("Please enter an integer: ");
+                Console.Write($"{Resource.EnterInteger}: ");
                 input = Console.ReadLine();
             }
 

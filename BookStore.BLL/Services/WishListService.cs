@@ -45,18 +45,17 @@
         }
 
         /// <inheritdoc/>
-        public WishDto Find(WishDto dto)
+        public List<WishDto> Find(string id)
         {
-            var wish = _uow.WishListRepository
-                .Find(x => x.BookId == dto.BookId && x.ClientId == dto.ClientId)
-                ?.FirstOrDefault();
-
-            if (wish == null)
+            if (!Guid.TryParse(id, out Guid guid))
             {
-                throw new ArgumentException("Can`t find wish");
+                return null;
             }
 
-            return _mapper.Map<Wish, WishDto>(wish);
+            var wishList = _uow.WishListRepository
+                .Find(x => x.BookId == guid || x.ClientId == guid).ToList();
+
+            return _mapper.Map<List<Wish>, List<WishDto>>(wishList);
         }
 
         /// <inheritdoc/>
