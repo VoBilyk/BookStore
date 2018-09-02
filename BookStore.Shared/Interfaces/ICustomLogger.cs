@@ -1,6 +1,7 @@
 ﻿namespace BookStore.Shared.Interfaces
 {
     using System;
+    using BookStore.Shared.Logger;
 
     /// <summary>
     /// Interface for customlogger

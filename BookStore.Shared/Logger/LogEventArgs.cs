@@ -1,4 +1,4 @@
-﻿namespace BookStore.Shared
+﻿namespace BookStore.Shared.Logger
 {
     using System;
 

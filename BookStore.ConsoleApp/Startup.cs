@@ -18,6 +18,7 @@
     using BookStore.DAL.Models;
     using BookStore.Shared;
     using BookStore.Shared.Interfaces;
+    using BookStore.Shared.Logger;
 
     /// <summary>
     ///     Class for configuration application before starting application

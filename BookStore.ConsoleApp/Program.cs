@@ -4,8 +4,8 @@
     using Microsoft.Extensions.DependencyInjection;
 
     using BookStore.ConsoleApp.MenuPages;
-    using BookStore.Shared;
     using BookStore.Shared.Interfaces;
+    using BookStore.Shared.Logger;
     using BookStore.Shared.Resources;
 
     public static class Program

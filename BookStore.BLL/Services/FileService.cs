@@ -2,13 +2,16 @@
 {
     using System;
     using System.Linq;
+    using AutoMapper;
+    using Microsoft.Extensions.Logging;
 
     using BookStore.BLL.Interfaces;
     using BookStore.DAL.Interfaces;
+    using BookStore.DAL.Models;
     using BookStore.Shared.DTOs;
 
     /// <inheritdoc/>
-    public class AuthService : IAuthService
+    public class FileService : IAuthService
     {
         private readonly IUnitOfWork _uow;
         private readonly IClientService _clientService;
