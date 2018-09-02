@@ -3,19 +3,19 @@
     using System;
     using System.Collections.Generic;
     using FakeItEasy;
-    using Microsoft.Extensions.Logging;
     using NUnit.Framework;
 
     using BookStore.BLL.Interfaces;
     using BookStore.ConsoleApp.Interfaces;
     using BookStore.ConsoleApp.MenuPages;
     using BookStore.Shared.DTOs;
+    using BookStore.Shared.Interfaces;
 
     [TestFixture]
     public class BookMenuPageTest
     {
 
-        private ILogger<BookMenuPage> _logger;
+        private ICustomLoggerFactory _logger;
         private IMenuVisualizer _menuVisualizer;
         private IOutputEnvironment _outputEnvironment;
         private IClientService _clientService;
@@ -28,7 +28,7 @@
         [SetUp]
         public void Setup()
         {
-            this._logger = A.Fake<ILogger<BookMenuPage>>();
+            this._logger = A.Fake<ICustomLoggerFactory>();
             this._menuVisualizer = A.Fake<IMenuVisualizer>();
             this._outputEnvironment = A.Fake<IOutputEnvironment>();
             this._clientService = A.Fake<IClientService>();

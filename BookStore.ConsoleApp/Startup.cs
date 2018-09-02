@@ -6,9 +6,6 @@
     using AutoMapper;
     using FluentValidation;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
-    using NLog;
-    using NLog.Extensions.Logging;
 
     using BookStore.BLL.Interfaces;
     using BookStore.BLL.MappingProfiles;
@@ -20,6 +17,7 @@
     using BookStore.DAL.Interfaces;
     using BookStore.DAL.Models;
     using BookStore.Shared;
+    using BookStore.Shared.Interfaces;
 
     /// <summary>
     ///     Class for configuration application before starting application
@@ -49,9 +47,7 @@
             services.AddTransient<IValidator<Comment>, CommentValidator>();
             services.AddTransient<IValidator<Wish>, WishValidator>();
 
-            LogManager.LoadConfiguration("nlog.config");
-            services.AddSingleton(new LoggerFactory().AddNLog());
-            services.AddLogging();
+            services.AddTransient<ICustomLoggerFactory, CustomLoggerFactory>();
 
             services.AddAutoMapper(cfg => { cfg.AddProfile<GeneralProfile>(); });
 

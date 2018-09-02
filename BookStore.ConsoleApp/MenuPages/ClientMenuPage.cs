@@ -2,11 +2,11 @@
 {
     using System;
     using System.Linq;
-    using Microsoft.Extensions.Logging;
 
     using BookStore.BLL.Interfaces;
     using BookStore.ConsoleApp.Interfaces;
     using BookStore.Shared.DTOs;
+    using BookStore.Shared.Interfaces;
     using BookStore.Shared.Resources;
 
     /// <summary>
@@ -14,7 +14,7 @@
     /// </summary>
     public class ClientMenuPage : IPage
     {
-        private readonly ILogger<ClientMenuPage> _logger;
+        private readonly ICustomLogger _logger;
         private readonly IOutputEnvironment _outputEnvironment;
         private readonly IMenuVisualizer _menuVisualizer;
 
@@ -23,15 +23,15 @@
         private readonly ICommentService _commentService;
 
         public ClientMenuPage(
-            ILogger<ClientMenuPage> logger,
+            ICustomLoggerFactory loggerFactory,
             IMenuVisualizer menuVisualizer,
             IOutputEnvironment outputEnvironment,
             IClientService clientService,
             IBookService bookService,
             ICommentService commentService)
         {
+            this._logger = loggerFactory.CreateLogger<ClientMenuPage>();
             this._outputEnvironment = outputEnvironment;
-            this._logger = logger;
             this._menuVisualizer = menuVisualizer;
 
             this._clientService = clientService;
@@ -129,11 +129,11 @@
             try
             {
                 _clientService.Create(client);
-                _logger.LogInformation(Resource.CreatedSuccess);
+                _outputEnvironment.WriteLine(Resource.CreatedSuccess);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.Error(ex.Message, ex);
             }
         }
 
@@ -150,11 +150,11 @@
             try
             {
                 _clientService.Update(clients[choice - 1].Id, client);
-                _logger.LogInformation(Resource.UpdatedSuccess);
+                _outputEnvironment.WriteLine(Resource.UpdatedSuccess);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.Error(ex.Message, ex);
             }
         }
 
@@ -170,11 +170,11 @@
             try
             {
                 _clientService.Delete(clients[choice - 1].Id);
-                _logger.LogInformation(Resource.DeletedSuccess);
+                _outputEnvironment.WriteLine(Resource.DeletedSuccess);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.Error(ex.Message, ex);
             }
         }
 

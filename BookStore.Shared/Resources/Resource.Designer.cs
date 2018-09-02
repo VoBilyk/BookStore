@@ -268,7 +268,7 @@ namespace BookStore.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter new name:.
+        ///   Looks up a localized string similar to Enter new name.
         /// </summary>
         public static string EnterNewName {
             get {
@@ -408,6 +408,24 @@ namespace BookStore.Shared.Resources {
         public static string Price {
             get {
                 return ResourceManager.GetString("Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Program finished at.
+        /// </summary>
+        public static string ProgramFinished {
+            get {
+                return ResourceManager.GetString("ProgramFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Program started at.
+        /// </summary>
+        public static string ProgramStarted {
+            get {
+                return ResourceManager.GetString("ProgramStarted", resourceCulture);
             }
         }
         

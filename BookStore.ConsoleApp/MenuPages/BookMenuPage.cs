@@ -2,11 +2,11 @@
 {
     using System;
     using System.Linq;
-    using Microsoft.Extensions.Logging;
 
     using BookStore.BLL.Interfaces;
     using BookStore.ConsoleApp.Interfaces;
     using BookStore.Shared.DTOs;
+    using BookStore.Shared.Interfaces;
     using BookStore.Shared.Resources;
 
     /// <summary>
@@ -14,7 +14,7 @@
     /// </summary>
     public class BookMenuPage : IPage
     {
-        private readonly ILogger<BookMenuPage> _logger;
+        private readonly ICustomLogger _logger;
         private readonly IMenuVisualizer _menuVisualizer;
         private readonly IOutputEnvironment _outputEnvironment;
         private readonly IClientService _clientService;
@@ -24,7 +24,7 @@
         private readonly IWishListService _wishListService;
 
         public BookMenuPage(
-            ILogger<BookMenuPage> logger,
+            ICustomLoggerFactory loggerFactory,
             IMenuVisualizer menuVisualizer,
             IOutputEnvironment outputEnvironment,
             IClientService clientService,
@@ -33,10 +33,9 @@
             ICommentService commentService,
             IWishListService wishListService)
         {
-            this._logger = logger;
+            this._logger = loggerFactory.CreateLogger<BookMenuPage>();
             this._outputEnvironment = outputEnvironment;
             this._menuVisualizer = menuVisualizer;
-
             this._clientService = clientService;
             this._authService = authService;
             this._bookService = bookService;
@@ -158,7 +157,7 @@
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, ex.Message);
+                    _logger.Error(ex.Message, ex);
                 }
             }
             else
@@ -174,7 +173,7 @@
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, ex.Message);
+                    _logger.Error(ex.Message, ex);
                 }
             }
         }
@@ -192,7 +191,7 @@
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, ex.Message);
+                    _logger.Error(ex.Message, ex);
                 }
             }
             else
@@ -209,7 +208,7 @@
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, ex.Message);
+                    _logger.Error(ex.Message, ex);
                 }
             }
         }
@@ -221,11 +220,11 @@
             try
             {
                 _bookService.Create(book);
-                _logger.LogInformation(Resource.CreatedSuccess);
+                _outputEnvironment.WriteLine(Resource.CreatedSuccess);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.Error(ex.Message, ex);
             }
         }
 
@@ -240,11 +239,11 @@
             try
             {
                 _bookService.Update(books[choice - 1].Id, book);
-                _logger.LogInformation(Resource.UpdatedSuccess);
+                _outputEnvironment.WriteLine(Resource.UpdatedSuccess);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.Error(ex.Message, ex);
             }
         }
 
@@ -260,11 +259,11 @@
             try
             {
                 _bookService.Delete(books[choice - 1].Id);
-                _logger.LogInformation(Resource.DeletedSuccess);
+                _outputEnvironment.WriteLine(Resource.DeletedSuccess);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.Error(ex.Message, ex);
             }
         }
 

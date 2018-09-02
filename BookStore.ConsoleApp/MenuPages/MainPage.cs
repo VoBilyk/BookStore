@@ -1,11 +1,10 @@
 ﻿namespace BookStore.ConsoleApp.MenuPages
 {
-    using Microsoft.Extensions.Logging;
-
     using BookStore.BLL.Interfaces;
     using BookStore.ConsoleApp.Interfaces;
-    using BookStore.Shared.DTOs;
     using BookStore.Shared;
+    using BookStore.Shared.DTOs;
+    using BookStore.Shared.Interfaces;
     using BookStore.Shared.Resources;
 
     /// <summary>
@@ -13,7 +12,7 @@
     /// </summary>
     public class MainPage : IPage
     {
-        private readonly ILogger<MainPage> _logger;
+        private readonly ICustomLogger _logger;
         private readonly IAuthService _authService;
         private readonly IMenuVisualizer _menuVisualizer;
         private readonly IOutputEnvironment _outputEnvironment;
@@ -22,20 +21,21 @@
         private readonly ClientMenuPage _clientPage;
 
         public MainPage(
-            ILogger<MainPage> logger,
+            ICustomLoggerFactory loggerFactory,
             IMenuVisualizer menuVisualizer,
             IOutputEnvironment outputEnvironment,
             IAuthService authService,
             BookMenuPage bookPage,
             ClientMenuPage clientPage)
         {
+            this._logger = loggerFactory.CreateLogger<MainPage>();
+
             this._clientPage = clientPage;
             this._bookPage = bookPage;
 
             this._menuVisualizer = menuVisualizer;
             this._outputEnvironment = outputEnvironment;
             this._authService = authService;
-            this._logger = logger;
         }
 
         /// <inheritdoc/>
@@ -70,11 +70,13 @@
             {
                 if (_authService.Logout())
                 {
-                    _logger.LogInformation(Resource.LogoutSuccess);
+                    _outputEnvironment.WriteLine(Resource.LogoutSuccess);
+                    _logger.Info(Resource.LogoutSuccess);
                 }
                 else
                 {
-                    _logger.LogInformation(Resource.CannotLogout);
+                    _outputEnvironment.WriteLine(Resource.CannotLogout);
+                    _logger.Info(Resource.CannotLogout);
                 }
 
                 return;
@@ -94,11 +96,13 @@
 
             if (_authService.Login(client))
             {
-                _logger.LogInformation(Resource.LoginSuccess);
+                _outputEnvironment.WriteLine(Resource.LoginSuccess);
+                _logger.Info(Resource.LoginSuccess);
             }
             else
             {
-                _logger.LogWarning(Resource.ClientNotExist);
+                _outputEnvironment.WriteLine(Resource.ClientNotExist);
+                _logger.Info(Resource.ClientNotExist);
             }
         }
     }

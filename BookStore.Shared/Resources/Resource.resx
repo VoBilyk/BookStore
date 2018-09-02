@@ -178,7 +178,7 @@
     <value>Enter new genre</value>
   </data>
   <data name="EnterNewName" xml:space="preserve">
-    <value>Enter new name:</value>
+    <value>Enter new name</value>
   </data>
   <data name="EnterNewPrice" xml:space="preserve">
     <value>Enter new price</value>
@@ -281,5 +281,11 @@
   </data>
   <data name="NotHave" xml:space="preserve">
     <value>Don`t have yet</value>
+  </data>
+  <data name="ProgramFinished" xml:space="preserve">
+    <value>Program finished at</value>
+  </data>
+  <data name="ProgramStarted" xml:space="preserve">
+    <value>Program started at</value>
   </data>
 </root>

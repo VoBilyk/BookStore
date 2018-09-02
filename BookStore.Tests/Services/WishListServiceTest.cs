@@ -89,7 +89,7 @@
         }
 
         [Test]
-        public void Find_WhenFindUnknownWish_ThenReturnNull()
+        public void Find_WhenFindUnknownWish_ThenReturnEmpty()
         {
             // Arrange
             var wish = new WishDto();
@@ -100,7 +100,7 @@
             var result = service.Find(string.Empty);
 
             // Assert
-            Assert.IsNull(result);
+            Assert.IsEmpty(result);
         }
 
         [Test]

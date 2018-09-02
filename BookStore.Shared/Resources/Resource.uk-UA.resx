@@ -282,4 +282,10 @@
   <data name="NotHave" xml:space="preserve">
     <value>Ще немає</value>
   </data>
+  <data name="ProgramFinished" xml:space="preserve">
+    <value>Програма завершене в</value>
+  </data>
+  <data name="ProgramStarted" xml:space="preserve">
+    <value>Програма запущена в</value>
+  </data>
 </root>

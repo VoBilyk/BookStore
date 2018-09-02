@@ -1,16 +1,11 @@
 ﻿namespace BookStore.Tests.Visualizations
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using FakeItEasy;
     using NUnit.Framework;
 
     using BookStore.ConsoleApp;
     using BookStore.ConsoleApp.Interfaces;
-    using BookStore.DAL;
-    using BookStore.DAL.Models;
-    using BookStore.DAL.Repositories;
 
     [TestFixture]
     public class MenuVisualizerTest

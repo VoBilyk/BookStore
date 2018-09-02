@@ -20,13 +20,19 @@
         /// <inheritdoc />
         public void ShowCollection<T>(IList<T> items)
         {
-            for (var i = 0; i < items.Count; i++) _outputEnvironment.WriteLine($"{i + 1}. {items[i]}");
+            for (var i = 0; i < items.Count; i++)
+            {
+                _outputEnvironment.WriteLine($"{i + 1}. {items[i]}");
+            }
         }
 
         /// <inheritdoc />
         public void Display()
         {
-            for (var i = 0; i < _options.Count; i++) _outputEnvironment.WriteLine($"{i + 1}. {_options[i].Name}");
+            for (var i = 0; i < _options.Count; i++)
+            {
+                _outputEnvironment.WriteLine($"{i + 1}. {_options[i].Name}");
+            }
 
             _outputEnvironment.Write($"{Resource.YourChoice}: ");
             var value = _outputEnvironment.ReadInt(1, _options.Count);
