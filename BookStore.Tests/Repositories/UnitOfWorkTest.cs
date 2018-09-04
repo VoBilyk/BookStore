@@ -25,7 +25,7 @@
         public void GetRepository_WhenGettingWIshListRepository_ThenReturnNotNull()
         {
             // Arrange
-            var uow = new UnitOfWork();
+            var uow = new UnitOfWork(_db);
 
             // Act
             var repository = uow.WishListRepository;
@@ -38,7 +38,7 @@
         public void GetRepository_WhenGettingBookRepository_ThenReturnNotNull()
         {
             // Arrange
-            var uow = new UnitOfWork();
+            var uow = new UnitOfWork(_db);
 
             // Act
             var repository = uow.BookRepository;
@@ -51,7 +51,7 @@
         public void GetRepository_WhenGettingClientRepository_ThenReturnNotNull()
         {
             // Arrange
-            var uow = new UnitOfWork();
+            var uow = new UnitOfWork(_db);
 
             // Act
             var repository = uow.ClientRepository;
@@ -64,7 +64,7 @@
         public void GetRepository_WhenGettingCommentRepository_ThenReturnNotNull()
         {
             // Arrange
-            var uow = new UnitOfWork();
+            var uow = new UnitOfWork(_db);
 
             // Act
             var repository = uow.CommentRepository;

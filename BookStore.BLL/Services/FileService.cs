@@ -1,61 +1,65 @@
 ﻿namespace BookStore.BLL.Services
 {
-    using System;
-    using System.Linq;
-    using AutoMapper;
-    using Microsoft.Extensions.Logging;
+    using System.IO;
 
     using BookStore.BLL.Interfaces;
     using BookStore.DAL.Interfaces;
     using BookStore.DAL.Models;
-    using BookStore.Shared.DTOs;
 
     /// <inheritdoc/>
-    public class FileService : IAuthService
+    public class FileService : IFileService
     {
         private readonly IUnitOfWork _uow;
-        private readonly IClientService _clientService;
+        private readonly IFileSerializer _defaultFileSerializer;
 
-        private Guid? _currentUserId;
-
-        public AuthService(
+        public FileService(
             IUnitOfWork uow,
-            IClientService clientService)
+            IFileSerializer serializer)
         {
             this._uow = uow;
-            this._clientService = clientService;
+            this._defaultFileSerializer = serializer;
         }
 
         /// <inheritdoc/>
-        public Guid? GetCurrentClientId() => _currentUserId;
-
-        /// <inheritdoc/>
-        public ClientDto GetCurrentClient()
+        public void ReadFromFile(string fileName, IFileSerializer serializer = null)
         {
-            if (!_currentUserId.HasValue)
-            {
-                return null;
-            }
+            var fileSerializer = serializer ?? _defaultFileSerializer;
 
-            var client = _clientService.Get(_currentUserId.Value);
-            return client;
+            var folderName = "storage";
+            Directory.CreateDirectory(folderName);
+
+            var books = fileSerializer.Read<Book>($"{folderName}/{fileName}_books.{fileSerializer.Name}");
+            _uow.BookRepository.CreateMany(books);
+
+            var clients = fileSerializer.Read<Client>($"{folderName}/{fileName}_client.{fileSerializer.Name}");
+            _uow.ClientRepository.CreateMany(clients);
+
+            var comments = fileSerializer.Read<Comment>($"{folderName}/{fileName}_comment.{fileSerializer.Name}");
+            _uow.CommentRepository.CreateMany(comments);
+
+            var wishList = fileSerializer.Read<Wish>($"{folderName}/{fileName}_wishList.{fileSerializer.Name}");
+            _uow.WishListRepository.CreateMany(wishList);
         }
 
         /// <inheritdoc/>
-        public bool Login(ClientDto client)
+        public void SaveToFile(string fileName, IFileSerializer serializer = null)
         {
-            _currentUserId = _uow.ClientRepository
-                .Find(x => (x.FirstName == client.FirstName) && (x.LastName == client.LastName))?
-                .FirstOrDefault()?.Id;
+            var fileSerializer = serializer ?? _defaultFileSerializer;
 
-            return _currentUserId.HasValue;
-        }
+            var folderName = "storage";
+            Directory.CreateDirectory(folderName);
 
-        /// <inheritdoc/>
-        public bool Logout()
-        {
-            _currentUserId = null;
-            return !_currentUserId.HasValue;
+            var books = _uow.BookRepository.Get();
+            fileSerializer.Write(books, $"{folderName}/{fileName}_books.{fileSerializer.Name}");
+
+            var clients = _uow.ClientRepository.Get();
+            fileSerializer.Write(clients, $"{folderName}/{fileName}_clients.{fileSerializer.Name}");
+
+            var comments = _uow.CommentRepository.Get();
+            fileSerializer.Write(comments, $"{folderName}/{fileName}_comments.{fileSerializer.Name}");
+
+            var wishList = _uow.WishListRepository.Get();
+            fileSerializer.Write(wishList, $"{folderName}/{fileName}_wishList.{fileSerializer.Name}");
         }
     }
 }

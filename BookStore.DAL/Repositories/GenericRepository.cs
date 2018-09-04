@@ -62,6 +62,12 @@
         }
 
         /// <inheritdoc />
+        public void CreateMany(IEnumerable<TEntity> entities)
+        {
+            _db.AddRange(entities);
+        }
+
+        /// <inheritdoc />
         public void Update(TEntity entity)
         {
             var foundedItem = _db.Find(t => t.Id == entity.Id);

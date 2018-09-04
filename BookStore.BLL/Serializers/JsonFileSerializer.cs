@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using Newtonsoft.Json;
 
     using BookStore.BLL.Interfaces;
@@ -10,22 +11,27 @@
     public class JsonFileSerializer : IFileSerializer
     {
         /// <inheritdoc/>
-        public IList<TEntity> Read<TEntity>(string fileName)
+        public string Name { get; set; } = "json";
+
+        /// <inheritdoc/>
+        public IEnumerable<TEntity> Read<TEntity>(string fileName)
         {
+            var entities = Enumerable.Empty<TEntity>();
+
             if (!File.Exists(fileName))
             {
-                return new List<TEntity>();
+                return entities;
             }
 
             var content = File.ReadAllText(fileName);
 
-            var entities = JsonConvert.DeserializeObject<IList<TEntity>>(content);
+            entities = JsonConvert.DeserializeObject<IEnumerable<TEntity>>(content);
 
             return entities;
         }
 
         /// <inheritdoc/>
-        public void Write<TEntity>(IList<TEntity> entities, string fileName)
+        public void Write<TEntity>(IEnumerable<TEntity> entities, string fileName)
         {
             var serializedData = JsonConvert.SerializeObject(entities);
 

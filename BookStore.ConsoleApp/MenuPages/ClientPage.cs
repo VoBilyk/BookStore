@@ -12,7 +12,7 @@
     /// <summary>
     /// Page form working with client
     /// </summary>
-    public class ClientMenuPage : IPage
+    public class ClientPage : IClientPage
     {
         private readonly ICustomLogger _logger;
         private readonly IOutputEnvironment _outputEnvironment;
@@ -22,7 +22,7 @@
         private readonly IBookService _bookService;
         private readonly ICommentService _commentService;
 
-        public ClientMenuPage(
+        public ClientPage(
             ICustomLoggerFactory loggerFactory,
             IMenuVisualizer menuVisualizer,
             IOutputEnvironment outputEnvironment,
@@ -30,7 +30,7 @@
             IBookService bookService,
             ICommentService commentService)
         {
-            this._logger = loggerFactory.CreateLogger<ClientMenuPage>();
+            this._logger = loggerFactory.CreateLogger<ClientPage>();
             this._outputEnvironment = outputEnvironment;
             this._menuVisualizer = menuVisualizer;
 

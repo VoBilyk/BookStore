@@ -288,4 +288,22 @@
   <data name="ProgramStarted" xml:space="preserve">
     <value>Програма запущена в</value>
   </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Відновити дані</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Зберегти дані</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Налаштування</value>
+  </data>
+  <data name="StorageSaved" xml:space="preserve">
+    <value>Дані були збережені</value>
+  </data>
+  <data name="StoregeRestored" xml:space="preserve">
+    <value>Дані були відновлені</value>
+  </data>
+  <data name="EnterFileName" xml:space="preserve">
+    <value>Введіть ім'я файлу</value>
+  </data>
 </root>

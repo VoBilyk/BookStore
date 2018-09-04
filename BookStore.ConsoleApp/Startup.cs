@@ -9,6 +9,7 @@
 
     using BookStore.BLL.Interfaces;
     using BookStore.BLL.MappingProfiles;
+    using BookStore.BLL.Serializers;
     using BookStore.BLL.Services;
     using BookStore.BLL.Validators;
     using BookStore.ConsoleApp.Interfaces;
@@ -35,13 +36,18 @@
             ConfigurateCulture();
 
             // Instance injection
+            services.AddSingleton<DataSource>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<IFileSerializer, BinaryFileSerializer>();
 
             services.AddSingleton<IAuthService, AuthService>();
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IWishListService, WishListService>();
+            services.AddScoped<IFileService, FileService>();
 
             services.AddTransient<IValidator<Book>, BookValidator>();
             services.AddTransient<IValidator<Client>, ClientValidator>();
@@ -52,11 +58,13 @@
 
             services.AddAutoMapper(cfg => { cfg.AddProfile<GeneralProfile>(); });
 
-            services.AddSingleton<IOutputEnvironment, OutputEnvironment>();
-            services.AddSingleton<IMenuVisualizer, MenuVisualizer>();
+            services.AddTransient<IOutputEnvironment, OutputEnvironment>();
+            services.AddTransient<IMenuVisualizer, MenuVisualizer>();
+
             services.AddTransient<MainPage>();
-            services.AddTransient<ClientMenuPage>();
-            services.AddTransient<BookMenuPage>();
+            services.AddTransient<IClientPage, ClientPage>();
+            services.AddTransient<IBookPage, BookPage>();
+            services.AddTransient<ISettingsPage, SettingsPage>();
         }
 
         /// <summary>

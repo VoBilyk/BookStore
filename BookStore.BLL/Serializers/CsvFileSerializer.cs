@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using ServiceStack;
     using ServiceStack.Text;
 
@@ -11,22 +12,25 @@
     public class CsvFileSerializer : IFileSerializer
     {
         /// <inheritdoc/>
-        public IList<TEntity> Read<TEntity>(string fileName)
+        public string Name { get; set; } = "csv";
+
+        /// <inheritdoc/>
+        public IEnumerable<TEntity> Read<TEntity>(string fileName)
         {
-            var entities = new List<TEntity>();
+            var entities = Enumerable.Empty<TEntity>();
 
             if (!File.Exists(fileName))
             {
                 return entities;
             }
 
-            entities = File.ReadAllText(fileName).FromCsv<List<TEntity>>();
+            entities = File.ReadAllText(fileName).FromCsv<IEnumerable<TEntity>>();
 
             return entities;
         }
 
         /// <inheritdoc/>
-        public void Write<TEntity>(IList<TEntity> entities, string fileName)
+        public void Write<TEntity>(IEnumerable<TEntity> entities, string fileName)
         {
             using (TextWriter streamWriter = File.AppendText(fileName))
             {

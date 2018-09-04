@@ -12,7 +12,7 @@
     /// <summary>
     /// Page for working with books
     /// </summary>
-    public class BookMenuPage : IPage
+    public class BookPage : IBookPage
     {
         private readonly ICustomLogger _logger;
         private readonly IMenuVisualizer _menuVisualizer;
@@ -23,7 +23,7 @@
         private readonly ICommentService _commentService;
         private readonly IWishListService _wishListService;
 
-        public BookMenuPage(
+        public BookPage(
             ICustomLoggerFactory loggerFactory,
             IMenuVisualizer menuVisualizer,
             IOutputEnvironment outputEnvironment,
@@ -33,7 +33,7 @@
             ICommentService commentService,
             IWishListService wishListService)
         {
-            this._logger = loggerFactory.CreateLogger<BookMenuPage>();
+            this._logger = loggerFactory.CreateLogger<BookPage>();
             this._outputEnvironment = outputEnvironment;
             this._menuVisualizer = menuVisualizer;
             this._clientService = clientService;

@@ -23,7 +23,7 @@
         private IBookService _bookService;
         private ICommentService _commentService;
         private IWishListService _wishListService;
-        private BookMenuPage _page;
+        private BookPage _page;
 
         [SetUp]
         public void Setup()
@@ -48,7 +48,7 @@
                 });
             A.CallTo(() => _outputEnvironment.ReadInt(A<int>._, A<int>._)).Returns(1);
 
-            _page = new BookMenuPage(
+            _page = new BookPage(
                 _logger,
                 _menuVisualizer,
                 _outputEnvironment,

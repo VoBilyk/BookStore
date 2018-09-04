@@ -18,8 +18,9 @@
         private IOutputEnvironment _outputEnvironment;
         private IAuthService _authService;
         private MainPage _page;
-        private BookMenuPage _bookPage;
-        private ClientMenuPage _clientPage;
+        private IBookPage _bookPage;
+        private IClientPage _clientPage;
+        private ISettingsPage _settingsPage;
 
         [SetUp]
         public void Setup()
@@ -28,8 +29,9 @@
             this._menuVisualizer = A.Fake<IMenuVisualizer>();
             this._outputEnvironment = A.Fake<IOutputEnvironment>();
             this._authService = A.Fake<IAuthService>();
-            this._bookPage = A.Fake<BookMenuPage>();
-            this._clientPage = A.Fake<ClientMenuPage>();
+            this._bookPage = A.Fake<IBookPage>();
+            this._clientPage = A.Fake<IClientPage>();
+            this._settingsPage = A.Fake<ISettingsPage>();
 
             _page = new MainPage(
                 _logger,
@@ -37,7 +39,8 @@
                 _outputEnvironment,
                 _authService,
                 _bookPage,
-                _clientPage);
+                _clientPage,
+                _settingsPage);
         }
 
         [Test]

@@ -288,4 +288,22 @@
   <data name="ProgramStarted" xml:space="preserve">
     <value>Program started at</value>
   </data>
+  <data name="EnterFileName" xml:space="preserve">
+    <value>Enter file name</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Restore data</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save data</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Setiings</value>
+  </data>
+  <data name="StorageSaved" xml:space="preserve">
+    <value>Storage was saved to file</value>
+  </data>
+  <data name="StoregeRestored" xml:space="preserve">
+    <value>Storage was restored from file</value>
+  </data>
 </root>

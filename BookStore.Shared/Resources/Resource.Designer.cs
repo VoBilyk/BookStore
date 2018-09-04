@@ -223,6 +223,15 @@ namespace BookStore.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter file name.
+        /// </summary>
+        public static string EnterFileName {
+            get {
+                return ResourceManager.GetString("EnterFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter first name.
         /// </summary>
         public static string EnterFirstName {
@@ -466,6 +475,15 @@ namespace BookStore.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore data.
+        /// </summary>
+        public static string Restore {
+            get {
+                return ResourceManager.GetString("Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Return back.
         /// </summary>
         public static string ReturnBack {
@@ -475,11 +493,29 @@ namespace BookStore.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save data.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setiings.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
         
@@ -498,6 +534,24 @@ namespace BookStore.Shared.Resources {
         public static string ShowClients {
             get {
                 return ResourceManager.GetString("ShowClients", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Storage was saved to file.
+        /// </summary>
+        public static string StorageSaved {
+            get {
+                return ResourceManager.GetString("StorageSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Storage was restored from file.
+        /// </summary>
+        public static string StoregeRestored {
+            get {
+                return ResourceManager.GetString("StoregeRestored", resourceCulture);
             }
         }
         

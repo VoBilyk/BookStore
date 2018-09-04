@@ -37,6 +37,12 @@
         void Create(TEntity entity);
 
         /// <summary>
+        /// Creating range of elements
+        /// </summary>
+        /// <param name="entities">Collection of items which need to create</param>
+        void CreateMany(IEnumerable<TEntity> entities);
+
+        /// <summary>
         /// Updating element by specified id
         /// </summary>
         /// <param name="entity">Element which need to update</param>

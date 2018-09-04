@@ -17,21 +17,24 @@
         private readonly IMenuVisualizer _menuVisualizer;
         private readonly IOutputEnvironment _outputEnvironment;
 
-        private readonly BookMenuPage _bookPage;
-        private readonly ClientMenuPage _clientPage;
+        private readonly IBookPage _bookPage;
+        private readonly IClientPage _clientPage;
+        private readonly ISettingsPage _settingsPage;
 
         public MainPage(
             ICustomLoggerFactory loggerFactory,
             IMenuVisualizer menuVisualizer,
             IOutputEnvironment outputEnvironment,
             IAuthService authService,
-            BookMenuPage bookPage,
-            ClientMenuPage clientPage)
+            IBookPage bookPage,
+            IClientPage clientPage,
+            ISettingsPage settingsPage)
         {
             this._logger = loggerFactory.CreateLogger<MainPage>();
 
             this._clientPage = clientPage;
             this._bookPage = bookPage;
+            this._settingsPage = settingsPage;
 
             this._menuVisualizer = menuVisualizer;
             this._outputEnvironment = outputEnvironment;
@@ -55,6 +58,7 @@
                 mainMenu.Add(_authService.GetCurrentClientId().HasValue ? Resource.Logout : Resource.Login, () => LoginLogout())
                     .Add(Resource.ClientMenu, () => _clientPage.Display())
                     .Add(Resource.BookMenu, () => _bookPage.Display())
+                    .Add(Resource.Settings, () => _settingsPage.Display())
                     .Add(Resource.SwitchLanguage, () => LanguageSwitcher.Switch())
                     .Add(Resource.Exit, () => run = false);
 

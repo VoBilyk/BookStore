@@ -16,9 +16,9 @@
         private ICommentRepository _commentRepository;
         private IWishListRepository _wishListRepository;
 
-        public UnitOfWork()
+        public UnitOfWork(DataSource data)
         {
-            _db = new DataSource();
+            this._db = data;
         }
 
         /// <inheritdoc/>

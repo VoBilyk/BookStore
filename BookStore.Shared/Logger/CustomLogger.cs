@@ -24,7 +24,11 @@
             _locker = new object();
 
             // Configurate default settings
-            LogFileName = $"{DateTime.Now.ToShortDateString()}.log";
+
+            var folderName = "logs";
+            Directory.CreateDirectory(folderName);
+
+            LogFileName = $"logs/{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.log";
             BufferThreshold = 10;
         }
 
