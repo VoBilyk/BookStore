@@ -23,4 +23,7 @@
 * Upd4: Added unit test used NUnit
 
 ###First branch -> Second branch
-* Upd1: added custom logger with loger factory. Logger has queue with buffer by 10 elements (it can be changed through settings). It also has event AddedLog which is notify when log was added to queue.
+* Upd1: added custom logger with loger factory. Logger has queue with buffer by 10 elements (it can be changed through settings).
+    It also has event AddedLog which is notify when log was added to queue.
+* Upd2: added working with files. There is ability save or restore collection with data to/from file in csv, xml, bin, json.
+    For json serializer used NewtonSoft, for csv - ServiceStack, for xml and bin used standart .NET libraries.
