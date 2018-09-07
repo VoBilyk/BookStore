@@ -1,5 +1,9 @@
 # BookStore
 
+[Sandcastle Documentation](https://drive.google.com/file/d/124P1sjU_ZkF7DtyY7S8jme6ci7MD7b01/view?usp=sharing)
+
+[SolarScanner code analysis](https://sonarcloud.io/dashboard?id=5211bookstore)
+
 ## What is done:
 * Solution created by .NET Core (It was tested on Windows and Ubuntu 18.04) and has following features:
     * Console application to interact with the user used current UI system localization (ukrainian or english by default)
@@ -12,9 +16,6 @@
 * Data Access layer implemented by UnitOfWork pattern with repositories
 
 *Used standart .NET Core IoC container, AutoMapper, FluentValidator, Bogus, Nlog, NUnit, FakeItEasy*
-
-[Documentation](https://drive.google.com/file/d/124P1sjU_ZkF7DtyY7S8jme6ci7MD7b01/view?usp=sharing)
-[SolarScanner analysis](https://sonarcloud.io/dashboard?id=5211bookstore)
 
 ##Updates:
 * Upd1: added validation in services for create/update operation used FluentValidator
