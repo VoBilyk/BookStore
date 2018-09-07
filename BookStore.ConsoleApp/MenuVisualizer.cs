@@ -11,6 +11,10 @@
         private readonly IList<(string Name, Action Callback)> _options;
         private readonly IOutputEnvironment _outputEnvironment;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MenuVisualizer"/> class.
+        /// </summary>
+        /// <param name="outputEnvironment">Output environment</param>
         public MenuVisualizer(IOutputEnvironment outputEnvironment)
         {
             _outputEnvironment = outputEnvironment;

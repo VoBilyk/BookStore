@@ -3,6 +3,9 @@
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Data transfer object for client
+    /// </summary>
     public class ClientDto
     {
         public ClientDto()

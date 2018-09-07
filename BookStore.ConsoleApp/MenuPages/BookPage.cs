@@ -23,6 +23,17 @@
         private readonly ICommentService _commentService;
         private readonly IWishListService _wishListService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BookPage"/> class.
+        /// </summary>
+        /// <param name="loggerFactory">Logger factory</param>
+        /// <param name="menuVisualizer">Menu visualizer</param>
+        /// <param name="outputEnvironment">Output environment implementation</param>
+        /// <param name="clientService">Client service implementation</param>
+        /// <param name="authService">Authorization service implementation</param>
+        /// <param name="bookService">Book service implementation</param>
+        /// <param name="commentService">Comment service implementation</param>
+        /// <param name="wishListService">Wish list service implementation</param>
         public BookPage(
             ICustomLoggerFactory loggerFactory,
             IMenuVisualizer menuVisualizer,

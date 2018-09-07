@@ -5,33 +5,33 @@
     using BookStore.Shared.DTOs;
 
     /// <summary>
-    /// Interface for authentication service
+    /// Contract for authentication service
     /// </summary>
     public interface IAuthService
     {
         /// <summary>
-        /// Getting logged client
+        /// Getting authorized client
         /// </summary>
-        /// <returns>Logged client</returns>
+        /// <returns>Authorized client</returns>
         ClientDto GetCurrentClient();
 
         /// <summary>
-        /// Getting only id of current client
+        /// Getting current client id
         /// </summary>
-        /// <returns>Id of current client</returns>
+        /// <returns>Current client id</returns>
         Guid? GetCurrentClientId();
 
         /// <summary>
         /// To login used data from client dto
         /// </summary>
-        /// <param name="client">Dto of client which wont to login</param>
+        /// <param name="client">Dto of client which wants to login</param>
         /// <returns>If operation success</returns>
         bool Login(ClientDto client);
 
         /// <summary>
         /// To logout current client
         /// </summary>
-        /// <returns>If operation success</returns>
+        /// <returns>If logout success</returns>
         bool Logout();
     }
 }

@@ -17,6 +17,13 @@
         private readonly IOutputEnvironment _outputEnvironment;
         private readonly IFileService _fileService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingsPage"/> class.
+        /// </summary>
+        /// <param name="loggerFactory">Logger factory</param>
+        /// <param name="menuVisualizer">Menu visualizer</param>
+        /// <param name="outputEnvironment">Output environment implementation</param>
+        /// <param name="fileService">File service implementation</param>
         public SettingsPage(
             ICustomLoggerFactory loggerFactory,
             IMenuVisualizer menuVisualizer,
@@ -39,6 +46,9 @@
             menu.Display();
         }
 
+        /// <summary>
+        /// Saving data to storage
+        /// </summary>
         public void SaveDb()
         {
             _outputEnvironment.Write($"{Resource.EnterFileName}: ");
@@ -57,6 +67,9 @@
             }
         }
 
+        /// <summary>
+        /// Restoring data from storage
+        /// </summary>
         public void RestoreDb()
         {
             _outputEnvironment.Write($"{Resource.EnterFileName}: ");

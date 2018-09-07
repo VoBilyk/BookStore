@@ -23,8 +23,7 @@
             _logQueue = new ConcurrentQueue<string>();
             _locker = new object();
 
-            // Configurate default settings
-
+            // Configure default settings
             var folderName = "logs";
             Directory.CreateDirectory(folderName);
 

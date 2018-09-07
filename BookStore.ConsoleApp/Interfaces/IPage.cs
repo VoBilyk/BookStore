@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BookStore.ConsoleApp.Interfaces
+﻿namespace BookStore.ConsoleApp.Interfaces
 {
+    /// <summary>
+    /// Contract for page
+    /// </summary>
     public interface IPage
     {
+        /// <summary>
+        /// Displaying page
+        /// </summary>
         void Display();
     }
 }

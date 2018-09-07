@@ -2,6 +2,9 @@
 {
     using System;
 
+    /// <summary>
+    /// Data transfer object for item of wish list
+    /// </summary>
     public class WishDto
     {
         public Guid Id { get; set; }

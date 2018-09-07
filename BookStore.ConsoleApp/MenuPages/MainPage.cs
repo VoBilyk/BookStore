@@ -21,6 +21,16 @@
         private readonly IClientPage _clientPage;
         private readonly ISettingsPage _settingsPage;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainPage"/> class.
+        /// </summary>
+        /// <param name="loggerFactory">Logger factory</param>
+        /// <param name="menuVisualizer">Menu visualizer</param>
+        /// <param name="outputEnvironment">Output environment implementation</param>
+        /// <param name="authService">Authorization service implementation</param>
+        /// <param name="bookPage">Book page implementation</param>
+        /// <param name="clientPage">Client page implementation</param>
+        /// <param name="settingsPage">Settings page implementation</param>
         public MainPage(
             ICustomLoggerFactory loggerFactory,
             IMenuVisualizer menuVisualizer,
@@ -68,6 +78,9 @@
             }
         }
 
+        /// <summary>
+        /// Login if user don`t authorized or logout
+        /// </summary>
         public void LoginLogout()
         {
             if (_authService.GetCurrentClient() != null)

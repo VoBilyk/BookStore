@@ -16,6 +16,10 @@
         private ICommentRepository _commentRepository;
         private IWishListRepository _wishListRepository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
+        /// </summary>
+        /// <param name="data">Data source context</param>
         public UnitOfWork(DataSource data)
         {
             this._db = data;

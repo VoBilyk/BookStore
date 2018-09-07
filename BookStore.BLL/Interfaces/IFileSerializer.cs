@@ -2,6 +2,9 @@
 {
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Contract for file serializer
+    /// </summary>
     public interface IFileSerializer
     {
         /// <summary>

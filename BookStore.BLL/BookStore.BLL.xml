@@ -1,0 +1,395 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BookStore.BLL</name>
+    </assembly>
+    <members>
+        <member name="T:BookStore.BLL.Interfaces.IAuthService">
+            <summary>
+            Contract for authentication service
+            </summary>
+        </member>
+        <member name="M:BookStore.BLL.Interfaces.IAuthService.GetCurrentClient">
+            <summary>
+            Getting authorized client
+            </summary>
+            <returns>Authorized client</returns>
+        </member>
+        <member name="M:BookStore.BLL.Interfaces.IAuthService.GetCurrentClientId">
+            <summary>
+            Getting current client id
+            </summary>
+            <returns>Current client id</returns>
+        </member>
+        <member name="M:BookStore.BLL.Interfaces.IAuthService.Login(BookStore.Shared.DTOs.ClientDto)">
+            <summary>
+            To login used data from client dto
+            </summary>
+            <param name="client">Dto of client which wants to login</param>
+            <returns>If operation success</returns>
+        </member>
+        <member name="M:BookStore.BLL.Interfaces.IAuthService.Logout">
+            <summary>
+            To logout current client
+            </summary>
+            <returns>If logout success</returns>
+        </member>
+        <member name="T:BookStore.BLL.Interfaces.IBookService">
+            <summary>
+            Contract for book service
+            </summary>
+        </member>
+        <member name="T:BookStore.BLL.Interfaces.IClientService">
+            <summary>
+            Contract for client service
+            </summary>
+        </member>
+        <member name="T:BookStore.BLL.Interfaces.ICommentService">
+            <summary>
+            Contract for comment service
+            </summary>
+        </member>
+        <member name="T:BookStore.BLL.Interfaces.IFileSerializer">
+            <summary>
+            Contract for file serializer
+            </summary>
+        </member>
+        <member name="P:BookStore.BLL.Interfaces.IFileSerializer.Name">
+            <summary>
+            Gets or sets serializer name
+            </summary>
+        </member>
+        <member name="M:BookStore.BLL.Interfaces.IFileSerializer.Read``1(System.String)">
+            <summary>
+            Read and deserialize data from file
+            </summary>
+            <typeparam name="TEntity">Entities which need to deserialize</typeparam>
+            <param name="fileName">File name from where need deserialize data</param>
+            <returns>Deserialized data</returns>
+        </member>
+        <member name="M:BookStore.BLL.Interfaces.IFileSerializer.Write``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <summary>
+            Write and serialize data to file
+            </summary>
+            <typeparam name="TEntity">Entities which need to serialize</typeparam>
+            <param name="entities">Collection which need to serialize to file</param>
+            <param name="fileName">File where need to serialize data</param>
+        </member>
+        <member name="T:BookStore.BLL.Interfaces.IFileService">
+            <summary>
+            Contract for file services
+            </summary>
+        </member>
+        <member name="M:BookStore.BLL.Interfaces.IFileService.SaveToFile(System.String,BookStore.BLL.Interfaces.IFileSerializer)">
+            <summary>
+            Save data to file using serializer
+            </summary>
+            <param name="fileName">File in which need to write</param>
+            <param name="serializer">Serializer</param>
+        </member>
+        <member name="M:BookStore.BLL.Interfaces.IFileService.ReadFromFile(System.String,BookStore.BLL.Interfaces.IFileSerializer)">
+            <summary>
+            Read data from file using serializer
+            </summary>
+            <param name="fileName">File which need to read</param>
+            <param name="serializer">Serializer</param>
+        </member>
+        <member name="T:BookStore.BLL.Interfaces.IService`1">
+            <summary>
+            Contract for service with business logic for working with item
+            </summary>
+            <typeparam name="TDto">Data transfer object</typeparam>
+        </member>
+        <member name="M:BookStore.BLL.Interfaces.IService`1.Get(System.Guid)">
+            <summary>
+            Getting item by id
+            </summary>
+            <param name="id">Item id</param>
+            <returns>Item with searching id</returns>
+        </member>
+        <member name="M:BookStore.BLL.Interfaces.IService`1.GetAll">
+            <summary>
+            Getting all items
+            </summary>
+            <returns>List of items</returns>
+        </member>
+        <member name="M:BookStore.BLL.Interfaces.IService`1.Find(System.String)">
+            <summary>
+            Finding item
+            </summary>
+            <param name="query">Value which need to find</param>
+            <returns>Found items</returns>
+        </member>
+        <member name="M:BookStore.BLL.Interfaces.IService`1.Create(`0)">
+            <summary>
+            Creating item
+            </summary>
+            <param name="dto">Data transfer object of item which need to create</param>
+        </member>
+        <member name="M:BookStore.BLL.Interfaces.IService`1.Update(System.Guid,`0)">
+            <summary>
+            Updating item by id
+            </summary>
+            <param name="id">Item id which need update</param>
+            <param name="dto">Data transfer object of item which need to update</param>
+        </member>
+        <member name="M:BookStore.BLL.Interfaces.IService`1.Delete(System.Guid)">
+            <summary>
+            Deleting item by id
+            </summary>
+            <param name="id">Item id which need to delete</param>
+        </member>
+        <member name="T:BookStore.BLL.Interfaces.IWishListService">
+            <summary>
+            Contract for wish list service
+            </summary>
+        </member>
+        <member name="T:BookStore.BLL.MappingProfiles.GeneralProfile">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.MappingProfiles.GeneralProfile.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.BLL.MappingProfiles.GeneralProfile"/> class.
+            </summary>
+        </member>
+        <member name="T:BookStore.BLL.Serializers.BinaryFileSerializer">
+            <inheritdoc/>
+        </member>
+        <member name="P:BookStore.BLL.Serializers.BinaryFileSerializer.Name">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Serializers.BinaryFileSerializer.Read``1(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Serializers.BinaryFileSerializer.Write``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.BLL.Serializers.CsvFileSerializer">
+            <inheritdoc/>
+        </member>
+        <member name="P:BookStore.BLL.Serializers.CsvFileSerializer.Name">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Serializers.CsvFileSerializer.Read``1(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Serializers.CsvFileSerializer.Write``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.BLL.Serializers.JsonFileSerializer">
+            <inheritdoc/>
+        </member>
+        <member name="P:BookStore.BLL.Serializers.JsonFileSerializer.Name">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Serializers.JsonFileSerializer.Read``1(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Serializers.JsonFileSerializer.Write``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.BLL.Serializers.XmlFileSerializer">
+            <inheritdoc/>
+        </member>
+        <member name="P:BookStore.BLL.Serializers.XmlFileSerializer.Name">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Serializers.XmlFileSerializer.Read``1(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Serializers.XmlFileSerializer.Write``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.BLL.Services.AuthService">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.AuthService.#ctor(BookStore.DAL.Interfaces.IUnitOfWork,BookStore.BLL.Interfaces.IClientService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.BLL.Services.AuthService"/> class.
+            </summary>
+            <param name="uow">UnitOfWork implementation</param>
+            <param name="clientService">Client service implementation</param>
+        </member>
+        <member name="M:BookStore.BLL.Services.AuthService.GetCurrentClientId">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.AuthService.GetCurrentClient">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.AuthService.Login(BookStore.Shared.DTOs.ClientDto)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.AuthService.Logout">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.BLL.Services.BookService">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.BookService.#ctor(BookStore.DAL.Interfaces.IUnitOfWork,AutoMapper.IMapper,FluentValidation.IValidator{BookStore.DAL.Models.Book})">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.BLL.Services.BookService"/> class.
+            </summary>
+            <param name="uow">UnitOfWork implementation</param>
+            <param name="mapper">Mapper implementation</param>
+            <param name="validator">Validator implementation</param>
+        </member>
+        <member name="M:BookStore.BLL.Services.BookService.Get(System.Guid)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.BookService.GetAll">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.BookService.Find(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.BookService.Create(BookStore.Shared.DTOs.BookDto)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.BookService.Update(System.Guid,BookStore.Shared.DTOs.BookDto)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.BookService.Delete(System.Guid)">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.BLL.Services.ClientService">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.ClientService.#ctor(BookStore.DAL.Interfaces.IUnitOfWork,AutoMapper.IMapper,FluentValidation.IValidator{BookStore.DAL.Models.Client})">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.BLL.Services.ClientService"/> class.
+            </summary>
+            <param name="uow">UnitOfWork implementation</param>
+            <param name="mapper">Mapper implementation</param>
+            <param name="validator">Validator implementation</param>
+        </member>
+        <member name="M:BookStore.BLL.Services.ClientService.Find(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.ClientService.Get(System.Guid)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.ClientService.GetAll">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.ClientService.Create(BookStore.Shared.DTOs.ClientDto)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.ClientService.Update(System.Guid,BookStore.Shared.DTOs.ClientDto)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.ClientService.Delete(System.Guid)">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.BLL.Services.CommentService">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.CommentService.#ctor(BookStore.DAL.Interfaces.IUnitOfWork,AutoMapper.IMapper,FluentValidation.IValidator{BookStore.DAL.Models.Comment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.BLL.Services.CommentService"/> class.
+            </summary>
+            <param name="uow">UnitOfWork implementation</param>
+            <param name="mapper">Mapper implementation</param>
+            <param name="validator">Validator implementation</param>
+        </member>
+        <member name="M:BookStore.BLL.Services.CommentService.Get(System.Guid)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.CommentService.GetAll">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.CommentService.Find(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.CommentService.Create(BookStore.Shared.DTOs.CommentDto)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.CommentService.Update(System.Guid,BookStore.Shared.DTOs.CommentDto)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.CommentService.Delete(System.Guid)">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.BLL.Services.FileService">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.FileService.#ctor(BookStore.DAL.Interfaces.IUnitOfWork,BookStore.BLL.Interfaces.IFileSerializer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.BLL.Services.FileService"/> class.
+            </summary>
+            <param name="uow">UnitOfWork implementation</param>
+            <param name="serializer">File serializer implementation</param>
+        </member>
+        <member name="M:BookStore.BLL.Services.FileService.ReadFromFile(System.String,BookStore.BLL.Interfaces.IFileSerializer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.FileService.SaveToFile(System.String,BookStore.BLL.Interfaces.IFileSerializer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.BLL.Services.WishListService">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.WishListService.#ctor(BookStore.DAL.Interfaces.IUnitOfWork,AutoMapper.IMapper,FluentValidation.IValidator{BookStore.DAL.Models.Wish})">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.BLL.Services.WishListService"/> class.
+            </summary>
+            <param name="uow">UnitOfWork implementation</param>
+            <param name="mapper">Mapper implementation</param>
+            <param name="validator">Validator implementation</param>
+        </member>
+        <member name="M:BookStore.BLL.Services.WishListService.Get(System.Guid)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.WishListService.Find(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.WishListService.Create(BookStore.Shared.DTOs.WishDto)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.WishListService.Update(System.Guid,BookStore.Shared.DTOs.WishDto)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.BLL.Services.WishListService.Delete(System.Guid)">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.BLL.Validators.BookValidator">
+            <summary>
+            Validator for book model
+            </summary>
+        </member>
+        <member name="M:BookStore.BLL.Validators.BookValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.BLL.Validators.BookValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:BookStore.BLL.Validators.ClientValidator">
+            <summary>
+            Validator for client model
+            </summary>
+        </member>
+        <member name="M:BookStore.BLL.Validators.ClientValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.BLL.Validators.ClientValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:BookStore.BLL.Validators.CommentValidator">
+            <summary>
+            Validator for comment model
+            </summary>
+        </member>
+        <member name="M:BookStore.BLL.Validators.CommentValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.BLL.Validators.CommentValidator"/> class.
+            </summary>
+        </member>
+        <member name="T:BookStore.BLL.Validators.WishValidator">
+            <summary>
+            Validator for wish model
+            </summary>
+        </member>
+        <member name="M:BookStore.BLL.Validators.WishValidator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.BLL.Validators.WishValidator"/> class.
+            </summary>
+        </member>
+    </members>
+</doc>

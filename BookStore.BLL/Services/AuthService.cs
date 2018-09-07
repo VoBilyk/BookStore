@@ -15,6 +15,11 @@
 
         private Guid? _currentUserId;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AuthService"/> class.
+        /// </summary>
+        /// <param name="uow">UnitOfWork implementation</param>
+        /// <param name="clientService">Client service implementation</param>
         public AuthService(
             IUnitOfWork uow,
             IClientService clientService)

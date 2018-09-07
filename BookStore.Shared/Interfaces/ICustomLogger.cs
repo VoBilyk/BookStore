@@ -4,7 +4,7 @@
     using BookStore.Shared.Logger;
 
     /// <summary>
-    /// Interface for customlogger
+    /// Interface for custom logger
     /// </summary>
     public interface ICustomLogger
     {

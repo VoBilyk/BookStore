@@ -6,9 +6,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;1309;1101</NoWarn>
+    <DocumentationFile>D:\Projects\epam\BookStore\BookStore.Shared\BookStore.Shared.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EWSoftware.SHFB" Version="2018.7.8.1" />
+    <PackageReference Include="EWSoftware.SHFB.NETCore" Version="4.5.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
   </ItemGroup>
 

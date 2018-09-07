@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EWSoftware.SHFB" Version="2018.7.8.1" />
+    <PackageReference Include="EWSoftware.SHFB.NETCore" Version="4.5.1" />
     <PackageReference Include="FakeItEasy" Version="4.8.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
     <PackageReference Include="NUnit" Version="3.10.1" />

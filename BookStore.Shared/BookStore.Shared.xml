@@ -1,0 +1,552 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BookStore.Shared</name>
+    </assembly>
+    <members>
+        <member name="T:BookStore.Shared.DTOs.BookDto">
+            <summary>
+            Data transfer object for book
+            </summary>
+        </member>
+        <member name="T:BookStore.Shared.DTOs.ClientDto">
+            <summary>
+            Data transfer object for client
+            </summary>
+        </member>
+        <member name="T:BookStore.Shared.DTOs.CommentDto">
+            <summary>
+            Data transfer object for comment
+            </summary>
+        </member>
+        <member name="T:BookStore.Shared.DTOs.WishDto">
+            <summary>
+            Data transfer object for item of wish list
+            </summary>
+        </member>
+        <member name="T:BookStore.Shared.Enums.Localication">
+            <summary>
+            Available localizations
+            </summary>
+        </member>
+        <member name="T:BookStore.Shared.Enums.LogLevel">
+            <summary>
+            Available logger level
+            </summary>
+        </member>
+        <member name="T:BookStore.Shared.Extensions.StringExtension">
+            <summary>
+            Extension for system type String
+            </summary>
+        </member>
+        <member name="M:BookStore.Shared.Extensions.StringExtension.ContainsIgnoringCase(System.String,System.String)">
+            <summary>
+            Checking if string contains another string while ignoring case when compare
+            </summary>
+            <param name="source">String in which need to find</param>
+            <param name="toCheck">String which need find in another string</param>
+            <returns>If string toCheck contains in source string</returns>
+        </member>
+        <member name="T:BookStore.Shared.Interfaces.ICustomLogger">
+            <summary>
+            Interface for custom logger
+            </summary>
+        </member>
+        <member name="E:BookStore.Shared.Interfaces.ICustomLogger.LogAdded">
+            <summary>
+            Event which notify that log was added to queue
+            </summary>
+        </member>
+        <member name="M:BookStore.Shared.Interfaces.ICustomLogger.Info(System.String)">
+            <summary>
+            Logging some information message
+            </summary>
+            <param name="message">Log message</param>
+        </member>
+        <member name="M:BookStore.Shared.Interfaces.ICustomLogger.Debug(System.String)">
+            <summary>
+            Logging some debug message
+            </summary>
+            <param name="message">Log message</param>
+        </member>
+        <member name="M:BookStore.Shared.Interfaces.ICustomLogger.Warning(System.String,System.Exception)">
+            <summary>
+            Logging some warning message
+            </summary>
+            <param name="message">Log message</param>
+            <param name="exception">Optional: exception which need to log</param>
+        </member>
+        <member name="M:BookStore.Shared.Interfaces.ICustomLogger.Error(System.String,System.Exception)">
+            <summary>
+            Logging some warning message
+            </summary>
+            <param name="message">Log message</param>
+            <param name="exception">Optional: exception which need to log</param>
+        </member>
+        <member name="M:BookStore.Shared.Interfaces.ICustomLogger.Critical(System.String,System.Exception)">
+            <summary>
+            Logging some critical message
+            </summary>
+            <param name="message">Log message</param>
+            <param name="exception">Optional: exception which need to log</param>
+        </member>
+        <member name="T:BookStore.Shared.Interfaces.ICustomLoggerFactory">
+            <summary>
+            Interface for creating ICustomLogger used class factory
+            </summary>
+        </member>
+        <member name="M:BookStore.Shared.Interfaces.ICustomLoggerFactory.CreateLogger``1">
+            <summary>
+            Creating custom logger with needed name through generic parameter
+            </summary>
+            <typeparam name="TClassName">Class for which need create logger</typeparam>
+            <returns>Created custom logger</returns>
+        </member>
+        <member name="M:BookStore.Shared.Interfaces.ICustomLoggerFactory.CreateLogger(System.String)">
+            <summary>
+            Creating custom logger with needed name through parameter
+            </summary>
+            <param name="loggerName">Custom logger name</param>
+            <returns>Created custom logger</returns>
+        </member>
+        <member name="T:BookStore.Shared.LanguageSwitcher">
+            <summary>
+            Language localization switcher
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.LanguageSwitcher.Culture">
+            <summary>
+            Gets or sets current culture
+            </summary>
+        </member>
+        <member name="M:BookStore.Shared.LanguageSwitcher.Switch">
+            <summary>
+            Switch localization to another
+            </summary>
+        </member>
+        <member name="T:BookStore.Shared.Logger.CustomLogger">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.Shared.Logger.CustomLogger.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.Shared.Logger.CustomLogger"/> class.
+            </summary>
+            <param name="loggerName">Logger name</param>
+        </member>
+        <member name="E:BookStore.Shared.Logger.CustomLogger.LogAdded">
+            <summary>
+            Event which notify that log was added to queue
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Logger.CustomLogger.LogFileName">
+            <summary>
+            Gets or sets file name where to write log
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Logger.CustomLogger.BufferThreshold">
+            <summary>
+            Gets or sets max buffer threshold after
+            </summary>
+        </member>
+        <member name="M:BookStore.Shared.Logger.CustomLogger.ShutDown">
+            <summary>
+            Writing logs from queue if there left something
+            </summary>
+        </member>
+        <member name="M:BookStore.Shared.Logger.CustomLogger.Info(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.Shared.Logger.CustomLogger.Debug(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.Shared.Logger.CustomLogger.Warning(System.String,System.Exception)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.Shared.Logger.CustomLogger.Error(System.String,System.Exception)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.Shared.Logger.CustomLogger.Critical(System.String,System.Exception)">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.Shared.Logger.CustomLoggerFactory">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.Shared.Logger.CustomLoggerFactory.CreateLogger``1">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.Shared.Logger.CustomLoggerFactory.CreateLogger(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.Shared.Logger.LogEventArgs">
+            <summary>
+            Class that implement EventArgs to be send to event
+            </summary>
+        </member>
+        <member name="M:BookStore.Shared.Logger.LogEventArgs.#ctor(System.String,System.DateTime,BookStore.Shared.Enums.LogLevel,System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.Shared.Logger.LogEventArgs"/> class.
+            </summary>
+            <param name="name">Log event name</param>
+            <param name="time">Created log time</param>
+            <param name="level">Log level</param>
+            <param name="message">Log message</param>
+            <param name="exception">Log exception</param>
+        </member>
+        <member name="P:BookStore.Shared.Logger.LogEventArgs.Name">
+            <summary>
+            Gets or sets event log name
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Logger.LogEventArgs.Time">
+            <summary>
+            Gets or sets event log time
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Logger.LogEventArgs.Level">
+            <summary>
+            Gets or sets event log level
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Logger.LogEventArgs.Message">
+            <summary>
+            Gets or sets event log message
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Logger.LogEventArgs.Exception">
+            <summary>
+            Gets or sets event log exception
+            </summary>
+        </member>
+        <member name="T:BookStore.Shared.Resources.Resource">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.AddBook">
+            <summary>
+              Looks up a localized string similar to Add book.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.AddClient">
+            <summary>
+              Looks up a localized string similar to Add client.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.AddComment">
+            <summary>
+              Looks up a localized string similar to Add comment.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Address">
+            <summary>
+              Looks up a localized string similar to Address.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.AddToWishList">
+            <summary>
+              Looks up a localized string similar to Add to WishList.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.AlreadyExist">
+            <summary>
+              Looks up a localized string similar to Item has already exist.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Author">
+            <summary>
+              Looks up a localized string similar to Author.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.BirthDate">
+            <summary>
+              Looks up a localized string similar to BirthDate.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.BookMenu">
+            <summary>
+              Looks up a localized string similar to Book menu.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.CannotLogout">
+            <summary>
+              Looks up a localized string similar to Can`t logout.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.ChooseSomeone">
+            <summary>
+              Looks up a localized string similar to Choose someone.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.ClientMenu">
+            <summary>
+              Looks up a localized string similar to Client menu.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.ClientNotExist">
+            <summary>
+              Looks up a localized string similar to Client don`t exist.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Comments">
+            <summary>
+              Looks up a localized string similar to Comments.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.CreatedSuccess">
+            <summary>
+              Looks up a localized string similar to Created success.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.DeletedSuccess">
+            <summary>
+              Looks up a localized string similar to Deleted success.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Email">
+            <summary>
+              Looks up a localized string similar to Email.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.EnterEmail">
+            <summary>
+              Looks up a localized string similar to Enter email.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.EnterFileName">
+            <summary>
+              Looks up a localized string similar to Enter file name.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.EnterFirstName">
+            <summary>
+              Looks up a localized string similar to Enter first name.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.EnterInteger">
+            <summary>
+              Looks up a localized string similar to Please enter an integer.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.EnterLastName">
+            <summary>
+              Looks up a localized string similar to Enter last name.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.EnterNewAuthor">
+            <summary>
+              Looks up a localized string similar to Enter new author.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.EnterNewGenre">
+            <summary>
+              Looks up a localized string similar to Enter new genre.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.EnterNewName">
+            <summary>
+              Looks up a localized string similar to Enter new name.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.EnterNewPrice">
+            <summary>
+              Looks up a localized string similar to Enter new price.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Exit">
+            <summary>
+              Looks up a localized string similar to Exit.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.FirstName">
+            <summary>
+              Looks up a localized string similar to FirstName.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Genre">
+            <summary>
+              Looks up a localized string similar to Genre.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Hello">
+            <summary>
+              Looks up a localized string similar to Hello.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.LastName">
+            <summary>
+              Looks up a localized string similar to Last name.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Login">
+            <summary>
+              Looks up a localized string similar to Login.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.LoginSuccess">
+            <summary>
+              Looks up a localized string similar to Login success.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Logout">
+            <summary>
+              Looks up a localized string similar to Logout.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.LogoutSuccess">
+            <summary>
+              Looks up a localized string similar to Logout success.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Name">
+            <summary>
+              Looks up a localized string similar to Name.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.NotExist">
+            <summary>
+              Looks up a localized string similar to Item don`t exist.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.NotFound">
+            <summary>
+              Looks up a localized string similar to NotFound.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.NotHave">
+            <summary>
+              Looks up a localized string similar to Don`t have yet.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Price">
+            <summary>
+              Looks up a localized string similar to Price.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.ProgramFinished">
+            <summary>
+              Looks up a localized string similar to Program finished at.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.ProgramStarted">
+            <summary>
+              Looks up a localized string similar to Program started at.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.RemoveBook">
+            <summary>
+              Looks up a localized string similar to Remove book.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.RemoveClient">
+            <summary>
+              Looks up a localized string similar to Remove client.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.RemoveComment">
+            <summary>
+              Looks up a localized string similar to Remove comment.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.RemoveFromWishList">
+            <summary>
+              Looks up a localized string similar to Remove from WishList.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Restore">
+            <summary>
+              Looks up a localized string similar to Restore data.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.ReturnBack">
+            <summary>
+              Looks up a localized string similar to Return back.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Save">
+            <summary>
+              Looks up a localized string similar to Save data.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Search">
+            <summary>
+              Looks up a localized string similar to Search.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Settings">
+            <summary>
+              Looks up a localized string similar to Setiings.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.ShowBooks">
+            <summary>
+              Looks up a localized string similar to Show books.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.ShowClients">
+            <summary>
+              Looks up a localized string similar to Show clients.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.StorageSaved">
+            <summary>
+              Looks up a localized string similar to Storage was saved to file.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.StoregeRestored">
+            <summary>
+              Looks up a localized string similar to Storage was restored from file.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.Success">
+            <summary>
+              Looks up a localized string similar to Success.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.SwitchLanguage">
+            <summary>
+              Looks up a localized string similar to Switch language.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.UpdateBook">
+            <summary>
+              Looks up a localized string similar to Update book.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.UpdateClient">
+            <summary>
+              Looks up a localized string similar to UpdateClient.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.UpdatedSuccess">
+            <summary>
+              Looks up a localized string similar to Updated success.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.UsersWhichWish">
+            <summary>
+              Looks up a localized string similar to Users which wish.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.WishList">
+            <summary>
+              Looks up a localized string similar to WishList.
+            </summary>
+        </member>
+        <member name="P:BookStore.Shared.Resources.Resource.YourChoice">
+            <summary>
+              Looks up a localized string similar to Your choice.
+            </summary>
+        </member>
+    </members>
+</doc>

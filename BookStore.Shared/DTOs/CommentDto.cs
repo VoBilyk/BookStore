@@ -2,6 +2,9 @@
 {
     using System;
 
+    /// <summary>
+    /// Data transfer object for comment
+    /// </summary>
     public class CommentDto
     {
         public Guid Id { get; set; }

@@ -5,6 +5,9 @@
 
     using BookStore.Shared.Resources;
 
+    /// <summary>
+    /// Data transfer object for book
+    /// </summary>
     public class BookDto
     {
         public BookDto()

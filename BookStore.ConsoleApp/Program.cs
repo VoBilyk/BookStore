@@ -8,11 +8,18 @@
     using BookStore.Shared.Logger;
     using BookStore.Shared.Resources;
 
+    /// <summary>
+    /// Entry program class
+    /// </summary>
     public static class Program
     {
+        /// <summary>
+        /// Program entry point
+        /// </summary>
+        /// <param name="args">Passed arguments to program</param>
         public static void Main(string[] args)
         {
-            // Configuration app
+            // Configuration application
             var services = new ServiceCollection();
             Startup.ConfigureServices(services);
 
@@ -26,7 +33,7 @@
             {
                 logger.Debug($"{Resource.ProgramStarted}: {DateTime.Now.ToLocalTime()}");
 
-                // Running app
+                // Running application
                 serviceProvider.GetService<MainPage>().Display();
             }
             catch (Exception ex)

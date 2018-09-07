@@ -4,7 +4,7 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// Service with business logic for working with item
+    /// Contract for service with business logic for working with item
     /// </summary>
     /// <typeparam name="TDto">Data transfer object</typeparam>
     public interface IService<TDto>

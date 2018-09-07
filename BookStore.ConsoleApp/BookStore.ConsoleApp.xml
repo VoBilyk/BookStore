@@ -1,0 +1,300 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BookStore.ConsoleApp</name>
+    </assembly>
+    <members>
+        <member name="T:BookStore.ConsoleApp.Interfaces.IBookPage">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.ConsoleApp.Interfaces.IClientPage">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.ConsoleApp.Interfaces.IMenuVisualizer">
+            <summary>
+            Contract for visualizing menu
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Interfaces.IMenuVisualizer.ShowCollection``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            Show collection as list
+            </summary>
+            <typeparam name="T">Generic type of collection</typeparam>
+            <param name="items">Collection which need to show</param>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Interfaces.IMenuVisualizer.Display">
+            <summary>
+            Display created menu
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Interfaces.IMenuVisualizer.Add(System.String,System.Action)">
+            <summary>
+            Add new menu item
+            </summary>
+            <param name="option">Item name</param>
+            <param name="callback">Operating which need to execute when choose item</param>
+            <returns>Current IMenuVisualizer instance</returns>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Interfaces.IMenuVisualizer.FactoryMethod">
+            <summary>
+            Factory for creating new instance of IMenuVisualizer
+            </summary>
+            <returns>New instance of IMenuVisualizer</returns>
+        </member>
+        <member name="T:BookStore.ConsoleApp.Interfaces.IOutputEnvironment">
+            <summary>
+            Interface for writing to and reading from environment
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Interfaces.IOutputEnvironment.Read">
+            <summary>
+            Reading line from environment
+            </summary>
+            <returns>Read line</returns>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Interfaces.IOutputEnvironment.ReadKey">
+            <summary>
+            Reading key from environment
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Interfaces.IOutputEnvironment.ReadInt">
+            <summary>
+            Getting entered value
+            </summary>
+            <returns>Entered value</returns>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Interfaces.IOutputEnvironment.ReadInt(System.Int32,System.Int32)">
+            <summary>
+            Read int value with thresholds
+            </summary>
+            <param name="min">Min possible value</param>
+            <param name="max">Max possible value</param>
+            <returns>Entered value</returns>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Interfaces.IOutputEnvironment.Write(System.String)">
+            <summary>
+            Writing text to environment
+            </summary>
+            <param name="str">Text which need to write</param>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Interfaces.IOutputEnvironment.WriteLine(System.String)">
+            <summary>
+            Writing text line to environment
+            </summary>
+            <param name="str">Text which need to write</param>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Interfaces.IOutputEnvironment.Clear">
+            <summary>
+            Clearing text from environment
+            </summary>
+        </member>
+        <member name="T:BookStore.ConsoleApp.Interfaces.IPage">
+            <summary>
+            Contract for page
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Interfaces.IPage.Display">
+            <summary>
+            Displaying page
+            </summary>
+        </member>
+        <member name="T:BookStore.ConsoleApp.Interfaces.ISettingsPage">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.ConsoleApp.MenuPages.BookPage">
+            <summary>
+            Page for working with books
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.BookPage.#ctor(BookStore.Shared.Interfaces.ICustomLoggerFactory,BookStore.ConsoleApp.Interfaces.IMenuVisualizer,BookStore.ConsoleApp.Interfaces.IOutputEnvironment,BookStore.BLL.Interfaces.IClientService,BookStore.BLL.Interfaces.IAuthService,BookStore.BLL.Interfaces.IBookService,BookStore.BLL.Interfaces.ICommentService,BookStore.BLL.Interfaces.IWishListService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.ConsoleApp.MenuPages.BookPage"/> class.
+            </summary>
+            <param name="loggerFactory">Logger factory</param>
+            <param name="menuVisualizer">Menu visualizer</param>
+            <param name="outputEnvironment">Output environment implementation</param>
+            <param name="clientService">Client service implementation</param>
+            <param name="authService">Authorization service implementation</param>
+            <param name="bookService">Book service implementation</param>
+            <param name="commentService">Comment service implementation</param>
+            <param name="wishListService">Wish list service implementation</param>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.BookPage.Display">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.ConsoleApp.MenuPages.ClientPage">
+            <summary>
+            Page form working with client
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.ClientPage.#ctor(BookStore.Shared.Interfaces.ICustomLoggerFactory,BookStore.ConsoleApp.Interfaces.IMenuVisualizer,BookStore.ConsoleApp.Interfaces.IOutputEnvironment,BookStore.BLL.Interfaces.IClientService,BookStore.BLL.Interfaces.IBookService,BookStore.BLL.Interfaces.ICommentService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.ConsoleApp.MenuPages.ClientPage"/> class.
+            </summary>
+            <param name="loggerFactory">Logger factory</param>
+            <param name="menuVisualizer">Menu visualizer</param>
+            <param name="outputEnvironment">Output environment implementation</param>
+            <param name="clientService">Client service implementation</param>
+            <param name="bookService">Book service implementation</param>
+            <param name="commentService">Comment service implementation</param>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.ClientPage.Display">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.ClientPage.ShowClients">
+            <summary>
+            Showing clients list
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.ClientPage.Find">
+            <summary>
+            Finding clients
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.ClientPage.ShowDetails(BookStore.Shared.DTOs.ClientDto)">
+            <summary>
+            Show client details
+            </summary>
+            <param name="client">Client object which need to show</param>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.ClientPage.AddClient">
+            <summary>
+            Adding client form
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.ClientPage.UpdateClient">
+            <summary>
+            Updating client form
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.ClientPage.RemoveClient">
+            <summary>
+            Removing client form
+            </summary>
+        </member>
+        <member name="T:BookStore.ConsoleApp.MenuPages.MainPage">
+            <summary>
+            Page from which started design
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.MainPage.#ctor(BookStore.Shared.Interfaces.ICustomLoggerFactory,BookStore.ConsoleApp.Interfaces.IMenuVisualizer,BookStore.ConsoleApp.Interfaces.IOutputEnvironment,BookStore.BLL.Interfaces.IAuthService,BookStore.ConsoleApp.Interfaces.IBookPage,BookStore.ConsoleApp.Interfaces.IClientPage,BookStore.ConsoleApp.Interfaces.ISettingsPage)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.ConsoleApp.MenuPages.MainPage"/> class.
+            </summary>
+            <param name="loggerFactory">Logger factory</param>
+            <param name="menuVisualizer">Menu visualizer</param>
+            <param name="outputEnvironment">Output environment implementation</param>
+            <param name="authService">Authorization service implementation</param>
+            <param name="bookPage">Book page implementation</param>
+            <param name="clientPage">Client page implementation</param>
+            <param name="settingsPage">Settings page implementation</param>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.MainPage.Display">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.MainPage.LoginLogout">
+            <summary>
+            Login if user don`t authorized or logout
+            </summary>
+        </member>
+        <member name="T:BookStore.ConsoleApp.MenuPages.SettingsPage">
+            <summary>
+            Page from which started design
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.SettingsPage.#ctor(BookStore.Shared.Interfaces.ICustomLoggerFactory,BookStore.ConsoleApp.Interfaces.IMenuVisualizer,BookStore.ConsoleApp.Interfaces.IOutputEnvironment,BookStore.BLL.Interfaces.IFileService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.ConsoleApp.MenuPages.SettingsPage"/> class.
+            </summary>
+            <param name="loggerFactory">Logger factory</param>
+            <param name="menuVisualizer">Menu visualizer</param>
+            <param name="outputEnvironment">Output environment implementation</param>
+            <param name="fileService">File service implementation</param>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.SettingsPage.Display">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.SettingsPage.SaveDb">
+            <summary>
+            Saving data to storage
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuPages.SettingsPage.RestoreDb">
+            <summary>
+            Restoring data from storage
+            </summary>
+        </member>
+        <member name="T:BookStore.ConsoleApp.MenuVisualizer">
+            <inheritdoc />
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuVisualizer.#ctor(BookStore.ConsoleApp.Interfaces.IOutputEnvironment)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.ConsoleApp.MenuVisualizer"/> class.
+            </summary>
+            <param name="outputEnvironment">Output environment</param>
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuVisualizer.ShowCollection``1(System.Collections.Generic.IList{``0})">
+            <inheritdoc />
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuVisualizer.Display">
+            <inheritdoc />
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuVisualizer.Add(System.String,System.Action)">
+            <inheritdoc />
+        </member>
+        <member name="M:BookStore.ConsoleApp.MenuVisualizer.FactoryMethod">
+            <inheritdoc />
+        </member>
+        <member name="T:BookStore.ConsoleApp.OutputEnvironment">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.ConsoleApp.OutputEnvironment.Read">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.ConsoleApp.OutputEnvironment.ReadKey">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.ConsoleApp.OutputEnvironment.ReadInt(System.Int32,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.ConsoleApp.OutputEnvironment.ReadInt">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.ConsoleApp.OutputEnvironment.Write(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.ConsoleApp.OutputEnvironment.WriteLine(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.ConsoleApp.OutputEnvironment.Clear">
+            <inheritdoc/>
+        </member>
+        <member name="T:BookStore.ConsoleApp.Program">
+            <summary>
+            Entry program class
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Program.Main(System.String[])">
+            <summary>
+            Program entry point
+            </summary>
+            <param name="args">Passed arguments to program</param>
+        </member>
+        <member name="T:BookStore.ConsoleApp.Startup">
+            <summary>
+                Class for configuration application before starting application
+            </summary>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                Configuration services
+            </summary>
+            <param name="services">Collection of services</param>
+        </member>
+        <member name="M:BookStore.ConsoleApp.Startup.ConfigurateCulture">
+            <summary>
+                Configuration culture and localization
+            </summary>
+        </member>
+    </members>
+</doc>

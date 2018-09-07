@@ -3,7 +3,7 @@
     using BookStore.Shared.DTOs;
 
     /// <summary>
-    /// Interface for book service
+    /// Contract for book service
     /// </summary>
     public interface IBookService : IService<BookDto>
     {

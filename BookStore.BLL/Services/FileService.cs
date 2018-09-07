@@ -12,6 +12,11 @@
         private readonly IUnitOfWork _uow;
         private readonly IFileSerializer _defaultFileSerializer;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileService"/> class.
+        /// </summary>
+        /// <param name="uow">UnitOfWork implementation</param>
+        /// <param name="serializer">File serializer implementation</param>
         public FileService(
             IUnitOfWork uow,
             IFileSerializer serializer)

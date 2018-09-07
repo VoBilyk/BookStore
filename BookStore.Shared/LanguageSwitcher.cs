@@ -5,6 +5,9 @@
 
     using BookStore.Shared.Resources;
 
+    /// <summary>
+    /// Language localization switcher
+    /// </summary>
     public static class LanguageSwitcher
     {
         private static readonly Dictionary<string, string> _cultures = new Dictionary<string, string>
@@ -13,12 +16,18 @@
             { "ua", "uk-UA" }
         };
 
+        /// <summary>
+        /// Gets or sets current culture
+        /// </summary>
         public static CultureInfo Culture
         {
             get => Resource.Culture;
             set => Resource.Culture = value;
         }
 
+        /// <summary>
+        /// Switch localization to another
+        /// </summary>
         public static void Switch()
         {
             if (Culture.Name == _cultures["en"])

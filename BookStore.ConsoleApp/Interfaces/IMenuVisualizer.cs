@@ -4,7 +4,7 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// Interface for visualizing menu
+    /// Contract for visualizing menu
     /// </summary>
     public interface IMenuVisualizer
     {

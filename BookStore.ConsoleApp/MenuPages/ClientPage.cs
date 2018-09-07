@@ -22,6 +22,15 @@
         private readonly IBookService _bookService;
         private readonly ICommentService _commentService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClientPage"/> class.
+        /// </summary>
+        /// <param name="loggerFactory">Logger factory</param>
+        /// <param name="menuVisualizer">Menu visualizer</param>
+        /// <param name="outputEnvironment">Output environment implementation</param>
+        /// <param name="clientService">Client service implementation</param>
+        /// <param name="bookService">Book service implementation</param>
+        /// <param name="commentService">Comment service implementation</param>
         public ClientPage(
             ICustomLoggerFactory loggerFactory,
             IMenuVisualizer menuVisualizer,
@@ -52,6 +61,9 @@
             menu.Display();
         }
 
+        /// <summary>
+        /// Showing clients list
+        /// </summary>
         public void ShowClients()
         {
             var clients = _clientService.GetAll();
@@ -64,6 +76,9 @@
             ShowDetails(clients[choice - 1]);
         }
 
+        /// <summary>
+        /// Finding clients
+        /// </summary>
         public void Find()
         {
             _outputEnvironment.Write($"{Resource.Search}: ");
@@ -85,6 +100,10 @@
             ShowDetails(clients[choice - 1]);
         }
 
+        /// <summary>
+        /// Show client details
+        /// </summary>
+        /// <param name="client">Client object which need to show</param>
         public void ShowDetails(ClientDto client)
         {
             _outputEnvironment.WriteLine($"\n{Resource.FirstName}: {client.FirstName}");
@@ -122,6 +141,9 @@
             _outputEnvironment.ReadKey();
         }
 
+        /// <summary>
+        /// Adding client form
+        /// </summary>
         public void AddClient()
         {
             var client = EnterClientData();
@@ -137,6 +159,9 @@
             }
         }
 
+        /// <summary>
+        /// Updating client form
+        /// </summary>
         public void UpdateClient()
         {
             var clients = _clientService.GetAll();
@@ -158,6 +183,9 @@
             }
         }
 
+        /// <summary>
+        /// Removing client form
+        /// </summary>
         public void RemoveClient()
         {
             var clients = _clientService.GetAll();
