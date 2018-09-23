@@ -1,0 +1,259 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BookStore.DAL</name>
+    </assembly>
+    <members>
+        <member name="T:BookStore.DAL.DataSource">
+            <summary>
+            Container for data collection
+            </summary>
+        </member>
+        <member name="M:BookStore.DAL.DataSource.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.DAL.DataSource"/> class.
+            </summary>
+            <param name="amount">Amount of generated items on each collection</param>
+        </member>
+        <member name="P:BookStore.DAL.DataSource.Books">
+            <summary>
+            Gets book collection
+            </summary>
+        </member>
+        <member name="P:BookStore.DAL.DataSource.Clients">
+            <summary>
+            Gets client collection
+            </summary>
+        </member>
+        <member name="P:BookStore.DAL.DataSource.Comments">
+            <summary>
+            Gets comment collection
+            </summary>
+        </member>
+        <member name="P:BookStore.DAL.DataSource.WishList">
+            <summary>
+            Gets wish list collection
+            </summary>
+        </member>
+        <member name="M:BookStore.DAL.DataSource.Seed(System.Int32)">
+            <summary>
+            Added random data for data source
+            </summary>
+            <param name="amount">Amount of generated elements in each table</param>
+        </member>
+        <member name="T:BookStore.DAL.Interfaces.IEntity">
+            <summary>
+            Interface for entities
+            </summary>
+        </member>
+        <member name="P:BookStore.DAL.Interfaces.IEntity.Id">
+            <summary>
+            Gets or sets gets entity id
+            </summary>
+        </member>
+        <member name="T:BookStore.DAL.Interfaces.IUnitOfWork">
+            <summary>
+            Interface of patter UnitOfWork
+            </summary>
+        </member>
+        <member name="P:BookStore.DAL.Interfaces.IUnitOfWork.BookRepository">
+            <summary>
+            Gets BookRepository
+            </summary>
+        </member>
+        <member name="P:BookStore.DAL.Interfaces.IUnitOfWork.ClientRepository">
+            <summary>
+            Gets ClientRepository
+            </summary>
+        </member>
+        <member name="P:BookStore.DAL.Interfaces.IUnitOfWork.CommentRepository">
+            <summary>
+            Gets CommentRepository
+            </summary>
+        </member>
+        <member name="P:BookStore.DAL.Interfaces.IUnitOfWork.WishListRepository">
+            <summary>
+            Gets WishListRepository
+            </summary>
+        </member>
+        <member name="T:BookStore.DAL.Interfaces.Repositories.IBookRepository">
+            <summary>
+            Interface for book repository
+            </summary>
+        </member>
+        <member name="T:BookStore.DAL.Interfaces.Repositories.IClientRepository">
+            <summary>
+            Interface for ClientRepository
+            </summary>
+        </member>
+        <member name="T:BookStore.DAL.Interfaces.Repositories.ICommentRepository">
+            <summary>
+            Interface for comment repository
+            </summary>
+        </member>
+        <member name="T:BookStore.DAL.Interfaces.Repositories.IRepository`1">
+            <summary>
+            Interface of pattern repository
+            </summary>
+            <typeparam name="TEntity">Entity which implements IEntity interface</typeparam>
+        </member>
+        <member name="M:BookStore.DAL.Interfaces.Repositories.IRepository`1.Get">
+            <summary>
+            Getting all elements
+            </summary>
+            <returns>List of all elements</returns>
+        </member>
+        <member name="M:BookStore.DAL.Interfaces.Repositories.IRepository`1.Get(System.Guid)">
+            <summary>
+            Getting element with specified id
+            </summary>
+            <param name="id">Element id which need to get</param>
+            <returns>Element which specified id</returns>
+        </member>
+        <member name="M:BookStore.DAL.Interfaces.Repositories.IRepository`1.Find(System.Func{`0,System.Boolean})">
+            <summary>
+            Finding element with specified lambda
+            </summary>
+            <param name="predicate">Lambda predicate</param>
+            <returns>List of found elements</returns>
+        </member>
+        <member name="M:BookStore.DAL.Interfaces.Repositories.IRepository`1.Create(`0)">
+            <summary>
+            Creating element by specified id
+            </summary>
+            <param name="entity">Element which need to update</param>
+        </member>
+        <member name="M:BookStore.DAL.Interfaces.Repositories.IRepository`1.CreateMany(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Creating range of elements
+            </summary>
+            <param name="entities">Collection of items which need to create</param>
+        </member>
+        <member name="M:BookStore.DAL.Interfaces.Repositories.IRepository`1.Update(`0)">
+            <summary>
+            Updating element by specified id
+            </summary>
+            <param name="entity">Element which need to update</param>
+        </member>
+        <member name="M:BookStore.DAL.Interfaces.Repositories.IRepository`1.Delete(System.Guid)">
+            <summary>
+            Deleting element by specified id
+            </summary>
+            <param name="id">Element id which need delete</param>
+        </member>
+        <member name="T:BookStore.DAL.Interfaces.Repositories.IWishListRepository">
+            <summary>
+            Interface for wish list repository
+            </summary>
+        </member>
+        <member name="T:BookStore.DAL.Models.Book">
+            <summary>
+            Book entity
+            </summary>
+        </member>
+        <member name="T:BookStore.DAL.Models.Client">
+            <summary>
+            Client entity
+            </summary>
+        </member>
+        <member name="T:BookStore.DAL.Models.Comment">
+            <summary>
+            Comment entity
+            </summary>
+        </member>
+        <member name="T:BookStore.DAL.Models.Wish">
+            <summary>
+            Wish entity
+            </summary>
+        </member>
+        <member name="T:BookStore.DAL.Repositories.BookRepository">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.DAL.Repositories.BookRepository.#ctor(BookStore.DAL.DataSource)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.DAL.Repositories.BookRepository"/> class.
+            </summary>
+            <param name="source">Data source</param>
+        </member>
+        <member name="T:BookStore.DAL.Repositories.ClientRepository">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.DAL.Repositories.ClientRepository.#ctor(BookStore.DAL.DataSource)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.DAL.Repositories.ClientRepository"/> class.
+            </summary>
+            <param name="source">Data source</param>
+        </member>
+        <member name="T:BookStore.DAL.Repositories.CommentRepository">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.DAL.Repositories.CommentRepository.#ctor(BookStore.DAL.DataSource)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.DAL.Repositories.CommentRepository"/> class.
+            </summary>
+            <param name="source">Data source</param>
+        </member>
+        <member name="T:BookStore.DAL.Repositories.GenericRepository`1">
+            <inheritdoc />
+        </member>
+        <member name="M:BookStore.DAL.Repositories.GenericRepository`1.#ctor(System.Collections.Generic.List{`0})">
+            <summary>
+                Initializes a new instance of the <see cref="T:BookStore.DAL.Repositories.GenericRepository`1" /> class.
+            </summary>
+            <param name="context">Data context</param>
+        </member>
+        <member name="M:BookStore.DAL.Repositories.GenericRepository`1.Get(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:BookStore.DAL.Repositories.GenericRepository`1.Get">
+            <inheritdoc />
+        </member>
+        <member name="M:BookStore.DAL.Repositories.GenericRepository`1.Find(System.Func{`0,System.Boolean})">
+            <inheritdoc />
+        </member>
+        <member name="M:BookStore.DAL.Repositories.GenericRepository`1.Create(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:BookStore.DAL.Repositories.GenericRepository`1.CreateMany(System.Collections.Generic.IEnumerable{`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:BookStore.DAL.Repositories.GenericRepository`1.Update(`0)">
+            <inheritdoc />
+        </member>
+        <member name="M:BookStore.DAL.Repositories.GenericRepository`1.Delete(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="T:BookStore.DAL.Repositories.WishListRepository">
+            <inheritdoc/>
+        </member>
+        <member name="M:BookStore.DAL.Repositories.WishListRepository.#ctor(BookStore.DAL.DataSource)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.DAL.Repositories.WishListRepository"/> class.
+            </summary>
+            <param name="source">Data source</param>
+        </member>
+        <member name="T:BookStore.DAL.UnitOfWork">
+            <summary>
+            Class which implemented IUnitOfWork interface
+            </summary>
+        </member>
+        <member name="M:BookStore.DAL.UnitOfWork.#ctor(BookStore.DAL.DataSource)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BookStore.DAL.UnitOfWork"/> class.
+            </summary>
+            <param name="data">Data source context</param>
+        </member>
+        <member name="P:BookStore.DAL.UnitOfWork.BookRepository">
+            <inheritdoc/>
+        </member>
+        <member name="P:BookStore.DAL.UnitOfWork.ClientRepository">
+            <inheritdoc/>
+        </member>
+        <member name="P:BookStore.DAL.UnitOfWork.CommentRepository">
+            <inheritdoc/>
+        </member>
+        <member name="P:BookStore.DAL.UnitOfWork.WishListRepository">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>
